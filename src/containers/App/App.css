@@ -1,0 +1,50 @@
+@import "~antd/dist/antd.css";
+
+.logo {
+  float: left;
+  width: 10rem;
+  height: 2rem;
+  margin: 1rem 2rem 1rem 0;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.site-layout-background {
+  background: #fff;
+}
+
+.header .ant-dropdown-link {
+  float: right;
+  color: white;
+}
+
+.site-layout-background .noti-card {
+  width: 14rem;
+  margin: 0.5rem;
+}
+
+#noti-filter-button {
+  margin: 1rem 0rem 0rem 2rem;
+}
+
+.ant-dropdown-menu {
+  border-radius: 1rem;
+}
+
+.ant-layout-content {
+  padding: 2rem;
+  margin: 0rem;
+  min-height: 20rem;
+}
+
+#chat-input {
+    border-radius: 1rem;
+}
+
+#chat-btn {
+    border-radius: 1rem;
+}
+
+.anticon-bell {
+    font-size: 1.25rem;
+    margin-left: 6rem;
+}
