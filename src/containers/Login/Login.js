@@ -7,17 +7,20 @@ const Login = ({ setToken }) => {
 
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
+    const [role, setRole] = useState()
     const [register, setRegister] = useState(false);
 
     const onFinish = (e) => {
         e.preventDefault();
         setUsername(e.target[0].value)
         setPassword(e.target[1].value)
+        setRole(e.target[2].value)
         const token = loginUser({
             username,
-            password
+            password,
+            role
         });
-        setToken(token);
+        setToken(token.username, token.role);
     }
 
     const onFinishFailed = (errorInfo) => {
@@ -34,7 +37,7 @@ const Login = ({ setToken }) => {
         // })
         //     .then(data => data.json())
         console.log(data.username)
-        return { "token": data.username }
+        return { "username": data.username , "role": data.role}
     }
 
     function registerClicked() {
@@ -64,6 +67,7 @@ const Login = ({ setToken }) => {
                                     span: 16,
                                 }}
                                 initialValues={{
+                                    role: 'ROLE.STUDENT',
                                     remember: true,
                                 }}
                                 onSubmitCapture={onFinish}
@@ -96,6 +100,14 @@ const Login = ({ setToken }) => {
                                     ]}
                                 >
                                     <Input.Password />
+                                </Form.Item>
+
+                                <Form.Item
+                                    label="Role"
+                                    name="role"
+                                    hidden={true}
+                                >
+                                    <Input />
                                 </Form.Item>
 
                                 <Form.Item
@@ -137,6 +149,7 @@ const Login = ({ setToken }) => {
                                     span: 16,
                                 }}
                                 initialValues={{
+                                    role: 'ROLE.TEACHER',
                                     remember: true,
                                 }}
                                 onSubmitCapture={onFinish}
@@ -169,6 +182,14 @@ const Login = ({ setToken }) => {
                                     ]}
                                 >
                                     <Input.Password />
+                                </Form.Item>
+
+                                <Form.Item
+                                    label="Role"
+                                    name="role"
+                                    hidden={true}
+                                >
+                                    <Input />
                                 </Form.Item>
 
                                 <Form.Item

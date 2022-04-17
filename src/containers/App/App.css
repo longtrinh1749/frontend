@@ -18,8 +18,8 @@
 }
 
 .site-layout-background .noti-card {
-  width: 14rem;
-  margin: 0.5rem;
+  width: 15rem;
+  margin: auto;
 }
 
 #noti-filter-button {
@@ -48,3 +48,12 @@
     font-size: 1.25rem;
     margin-left: 6rem;
 }
+
+.ant-layout-sider::-webkit-scrollbar{
+    width: 2px;
+}
+
+.ant-layout-sider::-webkit-scrollbar-thumb {
+    background: black; 
+    border-radius: 10px;
+  }

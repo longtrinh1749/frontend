@@ -2,11 +2,11 @@ import React, { useRef, useState } from "react";
 import { Layout, Menu, Breadcrumb, Dropdown, Card, Avatar, Button, Input } from 'antd';
 import { UserOutlined, DownOutlined, LaptopOutlined, NotificationOutlined, BellOutlined, SendOutlined } from '@ant-design/icons';
 import '../App/App.css'
-import Courses from '../../components/Teacher/Courses/Courses'
-import Assignments from "../../components/Teacher/Course/Assignments";
-import Students from "../../components/Teacher/Course/Students"
+import Courses from '../../components/Student/Courses/Courses'
+import Assignments from "../../components/Student/Course/Assignments";
+import Assignment from '../../components/Student/Course/Assignment'
 
-const TeacherApp = ({setToken, token}) => {
+const StudentApp = ({setToken, token}) => {
 
     // Course
     const [course, setCourse] = useState('')
@@ -14,30 +14,20 @@ const TeacherApp = ({setToken, token}) => {
     // Assignment
     const [assignment, setAssignment] = useState('')
 
-    // Student
-    const [student, setStudent] = useState('')
-
     // Breadcrumbs
-    let brcrumb = useRef({ course: '', assignment: '', student: '' })
+    let brcrumb = useRef({ course: '', assignment: '' })
 
     const setBrCrumbCourse = (courseName) => {
-        brcrumb.current.course = <Breadcrumb.Item onClick={() => {setAssignment(''); setStudent('')}}>{courseName}</Breadcrumb.Item>
+        brcrumb.current.course = <Breadcrumb.Item onClick={() => setAssignment('')}>{courseName}</Breadcrumb.Item>
         brcrumb.current.assignment = ''
-        brcrumb.current.student = ''
     }
 
     const setBrCrumbAssignment = (assignmentName) => {
-        brcrumb.current.assignment = <Breadcrumb.Item onClick={() => setStudent('')}>{assignmentName}</Breadcrumb.Item>
-        brcrumb.current.student = ''
-    }
-
-    const setBrCrumbStudent = (studentName) => {
-        brcrumb.current.student = <Breadcrumb.Item>{studentName}</Breadcrumb.Item>
+        brcrumb.current.assignment = <Breadcrumb.Item>{assignmentName}</Breadcrumb.Item>
     }
 
     setBrCrumbCourse(course.name)
     setBrCrumbAssignment(assignment.name)
-    setBrCrumbStudent(student.name)
 
     // Profile menu
     const { SubMenu } = Menu;
@@ -93,17 +83,13 @@ const TeacherApp = ({setToken, token}) => {
     let content = (
         <Courses token={token} setCourse={setCourse}></Courses>
     )
-    if (course && !assignment && !student) {
+    if (course && !assignment) {
         content = (
             <Assignments token={token} course={course} setAssignment={setAssignment}></Assignments>
         )
-    } else if (course && assignment && !student) {
+    } else if (course && assignment) {
         content = (
-            <Students token={token} course={course} assignment={assignment} setStudent={setStudent}></Students>
-        )
-    } else if (course && assignment && student) {
-        content = (
-            <h1>Grading</h1>
+            <Assignment></Assignment>
         )
     }
 
@@ -113,7 +99,7 @@ const TeacherApp = ({setToken, token}) => {
                 <div className="logo" />
                 <Dropdown overlay={profileMenu}>
                     <a className="ant-dropdown-link" onClick={e => e.preventDefault()} >
-                        Teacher Profile! <UserOutlined />
+                        Student Profile! <UserOutlined />
                     </a>
                 </Dropdown>
             </Header>
@@ -134,7 +120,7 @@ const TeacherApp = ({setToken, token}) => {
                         <Meta
                             avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
                             title="Submitted"
-                            description="Nguyen Hanh Kien has submitted Bai 5 SGK Tieng Viet"
+                            description="Bai 5 SGK Tieng Viet has been graded"
                         />
                     </Card>
                     <Card className="noti-card" loading={false}>
@@ -148,7 +134,7 @@ const TeacherApp = ({setToken, token}) => {
                         <Meta
                             avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
                             title="Past due"
-                            description="Bai tap TV lop 3 has passed graded due"
+                            description="Bai tap TV lop 3 has passed due"
                         />
                     </Card>
                     <Card className="noti-card" loading={false}>
@@ -169,7 +155,7 @@ const TeacherApp = ({setToken, token}) => {
                         <Meta
                             avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
                             title="Question"
-                            description="Giang A Thuy has a question in his submitted for Bai tap Toan giua ki"
+                            description="Ms Thuy has reply to your question in Bai tap Toan giua ki"
                         />
                     </Card>
                     <Card className="noti-card" loading={false}>
@@ -182,10 +168,9 @@ const TeacherApp = ({setToken, token}) => {
                 </Sider>
                 <Layout style={{ padding: '0 24px 24px' }}>
                     <Breadcrumb style={{ margin: '16px 0' }}>
-                        <Breadcrumb.Item onClick={() => { setAssignment(''); setCourse(''); setStudent('') }}>Your Courses</Breadcrumb.Item>
+                        <Breadcrumb.Item onClick={() => { setAssignment(''); setCourse('') }}>Your Courses</Breadcrumb.Item>
                         {brcrumb.current.course}
                         {brcrumb.current.assignment}
-                        {brcrumb.current.student}
                     </Breadcrumb>
                     <Content className="site-layout-background">
                         {content}
@@ -202,4 +187,4 @@ const TeacherApp = ({setToken, token}) => {
 }
 
 
-export default TeacherApp
+export default StudentApp

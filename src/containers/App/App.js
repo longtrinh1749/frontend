@@ -4,8 +4,8 @@ import { UserOutlined, DownOutlined, LaptopOutlined, NotificationOutlined, BellO
 import './App.css'
 import useToken from '../../hooks/useToken'
 import Login from '../Login/Login'
-import Courses from '../../components/Courses/Courses'
-import Assignments from "../../components/Course/Assignments";
+import StudentApp from "../StudentApp/StudentApp";
+import TeacherApp from "../TeacherApp/TeacherApp";
 
 const App = () => {
 
@@ -38,17 +38,17 @@ const App = () => {
     const profileMenu = (
         <Menu>
             <Menu.Item>
-                <a rel="noopener noreferrer" href="#">
+                <a rel="noopener noreferrer" href="#" key={'profile'}>
                     Profile
                 </a>
             </Menu.Item>
             <Menu.Item>
-                <a rel="noopener noreferrer" href="#">
+                <a rel="noopener noreferrer" href="#" key={'saved'}>
                     Saved Items
                 </a>
             </Menu.Item>
             <Menu.Item>
-                <a rel="noopener noreferrer" href="#" onClick={() => setToken(null)}>
+                <a rel="noopener noreferrer" href="#" key={'logout'} onClick={() => setToken(null)}>
                     Logout
                 </a>
             </Menu.Item>
@@ -59,17 +59,17 @@ const App = () => {
     const notiFilterMenu = (
         <Menu>
             <Menu.Item>
-                <a rel="noopener noreferrer" href="#">
+                <a rel="noopener noreferrer" href="#" key={'due-filter'}>
                     Due
                 </a>
             </Menu.Item>
             <Menu.Item>
-                <a rel="noopener noreferrer" href="#">
+                <a rel="noopener noreferrer" href="#" key={'submitted-filter'}>
                     Submitted
                 </a>
             </Menu.Item>
             <Menu.Item>
-                <a rel="noopener noreferrer" href="#">
+                <a rel="noopener noreferrer" href="#" key={'chat-filter'}>
                     Chat
                 </a>
             </Menu.Item>
@@ -87,115 +87,19 @@ const App = () => {
     if (!token) {
         return <Login setToken={setToken}></Login>
     } else {
-        // Content
-        let content = (
-            <Courses token={token} setCourse={setCourse}></Courses>
-        )
-        console.log('0')
-        if (course && !assignment) {
-            content = (
-                <Assignments token={token} course={course} setAssignment={setAssignment}></Assignments>
+        if (token.role == 'ROLE.STUDENT') {
+            return (
+                <StudentApp setToken={setToken} token={token}></StudentApp>
             )
-            console.log('1')
-        } else if (course && assignment) {
-            content = (
-                <div>asd</div>
+        } else if (token.role == 'ROLE.TEACHER') {
+            return (
+                <TeacherApp setToken={setToken} token={token}></TeacherApp>
             )
-            console.log('2')
         }
-
-        return (
-            <Layout>
-                <Header className="header">
-                    <div className="logo" />
-                    <Dropdown overlay={profileMenu}>
-                        <a className="ant-dropdown-link" onClick={e => e.preventDefault()} >
-                            User Profile! <UserOutlined />
-                        </a>
-                    </Dropdown>
-                </Header>
-                <Layout>
-                    <Sider width={250} className="site-layout-background" style={{
-                        overflow: 'auto',
-                        height: '100vh',
-                    }}>
-                        <Dropdown overlay={notiFilterMenu} trigger={['click']}>
-                            <Button id="noti-filter-button" shape="round" type="primary">
-                                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                                    Filter <DownOutlined />
-                                </a>
-                            </Button>
-                        </Dropdown>
-                        <BellOutlined />
-                        <Card className="noti-card" loading={false}>
-                            <Meta
-                                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                                title="Submitted"
-                                description="Nguyen Hanh Kien has submitted Bai 5 SGK Tieng Viet"
-                            />
-                        </Card>
-                        <Card className="noti-card" loading={false}>
-                            <Meta
-                                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                                title="Due"
-                                description="Bai tap toan lop 2 is about to pass due in 1 day"
-                            />
-                        </Card>
-                        <Card className="noti-card" loading={false}>
-                            <Meta
-                                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                                title="Past due"
-                                description="Bai tap TV lop 3 has passed due"
-                            />
-                        </Card>
-                        <Card className="noti-card" loading={false}>
-                            <Meta
-                                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                                title="Question"
-                                description="Bui Gia Khanh has a question in Lop 2A3"
-                            />
-                        </Card>
-                        <Card className="noti-card" loading={false}>
-                            <Meta
-                                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                                title="Question"
-                                description="Kim Thuy Ngan has a question in assignment Bai tap Toan giua ki"
-                            />
-                        </Card>
-                        <Card className="noti-card" loading={false}>
-                            <Meta
-                                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                                title="Question"
-                                description="Giang A Thuy has a question in his submitted for Bai tap Toan giua ki"
-                            />
-                        </Card>
-                        <Card className="noti-card" loading={false}>
-                            <Meta
-                                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                                title="Question"
-                                description="Pham Gia Tuan replied your chat in class 2A3"
-                            />
-                        </Card>
-                    </Sider>
-                    <Layout style={{ padding: '0 24px 24px' }}>
-                        <Breadcrumb style={{ margin: '16px 0' }}>
-                            <Breadcrumb.Item onClick={() => {setAssignment(''); setCourse('')}}>Your Courses</Breadcrumb.Item>
-                            {brcrumb.current.course}
-                            {brcrumb.current.assignment}
-                        </Breadcrumb>
-                        <Content className="site-layout-background">
-                            {content}
-                        </Content>
-                    </Layout>
-                    <Sider width={200} className="site-layout-background">
-                        <Input.Group compact>
-                            <Input.TextArea id="chat-input" placeholder="Chat" autoSize={{ minRows: 2, maxRows: 4 }} onPressEnter={() => console.log("asd")} />
-                        </Input.Group>
-                    </Sider>
-                </Layout>
-            </Layout>
-        )
     }
+    return (
+        <h5>Error in User role</h5>
+    )
 }
 
 export default App

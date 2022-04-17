@@ -7,6 +7,7 @@
     "@testing-library/react": "13.0.1",
     "@testing-library/user-event": "13.5.0",
     "antd": "4.19.5",
+    "axios": "^0.26.1",
     "browserslist": "^4.6.3",
     "react": "18.0.0",
     "react-dom": "18.0.0",
@@ -35,11 +36,6 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
-  },
-  "jest": {
-    "transformIgnorePatterns": [
-      "/node_modules/(?!antd|@ant-design|rc-.+?|@babel/runtime).+(js|jsx)$"
     ]
   }
 }
