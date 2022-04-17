@@ -5,6 +5,7 @@ import './App.css'
 import useToken from '../../hooks/useToken'
 import Login from '../Login/Login'
 import Courses from '../../components/Courses/Courses'
+import Assignments from "../../components/Course/Assignments";
 
 const App = () => {
 
@@ -18,13 +19,16 @@ const App = () => {
     let brcrumb = useRef({ course: '', assignment: '' })
 
     const setBrCrumbCourse = (courseName) => {
-        brcrumb.current.course = <Breadcrumb.Item>{courseName}</Breadcrumb.Item>
+        brcrumb.current.course = <Breadcrumb.Item onClick={() => setAssignment('')}>{courseName}</Breadcrumb.Item>
         brcrumb.current.assignment = ''
     }
 
     const setBrCrumbAssignment = (assignmentName) => {
         brcrumb.current.assignment = <Breadcrumb.Item>{assignmentName}</Breadcrumb.Item>
     }
+
+    setBrCrumbCourse(course.name)
+    setBrCrumbAssignment(assignment.name)
 
     // Profile menu
     const { SubMenu } = Menu;
@@ -83,6 +87,22 @@ const App = () => {
     if (!token) {
         return <Login setToken={setToken}></Login>
     } else {
+        // Content
+        let content = (
+            <Courses token={token} setCourse={setCourse}></Courses>
+        )
+        console.log('0')
+        if (course && !assignment) {
+            content = (
+                <Assignments token={token} course={course} setAssignment={setAssignment}></Assignments>
+            )
+            console.log('1')
+        } else if (course && assignment) {
+            content = (
+                <div>asd</div>
+            )
+            console.log('2')
+        }
 
         return (
             <Layout>
@@ -159,12 +179,12 @@ const App = () => {
                     </Sider>
                     <Layout style={{ padding: '0 24px 24px' }}>
                         <Breadcrumb style={{ margin: '16px 0' }}>
-                            <Breadcrumb.Item>Your Courses</Breadcrumb.Item>
+                            <Breadcrumb.Item onClick={() => {setAssignment(''); setCourse('')}}>Your Courses</Breadcrumb.Item>
                             {brcrumb.current.course}
                             {brcrumb.current.assignment}
                         </Breadcrumb>
                         <Content className="site-layout-background">
-                            <Courses token={token}></Courses>
+                            {content}
                         </Content>
                     </Layout>
                     <Sider width={200} className="site-layout-background">
