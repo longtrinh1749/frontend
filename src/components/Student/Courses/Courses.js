@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from "react";
-import { Card, Col, Row } from 'antd'
+import React, { useState, useEffect } from "react";
+import { Card, Col, Row, Divider } from 'antd'
 import axios from "axios";
+import JoinCourse from "../JoinCourse/JoinCourse";
 
 const Courses = ({ token, setCourse }) => {
 
@@ -10,11 +11,10 @@ const Courses = ({ token, setCourse }) => {
 
     useEffect(() => {
         let params = {
-            userId: 1
+            user_id: 12
         }
 
-        axios.get(BASE_URL,{params}).then((res) => {
-            console.log(res.courses)
+        axios.get(BASE_URL, { params }).then((res) => {
             setCourses(res.data.courses)
         })
     }, [])
@@ -35,6 +35,8 @@ const Courses = ({ token, setCourse }) => {
     }
     return (
         <div className="site-card-wrapper">
+            <JoinCourse></JoinCourse>
+            <Divider />
             <Row gutter={16}>
                 {coursesHTML}
             </Row>
