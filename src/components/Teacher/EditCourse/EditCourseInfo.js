@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form, Input, Radio, Tabs } from 'antd';
+import ManageStudentList from './EditCourseStudent';
 
 const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel }) => {
     const [form] = Form.useForm();
     return (
         <Modal
             visible={visible}
-            title="Create a new collection"
-            okText="Create"
+            title="Manage Course"
+            okText="Submit"
             cancelText="Cancel"
             onCancel={onCancel}
             onOk={() => {
@@ -23,7 +24,7 @@ const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel }) => {
             }}
         >
             <Tabs defaultActiveKey='1'>
-                <Tabs.TabPane tab='Tab 1' key='1'>
+                <Tabs.TabPane tab='Course Info' key='1'>
                     <Form
                         form={form}
                         layout="vertical"
@@ -56,7 +57,9 @@ const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel }) => {
                         <Form.Item name="school" label="SChool">
                             <Input type="textarea" />
                         </Form.Item>
-                        <Form.Item name="year" label="Year (initial year of school year)" rules={[{ type: 'number' }]}>
+                        <Form.Item name="year" label="Year (initial year of school year)" 
+                            // rules={[{ type: 'number' }]}
+                        >
                             <Input type="textarea" />
                         </Form.Item>
                         {/* <Form.Item name="modifier" className="collection-create-form_last-form-item">
@@ -67,8 +70,8 @@ const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel }) => {
                 </Form.Item> */}
                     </Form>
                 </Tabs.TabPane>
-                <Tabs.TabPane tab='Tab 2' key='2'>
-                    Content of Tab Pane 2
+                <Tabs.TabPane tab='Students List' key='2'>
+                    <ManageStudentList courseInfo={courseInfo}></ManageStudentList>
                 </Tabs.TabPane>
             </Tabs>
         </Modal>
