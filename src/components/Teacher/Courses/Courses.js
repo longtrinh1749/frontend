@@ -1,53 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Card, Col, Row } from 'antd'
+import { Card, Col, Divider, Row, Button, Modal } from 'antd'
 import axios from "axios";
 import CreateCourse from "../CreateCourse/CreateCourse";
 
-const Courses = ({ token, setCourse }) => {
+const Courses = ({ token, setCourse, refresh, setRefresh }) => {
 
-    const BASE_URL = 'http://192.168.1.13:5000/courses'
-
-    // Modal create course
-
-    modalContent = (
-        <CreateCourse></CreateCourse>
-    )
-
-    const [visible, setVisible] = useState(false)
-    const [confirmLoading, setConfirmLoading] = useState(false)
-
-    const showModal = () {
-        setVisible(true)
-    }
-
-    const handleOk = () => {
-        setModalText('The modal will be closed after two seconds');
-        setConfirmLoading(true);
-        setTimeout(() => {
-            setVisible(false);
-            setConfirmLoading(false);
-        }, 2000);
-    }
-
-    const handleCancel = () => {
-        console.log('Clicked cancel button');
-        setVisible(false);
-    };
+    let BASE_URL = 'http://192.168.1.13:5000/courses'
 
     // Courses List
 
     const [courses, setCourses] = useState(1)
+    const [count, setCount] = useState(0)
 
     useEffect(() => {
+        console.log('call courses')
         let params = {
             user_id: sessionStorage.getItem('id')
         }
 
         axios.get(BASE_URL, { params }).then((res) => {
-            console.log(res.courses)
+            console.log(res.data.courses)
             setCourses(res.data.courses)
         })
-    }, [])
+    }, [refresh])
 
     let coursesHTML = (
         <div></div>
@@ -67,6 +42,8 @@ const Courses = ({ token, setCourse }) => {
 
     return (
         <div className="site-card-wrapper">
+            <CreateCourse setCount={setCount} count={count}></CreateCourse>
+            <Divider />
             <Row gutter={16}>
                 {coursesHTML}
             </Row>

@@ -1,7 +1,8 @@
 import React from "react";
-import { Card, Col, Row } from 'antd'
+import { Card, Col, Row, Divider } from 'antd'
+import CourseInfo from "../../Common/CourseInfo/CourseInfo";
 
-const Assignments = ({ token, course, setAssignment }) => {
+const Assignments = ({ token, course, setAssignment, refresh, setRefresh }) => {
 
     const BASE_URL = 'http://192.168.1.13:5000/assignments?'
 
@@ -42,6 +43,9 @@ const Assignments = ({ token, course, setAssignment }) => {
     })
     return (
         <div className="site-card-wrapper">
+            <CourseInfo course={course}  refresh={refresh} setRefresh={setRefresh}></CourseInfo>
+            <Divider />
+            <b>Assignments</b>
             <Row gutter={16}>
                 {assignmentsHTML}
             </Row>

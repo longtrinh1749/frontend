@@ -85,7 +85,7 @@ const StudentApp = ({setToken, token}) => {
     )
     if (course && !assignment) {
         content = (
-            <Assignments token={token} course={course} setAssignment={setAssignment}></Assignments>
+            <Assignments token={token} course={course} setAssignment={setAssignment} setBrCrumb={() => { setAssignment(''); setCourse('') }}></Assignments>
         )
     } else if (course && assignment) {
         content = (
