@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {Col, Card} from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormText, ProForm, ProFormDigit } from '@ant-design/pro-form';
 import axios from "axios";
@@ -39,7 +40,13 @@ const JoinCourse = () => {
         <>
             <ModalForm
                 title="Join Course"
-                trigger={<Button type="primary">Join Course</Button>}
+                trigger={
+                    <Col span={8}>
+                        <Card title="Join Course" bordered={true} style={{height:'100%', textAlign:'center'}}>
+                            <PlusOutlined style={{textAlign:'center', fontSize:'200%'}} />
+                        </Card>
+                    </Col>
+                }
                 submitter={{
                     searchConfig: {
                         submitText: 'Submit',
@@ -53,7 +60,7 @@ const JoinCourse = () => {
                     return true;
                 }}
             >
-                <ProFormDigit label="Course Code" name="code" width="md" min={1} max={10000000} placeholder="Code..."/>
+                <ProFormDigit label="Course Code" name="code" width="md" min={1} max={10000000} placeholder="Code..." />
             </ModalForm>
         </>
     );

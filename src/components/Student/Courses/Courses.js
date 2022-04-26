@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, Col, Row, Divider } from 'antd'
 import axios from "axios";
 import JoinCourse from "../JoinCourse/JoinCourse";
+import './Courses.css'
 
 const Courses = ({ token, setCourse }) => {
 
@@ -35,10 +36,9 @@ const Courses = ({ token, setCourse }) => {
     }
     return (
         <div className="site-card-wrapper">
-            <JoinCourse></JoinCourse>
-            <Divider />
             <Row gutter={16}>
                 {coursesHTML}
+                <JoinCourse></JoinCourse>
             </Row>
         </div>
     )
