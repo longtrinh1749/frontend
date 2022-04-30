@@ -1,9 +1,27 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input, Radio, Tabs } from 'antd';
+import { Button, Modal, Form, Input, Radio, Tabs, Switch } from 'antd';
 import ManageStudentList from './EditCourseStudent';
+import axios from 'axios';
 
 const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel }) => {
+    let BASE_URL = 'http://127.0.0.1:5000/courses'
+
     const [form] = Form.useForm();
+
+    const  callUpdateCourse = (values) => {
+        return new Promise((resolve) => {
+            console.log('Values:', values)
+            axios.put(BASE_URL, {
+                id: courseInfo.id,
+                class: values.class,
+                school: values.school,
+                school_year: values.school_year,
+                active: values.active,
+            })
+            resolve(true)
+        });
+    }
+
     return (
         <Modal
             visible={visible}
@@ -14,9 +32,10 @@ const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel }) => {
             onOk={() => {
                 form
                     .validateFields()
-                    .then((values) => {
+                    .then(async (values) => {
                         form.resetFields();
                         onEdit(values);
+                        await callUpdateCourse(values)
                     })
                     .catch((info) => {
                         console.log('Validate Failed:', info);
@@ -34,6 +53,7 @@ const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel }) => {
                             school: courseInfo.school,
                             class: courseInfo.class,
                             year: courseInfo.year,
+                            active: courseInfo.active,
                         }}
                     >
                         {/* <Form.Item
@@ -49,18 +69,21 @@ const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel }) => {
                     <Input />
                 </Form.Item> */}
                         <Form.Item name="name" label="Name" rules={[{ required: true }]}>
-                            <Input type="textarea" />
+                            <Input type="textarea" readonly="readonly"/>
                         </Form.Item>
                         <Form.Item name="class" label="Class">
                             <Input type="textarea" />
                         </Form.Item>
-                        <Form.Item name="school" label="SChool">
+                        <Form.Item name="school" label="School">
                             <Input type="textarea" />
                         </Form.Item>
-                        <Form.Item name="year" label="Year (initial year of school year)" 
-                            // rules={[{ type: 'number' }]}
+                        <Form.Item name="year" label="Year (initial year of school year)"
+                        // rules={[{ type: 'number' }]}
                         >
                             <Input type="textarea" />
+                        </Form.Item>
+                        <Form.Item label="Active" name="active" valuePropName="checked">
+                            <Switch />
                         </Form.Item>
                         {/* <Form.Item name="modifier" className="collection-create-form_last-form-item">
                     <Radio.Group>
