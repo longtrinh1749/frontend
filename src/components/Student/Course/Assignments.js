@@ -4,7 +4,7 @@ import LeaveCourse from '../LeaveCourse/LeaveCourse'
 import CourseInfo from '../../Common/CourseInfo/CourseInfo'
 import axios from "axios";
 
-const Assignments = ({ token, course, setAssignment, setBrCrumb }) => {
+const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRefresh }) => {
 
     const BASE_URL = 'http://192.168.1.13:5000/assignments'
 
@@ -18,7 +18,7 @@ const Assignments = ({ token, course, setAssignment, setBrCrumb }) => {
         axios.get(BASE_URL, {params}).then((res) => {
             setAssignments(res.data.assignments)
         })
-    }, [])
+    }, [refresh])
 
     let assignmentsHTML = (
         <div></div>

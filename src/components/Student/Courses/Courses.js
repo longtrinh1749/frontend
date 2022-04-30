@@ -4,7 +4,7 @@ import axios from "axios";
 import JoinCourse from "../JoinCourse/JoinCourse";
 import './Courses.css'
 
-const Courses = ({ token, setCourse }) => {
+const Courses = ({ token, setCourse, refresh, setRefresh  }) => {
 
     const BASE_URL = 'http://192.168.1.13:5000/courses'
 
@@ -18,7 +18,7 @@ const Courses = ({ token, setCourse }) => {
         axios.get(BASE_URL, { params }).then((res) => {
             setCourses(res.data.courses)
         })
-    }, [])
+    }, [refresh])
     let coursesHTML = (
         <div></div>
     )

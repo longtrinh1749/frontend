@@ -1,12 +1,15 @@
 import React, { useRef, useState } from "react";
 import { Layout, Menu, Breadcrumb, Dropdown, Card, Avatar, Button, Input } from 'antd';
-import { UserOutlined, DownOutlined, LaptopOutlined, NotificationOutlined, BellOutlined, SendOutlined } from '@ant-design/icons';
+import { UserOutlined, DownOutlined, RedoOutlined, NotificationOutlined, BellOutlined, SendOutlined } from '@ant-design/icons';
 import '../App/App.css'
 import Courses from '../../components/Student/Courses/Courses'
 import Assignments from "../../components/Student/Course/Assignments";
 import Assignment from '../../components/Student/Course/Assignment'
 
-const StudentApp = ({setToken, token}) => {
+const StudentApp = ({ setToken, token }) => {
+
+    // Refresh
+    const [refresh, setRefresh] = useState(false)
 
     // Course
     const [course, setCourse] = useState('')
@@ -81,15 +84,15 @@ const StudentApp = ({setToken, token}) => {
     )
     // Content
     let content = (
-        <Courses token={token} setCourse={setCourse}></Courses>
+        <Courses token={token} setCourse={setCourse} refresh={refresh} setRefresh={setRefresh}></Courses>
     )
     if (course && !assignment) {
         content = (
-            <Assignments token={token} course={course} setAssignment={setAssignment} setBrCrumb={() => { setAssignment(''); setCourse('') }}></Assignments>
+            <Assignments token={token} course={course} setAssignment={setAssignment} setBrCrumb={() => { setAssignment(''); setCourse('') }} refresh={refresh} setRefresh={setRefresh}></Assignments>
         )
     } else if (course && assignment) {
         content = (
-            <Assignment token={token} assignment={assignment}></Assignment>
+            <Assignment token={token} assignment={assignment} refresh={refresh} setRefresh={setRefresh}></Assignment>
         )
     }
 
@@ -221,6 +224,9 @@ const StudentApp = ({setToken, token}) => {
                         {brcrumb.current.course}
                         {brcrumb.current.assignment}
                     </Breadcrumb>
+                    <div>
+                        <RedoOutlined style={{ float: 'right', margin: '10px' }} onClick={() => setRefresh(!refresh)} />
+                    </div>
                     <Content className="site-layout-background">
                         {content}
                     </Content>
