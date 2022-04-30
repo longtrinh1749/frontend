@@ -122,7 +122,7 @@ const TeacherApp = ({setToken, token}) => {
                 </Dropdown>
             </Header>
             <Layout>
-                <Sider width={250} className="site-layout-background" style={{
+                <Sider width={'15%'} className="site-layout-background" style={{
                     overflow: 'auto',
                     height: '100vh',
                 }}>
@@ -198,7 +198,7 @@ const TeacherApp = ({setToken, token}) => {
                         {content}
                     </Content>
                 </Layout>
-                <Sider width={200} className="site-layout-background">
+                <Sider width={'20%'} className="site-layout-background">
                     <Input.Group compact>
                         <Input.TextArea id="chat-input" placeholder="Chat" autoSize={{ minRows: 2, maxRows: 4 }} onPressEnter={() => console.log("asd")} />
                     </Input.Group>

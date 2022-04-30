@@ -89,7 +89,7 @@ const StudentApp = ({setToken, token}) => {
         )
     } else if (course && assignment) {
         content = (
-            <Assignment></Assignment>
+            <Assignment token={token} assignment={assignment}></Assignment>
         )
     }
 
@@ -104,7 +104,7 @@ const StudentApp = ({setToken, token}) => {
                 </Dropdown>
             </Header>
             <Layout>
-                <Sider width={250} className="site-layout-background" style={{
+                <Sider width={'15%'} className="site-layout-background" style={{
                     overflow: 'auto',
                     height: '100vh',
                 }}>
@@ -165,6 +165,55 @@ const StudentApp = ({setToken, token}) => {
                             description="Pham Gia Tuan replied your chat in class 2A3"
                         />
                     </Card>
+                    <Card className="noti-card" loading={false}>
+                        <Meta
+                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                            title="Submitted"
+                            description="Bai 5 SGK Tieng Viet has been graded"
+                        />
+                    </Card>
+                    <Card className="noti-card" loading={false}>
+                        <Meta
+                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                            title="Due"
+                            description="Bai tap toan lop 2 is about to pass due in 1 day"
+                        />
+                    </Card>
+                    <Card className="noti-card" loading={false}>
+                        <Meta
+                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                            title="Past due"
+                            description="Bai tap TV lop 3 has passed due"
+                        />
+                    </Card>
+                    <Card className="noti-card" loading={false}>
+                        <Meta
+                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                            title="Question"
+                            description="Bui Gia Khanh has a question in Lop 2A3"
+                        />
+                    </Card>
+                    <Card className="noti-card" loading={false}>
+                        <Meta
+                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                            title="Question"
+                            description="Kim Thuy Ngan has a question in assignment Bai tap Toan giua ki"
+                        />
+                    </Card>
+                    <Card className="noti-card" loading={false}>
+                        <Meta
+                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                            title="Question"
+                            description="Ms Thuy has reply to your question in Bai tap Toan giua ki"
+                        />
+                    </Card>
+                    <Card className="noti-card" loading={false}>
+                        <Meta
+                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                            title="Question"
+                            description="Pham Gia Tuan replied your chat in class 2A3"
+                        />
+                    </Card>
                 </Sider>
                 <Layout style={{ padding: '0 24px 24px' }}>
                     <Breadcrumb style={{ margin: '16px 0' }}>
@@ -176,7 +225,7 @@ const StudentApp = ({setToken, token}) => {
                         {content}
                     </Content>
                 </Layout>
-                <Sider width={200} className="site-layout-background">
+                <Sider width={'20%'} className="site-layout-background">
                     <Input.Group compact>
                         <Input.TextArea id="chat-input" placeholder="Chat" autoSize={{ minRows: 2, maxRows: 4 }} onPressEnter={() => console.log("asd")} />
                     </Input.Group>

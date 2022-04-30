@@ -18,7 +18,7 @@
 }
 
 .site-layout-background .noti-card {
-  width: 15rem;
+  width: 100%;
   margin: auto;
 }
 
@@ -55,5 +55,9 @@
 
 .ant-layout-sider::-webkit-scrollbar-thumb {
     background: black; 
-    border-radius: 10px;
+    border-radius: 1px;
   }
+
+.ant-layout-sider {
+    min-width: 20%;
+}
