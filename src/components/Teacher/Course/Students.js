@@ -1,43 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Col, Row } from 'antd'
+import axios from "axios";
 
-const Students = ({setStudent, course, assignment}) => {
+const Students = ({ setStudent, course, assignment }) => {
 
-    const BASE_URL = 'http://192.168.1.13:5000/students?'
+    const BASE_URL = 'http://192.168.1.13:5000/users/course/students'
 
-    const callGetStudents = (token) => {
-        let data = {
-            "user_id": 1,
-            "course_id": 3,
-            "assignment_id": 4
+    const [students, setStudents] = useState(1)
+
+    useEffect(() => {
+        console.log('Call get all students within course')
+        let params = {
+            course_id: course.id
         }
-        // return fetch(BASE_URL + new URLSearchParams({
-        //     user_id: 1,
-        // })).then(response => response.json())
-        // .then(data => console.log(data))
-        return {
-            "students": [
-                {
-                    "id": 3,
-                    "name": "Tran Quang Khai",
-                },
-                {
-                    "id": 4,
-                    "name": "Trieu Man",
-                }
-            ]
-        }
+
+        axios.get(BASE_URL, { params }).then((res) => {
+            console.log(res.data.students)
+            setStudents(res.data.students)
+        })
+    }, [])
+    let studentsHTML = (
+        <div></div>
+    )
+    if (students.length) {
+        studentsHTML = students.map((student, index) => {
+            return (
+                <Col span={8} key={index}>
+                    <Card title={student.name} bordered={true} studentid={student.id} onClick={() => setStudent({ 'name': student.name, 'id': student.id })}>
+                        <p style={{ fontSize: 'smaller' }}>{student.name}</p>
+                    </Card>
+                </Col>
+            )
+        })
     }
-    let students = callGetStudents().students
-    const studentsHTML = students.map((student, index) => {
-        return (
-            <Col span={8} key={index}>
-                <Card title={student.name} bordered={true} studentid={student.id} onClick={() => setStudent({'name': student.name, 'id': student.id})}>
-                    <p style={{fontSize: 'smaller'}}>{student.name}</p>
-                </Card>
-            </Col>
-        )
-    })
+
     return (
         <div className="site-card-wrapper">
             <Row gutter={16}>
