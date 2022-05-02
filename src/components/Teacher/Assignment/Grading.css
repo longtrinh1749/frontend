@@ -1,0 +1,37 @@
+.image-work {
+    width: 100%;
+    /* margin-bottom: 8px; */
+}
+
+.layer {
+    position: absolute;
+}
+
+.symbol-container {
+    position: absolute;
+}
+
+.ant-radio-button-wrapper {
+    display: block;
+    margin: 5%;
+    text-align: center;
+}
+
+.input-comment-container {
+    position: absolute;
+    width: max-content;
+}
+
+.comment-container {
+    position: absolute;
+}
+
+.final-grade {
+    border: 1px solid;
+    margin: inherit;
+}
+
+.score {
+    height: 200px;
+    text-align: center;
+}

@@ -3,19 +3,19 @@ import { Button, Modal, Form, Input, Radio, Tabs, Switch } from 'antd';
 import ManageStudentList from './EditCourseStudent';
 import axios from 'axios';
 
-const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel }) => {
+const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel, refresh }) => {
     let BASE_URL = 'http://127.0.0.1:5000/courses'
 
     const [form] = Form.useForm();
 
-    const  callUpdateCourse = (values) => {
+    const callUpdateCourse = (values) => {
         return new Promise((resolve) => {
             console.log('Values:', values)
             axios.put(BASE_URL, {
                 id: courseInfo.id,
                 class: values.class,
                 school: values.school,
-                school_year: values.school_year,
+                year: values.year,
                 active: values.active,
             })
             resolve(true)
@@ -94,7 +94,7 @@ const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel }) => {
                     </Form>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab='Students List' key='2'>
-                    <ManageStudentList courseInfo={courseInfo}></ManageStudentList>
+                    <ManageStudentList courseInfo={courseInfo} refresh={refresh} visible={visible}></ManageStudentList>
                 </Tabs.TabPane>
             </Tabs>
         </Modal>

@@ -77,8 +77,8 @@ const Login = ({ setToken }) => {
                 <form onSubmit={onFinish}>
                     <input type="text" id="login" className="fadeIn first" name="login" placeholder="Username" />
                     <input type="password" id="password" className="fadeIn second" name="login" placeholder="Password" /><br />
-                    <input type="radio" id="roleStudent" name="role" value="ROLE.STUDENT" defaultChecked="checked"/><label htmlFor="roleStudent">Login as Student</label><br />
-                    <input type="radio" id="roleTeacher" name="role" value="ROLE.TEACHER" /><label htmlFor="roleTeacher">Login as Teacher</label><br />
+                    <input type="radio" id="roleStudent" name="role" value="ROLE.STUDENT" /><label htmlFor="roleStudent">Login as Student</label><br />
+                    <input type="radio" id="roleTeacher" name="role" value="ROLE.TEACHER" defaultChecked="checked"/><label htmlFor="roleTeacher">Login as Teacher</label><br />
                     <input type="submit" className="fadeIn third" value="Log In" />
                 </form>
                 <div id="formFooter">

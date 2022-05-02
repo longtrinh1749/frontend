@@ -5,8 +5,9 @@ import '../App/App.css'
 import Courses from '../../components/Teacher/Courses/Courses'
 import Assignments from "../../components/Teacher/Course/Assignments";
 import Students from "../../components/Teacher/Course/Students"
+import Grading from "../../components/Teacher/Assignment/Grading";
 
-const TeacherApp = ({setToken, token}) => {
+const TeacherApp = ({ setToken, token }) => {
 
     // Refresh
     const [refresh, setRefresh] = useState(false)
@@ -24,7 +25,7 @@ const TeacherApp = ({setToken, token}) => {
     let brcrumb = useRef({ course: '', assignment: '', student: '' })
 
     const setBrCrumbCourse = (courseName) => {
-        brcrumb.current.course = <Breadcrumb.Item onClick={() => {setAssignment(''); setStudent('')}}>{courseName}</Breadcrumb.Item>
+        brcrumb.current.course = <Breadcrumb.Item onClick={() => { setAssignment(''); setStudent('') }}>{courseName}</Breadcrumb.Item>
         brcrumb.current.assignment = ''
         brcrumb.current.student = ''
     }
@@ -103,11 +104,13 @@ const TeacherApp = ({setToken, token}) => {
         )
     } else if (course && assignment && !student) {
         content = (
-            <Students token={token} course={course} assignment={assignment} setStudent={setStudent}></Students>
+            <Students token={token} course={course} assignment={assignment} setStudent={setStudent} refresh={refresh}></Students>
         )
     } else if (course && assignment && student) {
         content = (
-            <h1>Grading</h1>
+            <>
+                <Grading token={token} course={course} assignment={assignment} student={student} refresh={refresh}></Grading>
+            </>
         )
     }
 
@@ -191,9 +194,9 @@ const TeacherApp = ({setToken, token}) => {
                         {brcrumb.current.assignment}
                         {brcrumb.current.student}
                     </Breadcrumb>
-                        <div>
-                            <RedoOutlined style={{float:'right', margin: '10px'}} onClick={() => setRefresh(!refresh)}/>
-                        </div>
+                    <div>
+                        <RedoOutlined style={{ float: 'right', margin: '10px' }} onClick={() => setRefresh(!refresh)} />
+                    </div>
                     <Content className="site-layout-background">
                         {content}
                     </Content>

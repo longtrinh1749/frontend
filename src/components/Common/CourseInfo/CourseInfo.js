@@ -23,7 +23,7 @@ const CourseInfo = ({ course, refresh, setRefresh }) => {
     }
     return (
         <>
-            <EditCourseForm courseInfo={courseInfo} visible={visible} onEdit={onEdit} onCancel={() => setVisible(false)}></EditCourseForm>
+            <EditCourseForm courseInfo={courseInfo} visible={visible} onEdit={onEdit} onCancel={() => setVisible(false)} refresh={refresh}></EditCourseForm>
             <Descriptions
                 bordered
                 title="Class Information"
@@ -32,10 +32,10 @@ const CourseInfo = ({ course, refresh, setRefresh }) => {
                     setVisible(true);
                 }}>Edit</Button>}
             >
-                <Descriptions.Item label="Name">{courseInfo.name}</Descriptions.Item>
-                <Descriptions.Item label="School">{courseInfo.school}</Descriptions.Item>
-                <Descriptions.Item label="Year">{courseInfo.school_year}</Descriptions.Item>
-                <Descriptions.Item label="Class">{courseInfo.class}</Descriptions.Item>
+                <Descriptions.Item label="Name">{courseInfo.name ? courseInfo.name : 'None'}</Descriptions.Item>
+                <Descriptions.Item label="School">{courseInfo.school ? courseInfo.school : 'None'}</Descriptions.Item>
+                <Descriptions.Item label="Year">{courseInfo.school_year ? courseInfo.school_year : 'None'}</Descriptions.Item>
+                <Descriptions.Item label="Class">{courseInfo.class ? courseInfo.class : 'None'}</Descriptions.Item>
                 <Descriptions.Item label="Course Description">
                     This course is meant for students who is extremely good
                 </Descriptions.Item>
