@@ -94,26 +94,32 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
                     isDrawingMode: true,
                     freeDrawingBrush: new fabric.PencilBrush({ width: 2 })
                 })
-                let _img = document.getElementById('work' + worksData[i].id)
-                let _imgInstance = new fabric.Image(_img, {
-                    scaleX: _img.width / _img.naturalWidth,
-                    scaleY: _img.height / _img.naturalHeight,
-                })
-                canvases.current[i].add(_imgInstance)
-                
-                _img = document.createElement('img')
-                _img.src = objectConst.RIGHT_URL
-                let imageInstance = new fabric.Image(_img)
-                canvases.current[i].add(imageInstance)
+                // For grading to image
+
+                // let _img = document.getElementById('work' + worksData[i].id)
+                // let _imgInstance = new fabric.Image(_img, {
+                //     scaleX: _img.width / _img.naturalWidth,
+                //     scaleY: _img.height / _img.naturalHeight,
+                // })
+                // canvases.current[i].add(_imgInstance)
+
+                // Add symbol right
+
+                // _img = document.createElement('img')
+                // _img.src = objectConst.RIGHT_URL
+                // let imageInstance = new fabric.Image(_img)
+                // canvases.current[i].add(imageInstance)
 
                 console.log("Canvas JSON", canvases.current[i].toJSON())
-                // if (worksData[i].canvas_json) {
-                //     canvases.current[i].loadFromJSON(worksData[i].canvas_json, function () {
-                //         canvases.current[i].renderAll();
-                //     }, function (o, object) {
-                //         console.log(o, object)
-                //     })
-                // }
+
+                // load JSON from backend
+                if (worksData[i].canvas_json) {
+                    canvases.current[i].loadFromJSON(worksData[i].canvas_json, function () {
+                        canvases.current[i].renderAll();
+                    }, function (o, object) {
+                        console.log(o, object)
+                    })
+                }
                 let _objects = []
                 for (let j = 0; j < worksData[i].objects.length; j++) {
                     let o = worksData[i].objects[j]
@@ -303,9 +309,9 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
     }
     const onGraded = (e) => {
         // Uncomment tat ca ok
-        // saveGrading()
+        saveGrading()
         let formData = new FormData()
-        
+
         notification.open({
             message: 'Cham diem',
             description:
@@ -340,15 +346,37 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
             formData.append('score', score.current)
             formData.append('comment', finalComment.current)
             formData.append('file', img)
-    
+
             axios.put(BASE_GRADING_URL, formData)
         })
     }
     //
     return (
         <>
+            <div id="tool-container">
+                <Radio.Group
+                    options={options}
+                    onChange={(e) => {
+                        tool.current = e.target.value
+                        if (tool.current == toolConst.PEN) {
+                            for (let i = 0; i < canvases.current.length; i++) {
+                                canvases.current[i].isDrawingMode = true
+                            }
+                        } else {
+                            for (let i = 0; i < canvases.current.length; i++) {
+                                canvases.current[i].isDrawingMode = false
+                            }
+                        }
+                        console.log('Set tool to', tool)
+                    }}
+                    optionType="button"
+                    buttonStyle="outline"
+                />
+                {/* <Button onClick={saveGrading}>Save</Button> */}
+                {/* <Button onClick={rescoring}>Re-scoring</Button> */}
+            </div>
             <Row>
-                <Col span={3} style={{ backgroundColor: 'lightblue', textAlign: 'center' }}>
+                {/* <Col span={3} style={{ backgroundColor: 'lightblue', textAlign: 'center' }}>
                     <Radio.Group
                         options={options}
                         onChange={(e) => {
@@ -367,10 +395,11 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
                         optionType="button"
                         buttonStyle="solid"
                     />
-                    <Button onClick={saveGrading}>Save</Button>
-                    {/* <Button onClick={rescoring}>Re-scoring</Button> */}
-                </Col>
-                <Col span={21} style={{ backgroundColor: 'lightcyan' }}>
+                    <Button onClick={saveGrading}>Save</Button> */}
+                {/* <Button onClick={rescoring}>Re-scoring</Button> */}
+                {/* </Col> */}
+                <Col span={24} style={{ backgroundColor: 'lightcyan' }}>
+
                     <div className="img-layer layer" id="image-layer">
                         {worksHtml}
                         <Row style={{ backgroundColor: 'white' }}>
@@ -407,7 +436,7 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
                                 height: '5rem',
                                 color: 'white',
                             }} onClick={onGraded}>
-                                <Typography.Title style={{ color: 'white', textAlign: 'center' }}><i>Save</i></Typography.Title>
+                                <Typography.Title style={{ color: 'white', textAlign: 'center', margin: '1.25%' }}><i>Save</i></Typography.Title>
                             </Button>
                         </div>
                     </div>

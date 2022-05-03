@@ -4,9 +4,9 @@ import axios from "axios";
 import JoinCourse from "../JoinCourse/JoinCourse";
 import './Courses.css'
 
-const Courses = ({ token, setCourse, refresh, setRefresh  }) => {
+const Courses = ({ token, setCourse, refresh, setRefresh }) => {
 
-    const BASE_URL = 'http://192.168.1.13:5000/courses'
+    const BASE_URL = 'http://127.0.0.1:5000/courses'
 
     const [courses, setCourses] = useState(1)
 

@@ -8,7 +8,7 @@ import moment from 'moment';
 
 const Assignments = ({ token, course, setAssignment, refresh, setRefresh }) => {
 
-    const BASE_URL = 'http://192.168.1.13:5000/assignments'
+    const BASE_URL = 'http://127.0.0.1:5000/assignments'
 
     const [assignments, setAssignments] = useState(1)
     useEffect(() => {
@@ -33,8 +33,8 @@ const Assignments = ({ token, course, setAssignment, refresh, setRefresh }) => {
                     <Card hoverable={true} title={assignment.name} bordered={true} assignmentid={assignment.id} onClick={() => setAssignment({ 'name': assignment.name, 'id': assignment.id })}>
                         <p style={{ fontSize: 'smaller' }}>{moment(assignment.due, 'YYYY-MM-DD HH:mm').format('HH:mm DD-MM-YYYY')}</p>
                         <p style={{ fontSize: 'smaller' }}>{course.name}</p>
-                    <p style={{fontSize: 'smaller'}}>Đã nộp: {assignment.submit}/{course.total}</p>
-                    <p style={{fontSize: 'smaller'}}>Đã chấm: {assignment.graded}/{course.total}</p>
+                        <p style={{ fontSize: 'smaller' }}>Đã nộp: {assignment.submit}/{course.total}</p>
+                        <p style={{ fontSize: 'smaller' }}>Đã chấm: {assignment.graded}/{course.total}</p>
                     </Card>
                 </Col>
             )
@@ -55,8 +55,8 @@ const Assignments = ({ token, course, setAssignment, refresh, setRefresh }) => {
             <Row gutter={16}>
                 {assignmentsHTML}
                 <Col span={8}>
-                    <Card hoverable={true} title={'Create Assignment'} bordered={true} onClick={() => setVisible(true)} style={{height:'100%', textAlign:'center'}}>
-                            <PlusOutlined style={{textAlign:'center', fontSize:'200%'}} />
+                    <Card hoverable={true} title={'Create Assignment'} bordered={true} onClick={() => setVisible(true)} style={{ height: '100%', textAlign: 'center' }}>
+                        <PlusOutlined style={{ textAlign: 'center', fontSize: '200%' }} />
                     </Card>
                 </Col>
                 <CreateAssignment course={course} visible={visible} onEdit={onEdit} onCancel={() => setVisible(false)}></CreateAssignment>

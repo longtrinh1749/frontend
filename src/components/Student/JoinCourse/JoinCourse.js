@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Col, Card} from 'antd'
+import { Col, Card } from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormText, ProForm, ProFormDigit } from '@ant-design/pro-form';
 import axios from "axios";
@@ -21,7 +21,7 @@ import {
 } from 'antd';
 const JoinCourse = () => {
 
-    let BASE_URL = 'http://192.168.1.13:5000/course'
+    let BASE_URL = 'http://127.0.0.1:5000/course'
 
     const callJoinCourse = (values) => {
         return new Promise((resolve) => {
@@ -42,8 +42,8 @@ const JoinCourse = () => {
                 title="Join Course"
                 trigger={
                     <Col span={8}>
-                        <Card hoverable={true} title="Join Course" bordered={true} style={{height:'100%', textAlign:'center'}}>
-                            <PlusOutlined style={{textAlign:'center', fontSize:'200%', margin: '10.5% 0 0 0'}} />
+                        <Card hoverable={true} title="Join Course" bordered={true} style={{ height: '100%', textAlign: 'center' }}>
+                            <PlusOutlined style={{ textAlign: 'center', fontSize: '200%', margin: '10.5% 0 0 0' }} />
                         </Card>
                     </Col>
                 }

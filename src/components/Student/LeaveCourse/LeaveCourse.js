@@ -20,7 +20,7 @@ import {
 } from 'antd';
 const LeaveCourse = ({ course, leaveCourse }) => {
 
-    let BASE_URL = 'http://192.168.1.13:5000/course'
+    let BASE_URL = 'http://127.0.0.1:5000/course'
 
     const callLeaveCourse = () => {
         return new Promise((resolve) => {
@@ -55,7 +55,7 @@ const LeaveCourse = ({ course, leaveCourse }) => {
 
     return (
         <>
-            <Button type="primary" danger={true} size='large' style={{float:'right'}} onClick={showModal}>
+            <Button type="primary" danger={true} size='large' style={{ float: 'right' }} onClick={showModal}>
                 Leave Course
             </Button>
             <Modal title="!" visible={isModalVisible} onOk={async () => {

@@ -6,7 +6,7 @@ import axios from "axios";
 
 const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRefresh }) => {
 
-    const BASE_URL = 'http://192.168.1.13:5000/assignments'
+    const BASE_URL = 'http://127.0.0.1:5000/assignments'
 
     const [assignments, setAssignments] = useState(1)
 
@@ -15,15 +15,15 @@ const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRef
             course_id: course.id
         }
 
-        axios.get(BASE_URL, {params}).then((res) => {
+        axios.get(BASE_URL, { params }).then((res) => {
             setAssignments(res.data.assignments)
         })
     }, [refresh])
 
     let assignmentsHTML = (
         <div>
-        <Typography.Title level={4}>Enjoy your free time!</Typography.Title>
-        <Typography.Text italic={true}>Currently no assignments yet.</Typography.Text>
+            <Typography.Title level={4}>Enjoy your free time!</Typography.Title>
+            <Typography.Text italic={true}>Currently no assignments yet.</Typography.Text>
         </div>
     )
 
@@ -31,11 +31,11 @@ const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRef
         assignmentsHTML = assignments.map((assignment, index) => {
             return (
                 <Col span={8} key={index}>
-                <Card hoverable={true} title={assignment.name} bordered={true} assignmentid={assignment.id} onClick={() => setAssignment({'name': assignment.name, 'id': assignment.id})}>
-                    <p style={{fontSize: 'smaller'}}>{assignment.due}</p>
-                    <p style={{fontSize: 'smaller'}}>{course.name}</p>
-                </Card>
-            </Col>
+                    <Card hoverable={true} title={assignment.name} bordered={true} assignmentid={assignment.id} onClick={() => setAssignment({ 'name': assignment.name, 'id': assignment.id })}>
+                        <p style={{ fontSize: 'smaller' }}>{assignment.due}</p>
+                        <p style={{ fontSize: 'smaller' }}>{course.name}</p>
+                    </Card>
+                </Col>
             )
         })
     }

@@ -18,9 +18,9 @@ import {
     Space
 
 } from 'antd';
-const CreateCourse = ({setCount, count}) => {
+const CreateCourse = ({ setCount, count }) => {
 
-    let BASE_URL = 'http://192.168.1.13:5000/courses'
+    let BASE_URL = 'http://127.0.0.1:5000/courses'
 
     const callCreateCourse = (values) => {
         return new Promise((resolve) => {
@@ -67,7 +67,7 @@ const CreateCourse = ({setCount, count}) => {
 
                 <ProFormText width="md" name="class" label="Class" placeholder="Class" />
                 <ProFormText width="md" name="school" label="School" placeholder="School" />
-                <ProFormDigit label="School Year" name="year" width="md" min={1} max={10000} placeholder="Year"/>
+                <ProFormDigit label="School Year" name="year" width="md" min={1} max={10000} placeholder="Year" />
             </ModalForm>
         </>
     );

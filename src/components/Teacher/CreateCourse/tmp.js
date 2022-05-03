@@ -19,7 +19,7 @@ import {
 } from 'antd';
 const CreateCourse = () => {
 
-    let BASE_URL = 'http://192.168.1.13:5000/courses'
+    let BASE_URL = 'http://127.0.0.1:5000/courses'
 
     const waitTime = (time = 100) => {
         return new Promise((resolve) => {
@@ -57,7 +57,7 @@ const CreateCourse = () => {
 
                 <ProFormText width="md" name="class" label="Class" placeholder="Class" />
                 <ProFormText width="md" name="school" label="School" placeholder="School" />
-                <ProFormDigit label="School Year" name="year" width="md" min={1} max={10000} placeholder="Year"/>
+                <ProFormDigit label="School Year" name="year" width="md" min={1} max={10000} placeholder="Year" />
             </ModalForm>
         </>
     );
