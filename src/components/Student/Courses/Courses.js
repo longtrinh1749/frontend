@@ -36,14 +36,14 @@ const Courses = ({ token, setCourse, refresh, setRefresh }) => {
                             textAlign: 'center',
                         }}>
                             <p className="course-card-content" >Lớp: {course.class}</p>
-                            <p className="course-card-content" >Trường: {course.school}</p>
+                            <p className="course-card-content" >Giáo viên: {course.teacher.name}</p>
                         </Card.Grid>
                         <Card.Grid hoverable={false} style={{
                             width: '50%',
                             textAlign: 'center',
                         }}>
-                            <p className="course-card-content" >Giáo viên: {course.teacher.name}</p>
                             <p className="course-card-content" >Sĩ số: {course.total}</p>
+                            <p className="course-card-content" >Trường: {course.school}</p>
                         </Card.Grid>
 
                     </Card>
