@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Layout, Menu, Breadcrumb, Dropdown, Card, Avatar, Button, Input } from 'antd';
+import { Layout, Menu, Breadcrumb, Dropdown, Card, Avatar, Button, Input, Typography } from 'antd';
 import { UserOutlined, DownOutlined, RedoOutlined, NotificationOutlined, BellOutlined, SendOutlined } from '@ant-design/icons';
 import '../App/App.css'
 import Courses from '../../components/Student/Courses/Courses'
@@ -99,17 +99,21 @@ const StudentApp = ({ setToken, token }) => {
     return (
         <Layout>
             <Header className="header">
-                <div className="logo" />
+                <div className="logo">
+                    <img src="img/text-logo2.png" style={{
+                        height: '100%',
+                    }}></img>
+                </div>
                 <Dropdown overlay={profileMenu}>
-                    <a className="ant-dropdown-link" onClick={e => e.preventDefault()} >
+                    <a id='profile-options' className="ant-dropdown-link" onClick={e => e.preventDefault()} >
                         Student Profile! <UserOutlined />
                     </a>
                 </Dropdown>
             </Header>
             <Layout>
-                <Sider width={'15%'} className="site-layout-background" style={{
+                <Sider id='main-content' width={'15%'} className="site-layout-background" style={{
                     overflow: 'auto',
-                    height: '100vh',
+                    height: "calc(100vh - 64px)",
                 }}>
                     <Dropdown overlay={notiFilterMenu} trigger={['click']}>
                         <Button id="noti-filter-button" shape="round" type="primary">
@@ -220,12 +224,14 @@ const StudentApp = ({ setToken, token }) => {
                 </Sider>
                 <Layout style={{ padding: '0 24px 24px' }}>
                     <Breadcrumb style={{ margin: '16px 0' }}>
-                        <Breadcrumb.Item onClick={() => { setAssignment(''); setCourse('') }}>Your Courses</Breadcrumb.Item>
+                        <Breadcrumb.Item onClick={() => { setAssignment(''); setCourse('') }}>
+                            <Typography.Title level={4} italic={true}>Your Courses</Typography.Title>
+                        </Breadcrumb.Item>
                         {brcrumb.current.course}
                         {brcrumb.current.assignment}
                     </Breadcrumb>
                     <div>
-                        <RedoOutlined style={{ float: 'right', margin: '10px' }} onClick={() => setRefresh(!refresh)} />
+                        <RedoOutlined style={{ float: 'right', margin: '10px', fontSize: '125%' }} onClick={() => setRefresh(!refresh)} />
                     </div>
                     <Content className="site-layout-background">
                         {content}

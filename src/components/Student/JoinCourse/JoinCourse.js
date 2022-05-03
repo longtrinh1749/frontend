@@ -42,8 +42,8 @@ const JoinCourse = () => {
                 title="Join Course"
                 trigger={
                     <Col span={8}>
-                        <Card title="Join Course" bordered={true} style={{height:'100%', textAlign:'center'}}>
-                            <PlusOutlined style={{textAlign:'center', fontSize:'200%'}} />
+                        <Card hoverable={true} title="Join Course" bordered={true} style={{height:'100%', textAlign:'center'}}>
+                            <PlusOutlined style={{textAlign:'center', fontSize:'200%', margin: '10.5% 0 0 0'}} />
                         </Card>
                     </Col>
                 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Descriptions, Divider, Upload, Modal, Button, Image } from "antd";
+import { Descriptions, Divider, Upload, Modal, Button, Image, notification, Typography } from "antd";
 import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import './Assignment.css'
 import axios from "axios";
@@ -38,7 +38,7 @@ const Assignment = ({ assignment, refresh, setRefresh }) => {
         })
 
         params = {
-            submit_id: submitData.id,
+            submit_id: submitData ? (submitData.id) : 0,
         }
 
         axios.get(BASE_WORK_URL, { params }).then(res => {
@@ -58,19 +58,31 @@ const Assignment = ({ assignment, refresh, setRefresh }) => {
     if (handin) handinText = 'Undo hand-in'
 
     const onHandin = () => {
-        setHandin(!handin)
         if (handin) {
+            setHandin(!handin)
             console.log(submitData)
             axios.put(BASE_SUBMIT_URL, {
-                id: submitData.id,
+                id: submitData ? submitData.id : 0,
                 status: 'submitted',
             })
         } else {
             console.log(submitData)
-            axios.put(BASE_SUBMIT_URL, {
-                id: submitData.id,
-                status: 'handed in',
-            })
+            if (fileList.length == 0) {
+                notification.open({
+                    message: 'Cannot handin',
+                    description:
+                        'Cannot handin without any file submitted!',
+                    onClick: () => {
+                        console.log('Notification Clicked!');
+                    },
+                });
+            } else {
+                setHandin(!handin)
+                axios.put(BASE_SUBMIT_URL, {
+                    id: submitData ? submitData.id : 0,
+                    status: 'handed in',
+                })
+            }
         }
     }
 
@@ -178,17 +190,23 @@ const Assignment = ({ assignment, refresh, setRefresh }) => {
     );
     return (
         <>
-            <Descriptions title={asmData.name} layout="vertical">
-                <Descriptions.Item label="Due"><b>{asmData.due}</b></Descriptions.Item>
+            <Typography.Title level={4} italic={true} style={{
+                display: 'inline-block',
+            }}>{asmData.name}</Typography.Title>
+            <Descriptions title='' layout="vertical" size="middle">
+                <Descriptions.Item label="Due"><i>{asmData.due}</i></Descriptions.Item>
                 <Descriptions.Item label="Description">
-                    <b>Doing homework 5 in page 23</b>
+                    <i>Doing homework 5 in page 23</i>
                 </Descriptions.Item>
-                <Descriptions.Item label="Score"><b>{submitData.result ? submitData.result : 'None'}</b></Descriptions.Item>
+                <Descriptions.Item label="Score"><i>{submitData ? (submitData.result ? submitData.result : 'None') : 'None'}</i></Descriptions.Item>
                 <Descriptions.Item label="Instruction" span={3}><i>{asmData.instruction ? asmData.instruction : 'None'}</i></Descriptions.Item>
             </Descriptions>
             <Divider />
             <>
-                <Button type="primary" style={{ float: 'right' }} onClick={onHandin}>{handinText}</Button>
+                <Typography.Title level={4} italic={true} style={{
+                    display: 'inline-block',
+                }}>Your works:</Typography.Title>
+                <Button type="primary" style={{ float: 'right' }} size='large' onClick={onHandin}>{handinText}</Button>
                 <Upload
                     // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                     action={uploadFile}
@@ -213,7 +231,10 @@ const Assignment = ({ assignment, refresh, setRefresh }) => {
                 </Modal>
             </>
             <Divider />
-            <Descriptions title="Result" layout="vertical">
+            <Typography.Title level={4} italic={true} style={{
+                display: 'inline-block',
+            }}>Results:</Typography.Title>
+            {/* <Descriptions title="Result" layout="vertical">
                 <Descriptions.Item>
                     <Image
                         width={200}
@@ -224,7 +245,7 @@ const Assignment = ({ assignment, refresh, setRefresh }) => {
                         src="img/sample/data/AssignmentDetail/Trần Vũ Tuấn Kiệt/trang_1.jpg"
                     />
                 </Descriptions.Item>
-            </Descriptions>
+            </Descriptions> */}
         </>
     )
 }

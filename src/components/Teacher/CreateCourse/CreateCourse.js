@@ -43,7 +43,7 @@ const CreateCourse = ({setCount, count}) => {
         <>
             <ModalForm
                 title="Create Course"
-                trigger={<Button type="primary">Create Course</Button>}
+                trigger={<Button size="large" type="primary">Create Course</Button>}
                 submitter={{
                     searchConfig: {
                         submitText: 'Submit',

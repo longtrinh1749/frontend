@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Layout, Menu, Breadcrumb, Dropdown, Card, Avatar, Button, Input } from 'antd';
+import { Layout, Menu, Breadcrumb, Dropdown, Card, Avatar, Button, Input, Typography } from 'antd';
 import { UserOutlined, DownOutlined, LaptopOutlined, NotificationOutlined, BellOutlined, SendOutlined, RedoOutlined } from '@ant-design/icons';
 import '../App/App.css'
 import Courses from '../../components/Teacher/Courses/Courses'
@@ -117,17 +117,22 @@ const TeacherApp = ({ setToken, token }) => {
     return (
         <Layout>
             <Header className="header">
-                <div className="logo" />
+                <div className="logo">
+                    <img style={{
+                        height: '100%',
+                    }} src="img/text-logo2.png"></img>
+                </div>
                 <Dropdown overlay={profileMenu}>
-                    <a className="ant-dropdown-link" onClick={e => e.preventDefault()} >
+                    <a id='profile-options' className="ant-dropdown-link" onClick={e => e.preventDefault()} >
                         Teacher Profile! <UserOutlined />
                     </a>
                 </Dropdown>
             </Header>
             <Layout>
-                <Sider width={'15%'} className="site-layout-background" style={{
+                <Sider id='main-content' width={'15%'} className="site-layout-background" style={{
                     overflow: 'auto',
-                    height: '100vh',
+                    height: "calc(100vh - 64px)",
+                    padding: '0 5px 0 5px',
                 }}>
                     <Dropdown overlay={notiFilterMenu} trigger={['click']}>
                         <Button id="noti-filter-button" shape="round" type="primary">
@@ -186,16 +191,91 @@ const TeacherApp = ({ setToken, token }) => {
                             description="Pham Gia Tuan replied your chat in class 2A3"
                         />
                     </Card>
+                    <Card className="noti-card" loading={false}>
+                        <Meta
+                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                            title="Question"
+                            description="Giang A Thuy has a question in his submitted for Bai tap Toan giua ki"
+                        />
+                    </Card>
+                    <Card className="noti-card" loading={false}>
+                        <Meta
+                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                            title="Question"
+                            description="Pham Gia Tuan replied your chat in class 2A3"
+                        />
+                    </Card>
+                    <Card className="noti-card" loading={false}>
+                        <Meta
+                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                            title="Question"
+                            description="Giang A Thuy has a question in his submitted for Bai tap Toan giua ki"
+                        />
+                    </Card>
+                    <Card className="noti-card" loading={false}>
+                        <Meta
+                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                            title="Question"
+                            description="Pham Gia Tuan replied your chat in class 2A3"
+                        />
+                    </Card>
+                    <Card className="noti-card" loading={false}>
+                        <Meta
+                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                            title="Question"
+                            description="Giang A Thuy has a question in his submitted for Bai tap Toan giua ki"
+                        />
+                    </Card>
+                    <Card className="noti-card" loading={false}>
+                        <Meta
+                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                            title="Question"
+                            description="Pham Gia Tuan replied your chat in class 2A3"
+                        />
+                    </Card>
+                    <Card className="noti-card" loading={false}>
+                        <Meta
+                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                            title="Question"
+                            description="Giang A Thuy has a question in his submitted for Bai tap Toan giua ki"
+                        />
+                    </Card>
+                    <Card className="noti-card" loading={false}>
+                        <Meta
+                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                            title="Question"
+                            description="Pham Gia Tuan replied your chat in class 2A3"
+                        />
+                    </Card>
+                    <Card className="noti-card" loading={false}>
+                        <Meta
+                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                            title="Question"
+                            description="Giang A Thuy has a question in his submitted for Bai tap Toan giua ki"
+                        />
+                    </Card>
+                    <Card className="noti-card" loading={false}>
+                        <Meta
+                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                            title="Question"
+                            description="Pham Gia Tuan replied your chat in class 2A3"
+                        />
+                    </Card>
                 </Sider>
-                <Layout style={{ padding: '0 24px 24px' }}>
+                <Layout style={{
+                    padding: '0 24px 24px',
+                    height: 'calc(100vh - 64px',
+                }}>
                     <Breadcrumb style={{ margin: '16px 0' }}>
-                        <Breadcrumb.Item onClick={() => { setAssignment(''); setCourse(''); setStudent('') }}><b>Your Courses</b></Breadcrumb.Item>
+                        <Breadcrumb.Item onClick={() => { setAssignment(''); setCourse(''); setStudent('') }}>
+                            <Typography.Title level={4} italic={true}>Your Courses</Typography.Title>
+                        </Breadcrumb.Item>
                         {brcrumb.current.course}
                         {brcrumb.current.assignment}
                         {brcrumb.current.student}
                     </Breadcrumb>
                     <div>
-                        <RedoOutlined style={{ float: 'right', margin: '10px' }} onClick={() => setRefresh(!refresh)} />
+                        <RedoOutlined style={{ float: 'right', margin: '10px', fontSize: '125%' }} onClick={() => setRefresh(!refresh)} />
                     </div>
                     <Content className="site-layout-background">
                         {content}

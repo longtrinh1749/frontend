@@ -30,9 +30,11 @@ const Assignments = ({ token, course, setAssignment, refresh, setRefresh }) => {
         assignmentsHTML = assignments.map((assignment, index) => {
             return (
                 <Col span={8} key={index}>
-                    <Card title={assignment.name} bordered={true} assignmentid={assignment.id} onClick={() => setAssignment({ 'name': assignment.name, 'id': assignment.id })}>
-                        <p style={{ fontSize: 'smaller' }}>{moment(assignment.due, 'YYYY-MM-DD HH:mm:ss').format('HH:mm DD-MM-YYYY')}</p>
+                    <Card hoverable={true} title={assignment.name} bordered={true} assignmentid={assignment.id} onClick={() => setAssignment({ 'name': assignment.name, 'id': assignment.id })}>
+                        <p style={{ fontSize: 'smaller' }}>{moment(assignment.due, 'YYYY-MM-DD HH:mm').format('HH:mm DD-MM-YYYY')}</p>
                         <p style={{ fontSize: 'smaller' }}>{course.name}</p>
+                    <p style={{fontSize: 'smaller'}}>Đã nộp: {assignment.submit}/{course.total}</p>
+                    <p style={{fontSize: 'smaller'}}>Đã chấm: {assignment.graded}/{course.total}</p>
                     </Card>
                 </Col>
             )
@@ -53,7 +55,7 @@ const Assignments = ({ token, course, setAssignment, refresh, setRefresh }) => {
             <Row gutter={16}>
                 {assignmentsHTML}
                 <Col span={8}>
-                    <Card title={'Create Assignment'} bordered={true} onClick={() => setVisible(true)} style={{height:'100%', textAlign:'center'}}>
+                    <Card hoverable={true} title={'Create Assignment'} bordered={true} onClick={() => setVisible(true)} style={{height:'100%', textAlign:'center'}}>
                             <PlusOutlined style={{textAlign:'center', fontSize:'200%'}} />
                     </Card>
                 </Col>

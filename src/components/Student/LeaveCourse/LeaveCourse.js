@@ -55,7 +55,7 @@ const LeaveCourse = ({ course, leaveCourse }) => {
 
     return (
         <>
-            <Button type="primary" danger={true} style={{float:'right'}} onClick={showModal}>
+            <Button type="primary" danger={true} size='large' style={{float:'right'}} onClick={showModal}>
                 Leave Course
             </Button>
             <Modal title="!" visible={isModalVisible} onOk={async () => {

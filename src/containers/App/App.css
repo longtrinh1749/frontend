@@ -2,10 +2,11 @@
 
 .logo {
   float: left;
-  width: 10rem;
-  height: 2rem;
-  margin: 1rem 2rem 1rem 0;
-  background: rgba(255, 255, 255, 0.3);
+  height: 100%;
+  /* width: 10rem; */
+  /* height: 2rem; */
+  /* margin: 1rem 2rem 1rem 0; */
+  /* background: rgba(255, 255, 255, 0.3); */
 }
 
 .site-layout-background {
@@ -23,7 +24,8 @@
 }
 
 #noti-filter-button {
-  margin: 1rem 0rem 0rem 2rem;
+  margin: 1rem 0 1rem 22px;
+  width: 50%;
 }
 
 .ant-dropdown-menu {
@@ -31,33 +33,49 @@
 }
 
 .ant-layout-content {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 20px;
+  overflow: auto;
   padding: 2rem;
   margin: 0rem;
   min-height: 20rem;
 }
 
 #chat-input {
-    border-radius: 1rem;
+  border-radius: 1rem;
 }
 
 #chat-btn {
-    border-radius: 1rem;
+  border-radius: 1rem;
 }
 
 .anticon-bell {
-    font-size: 1.25rem;
-    margin-left: 6rem;
+  font-size: 1.5rem;
+  /* margin-left: 6rem; */
+  float: right;
+  margin: 1rem 1rem 1rem 0rem;
 }
 
-.ant-layout-sider::-webkit-scrollbar{
-    width: 2px;
+.ant-layout-sider::-webkit-scrollbar {
+  width: 2px;
 }
 
 .ant-layout-sider::-webkit-scrollbar-thumb {
-    background: black; 
-    border-radius: 1px;
-  }
+  background: black;
+  border-radius: 1px;
+}
 
 .ant-layout-sider {
-    min-width: 20%;
+  min-width: 20%;
+}
+
+#profile-options {
+  width: 10rem;
+}
+/* #main-content {
+    height: "calc(100vh - 64px)";
+} */
+
+button {
+    border-radius: 25px !important;
 }

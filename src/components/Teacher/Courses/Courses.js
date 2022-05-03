@@ -31,9 +31,10 @@ const Courses = ({ token, setCourse, refresh, setRefresh }) => {
         coursesHTML = courses.map((course, index) => {
             return (
                 <Col span={8} key={index}>
-                    <Card title={course.name} bordered={true} courseid={course.id} onClick={() => setCourse({ 'name': course.name, 'id': course.id })}>
+                    <Card hoverable={true} title={course.name} bordered={true} courseid={course.id} onClick={() => setCourse({ 'name': course.name, 'id': course.id, 'total': course.total })}>
                         <p style={{ fontSize: 'smaller' }}>{course.class}</p>
                         <p style={{ fontSize: 'smaller' }}>{course.school}</p>
+                        <p style={{ fontSize: 'smaller' }}>Sĩ số: {course.total}</p>
                     </Card>
                 </Col>
             )

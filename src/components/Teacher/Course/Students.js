@@ -26,7 +26,7 @@ const Students = ({ setStudent, course, assignment }) => {
         studentsHTML = students.map((student, index) => {
             return (
                 <Col span={8} key={index}>
-                    <Card title={student.name} bordered={true} studentid={student.id} onClick={() => setStudent({ 'name': student.name, 'id': student.id })}>
+                    <Card hoverable={true} title={student.name} bordered={true} studentid={student.id} onClick={() => setStudent({ 'name': student.name, 'id': student.id })}>
                         <p style={{ fontSize: 'smaller' }}>{student.name}</p>
                     </Card>
                 </Col>

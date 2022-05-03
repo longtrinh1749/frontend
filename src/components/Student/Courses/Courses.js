@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Card, Col, Row, Divider } from 'antd'
 import axios from "axios";
 import JoinCourse from "../JoinCourse/JoinCourse";
@@ -26,9 +26,11 @@ const Courses = ({ token, setCourse, refresh, setRefresh  }) => {
         coursesHTML = courses.map((course, index) => {
             return (
                 <Col span={8} key={index}>
-                    <Card title={course.name} bordered={true} courseid={course.id} onClick={() => setCourse({ 'name': course.name, 'id': course.id })}>
+                    <Card hoverable={true} title={course.name} bordered={true} courseid={course.id} onClick={() => setCourse({ 'name': course.name, 'id': course.id })}>
                         <p style={{ fontSize: 'smaller' }}>{course.class}</p>
                         <p style={{ fontSize: 'smaller' }}>{course.school}</p>
+                        <p style={{ fontSize: 'smaller' }}>{course.teacher.name}</p>
+                        <p style={{ fontSize: 'smaller' }}>Sĩ số: {course.total}</p>
                     </Card>
                 </Col>
             )

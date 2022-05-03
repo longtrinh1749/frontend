@@ -28,7 +28,7 @@ const CourseInfo = ({ course, refresh, setRefresh }) => {
                 bordered
                 title="Class Information"
                 size='middle'
-                extra={<Button type="primary" onClick={() => {
+                extra={<Button size="large" type="primary" onClick={() => {
                     setVisible(true);
                 }}>Edit</Button>}
             >

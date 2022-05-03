@@ -302,6 +302,7 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
         finalComment.current = e.target.value
     }
     const onGraded = (e) => {
+        // Uncomment tat ca ok
         // saveGrading()
         let formData = new FormData()
         
@@ -315,25 +316,25 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
         });
         // them vong for work ben ngoai
         console.log("Grading objects", objects)
-        for (let i = 0; i < objects.length; i++) {
-            if (objects[i].image == 6) {
-                let o = objects[i]
-                let _img = document.createElement('img')
-                if (o.type == objectConst.TYPE_RIGHT) {
-                    _img.src = objectConst.RIGHT_URL
-                } else if (o.type == objectConst.TYPE_WRONG) {
-                    _img.src = objectConst.WRONG_URL
-                }
-                let imageInstance = new fabric.Image(_img)
-                canvases.current[6].add(imageInstance)
-            }
-        }
+        // for (let i = 0; i < objects.length; i++) {
+        //     if (objects[i].image == 6) {
+        //         let o = objects[i]
+        //         let _img = document.createElement('img')
+        //         if (o.type == objectConst.TYPE_RIGHT) {
+        //             _img.src = objectConst.RIGHT_URL
+        //         } else if (o.type == objectConst.TYPE_WRONG) {
+        //             _img.src = objectConst.WRONG_URL
+        //         }
+        //         let imageInstance = new fabric.Image(_img)
+        //         canvases.current[6].add(imageInstance)
+        //     }
+        // }
 
         html2canvas(document.getElementById('canvas21')).then(canvas => {
             var img = canvas.toDataURL("image/png");
             var imgHtml = document.createElement('img');
             imgHtml.src = img;
-            document.getElementById('image-layer').append(imgHtml);
+            // document.getElementById('image-layer').append(imgHtml);
 
             formData.append('submit_id', submitData.id)
             formData.append('score', score.current)

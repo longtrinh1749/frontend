@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Card, Col, Row, Divider } from 'antd'
+import React, { useEffect, useState, useRef } from "react";
+import { Card, Col, Row, Divider, Typography } from 'antd'
 import LeaveCourse from '../LeaveCourse/LeaveCourse'
 import CourseInfo from '../../Common/CourseInfo/CourseInfo'
 import axios from "axios";
@@ -21,14 +21,17 @@ const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRef
     }, [refresh])
 
     let assignmentsHTML = (
-        <div></div>
+        <div>
+        <Typography.Title level={4}>Enjoy your free time!</Typography.Title>
+        <Typography.Text italic={true}>Currently no assignments yet.</Typography.Text>
+        </div>
     )
 
     if (assignments.length > 0) {
         assignmentsHTML = assignments.map((assignment, index) => {
             return (
                 <Col span={8} key={index}>
-                <Card title={assignment.name} bordered={true} assignmentid={assignment.id} onClick={() => setAssignment({'name': assignment.name, 'id': assignment.id})}>
+                <Card hoverable={true} title={assignment.name} bordered={true} assignmentid={assignment.id} onClick={() => setAssignment({'name': assignment.name, 'id': assignment.id})}>
                     <p style={{fontSize: 'smaller'}}>{assignment.due}</p>
                     <p style={{fontSize: 'smaller'}}>{course.name}</p>
                 </Card>
@@ -38,6 +41,9 @@ const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRef
     }
     return (
         <div className="site-card-wrapper">
+            <Typography.Title level={3} italic={true} style={{
+                display: 'inline-block',
+            }}>Assignments:</Typography.Title>
             <LeaveCourse course={course} leaveCourse={setBrCrumb}></LeaveCourse>
             <Divider />
             <Row gutter={16}>
