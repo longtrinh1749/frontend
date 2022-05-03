@@ -3,6 +3,7 @@ import { Card, Col, Row, Divider, Typography } from 'antd'
 import LeaveCourse from '../LeaveCourse/LeaveCourse'
 import CourseInfo from '../../Common/CourseInfo/CourseInfo'
 import axios from "axios";
+import moment from 'moment';
 
 const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRefresh }) => {
 
@@ -32,8 +33,8 @@ const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRef
             return (
                 <Col span={8} key={index}>
                     <Card hoverable={true} title={assignment.name} bordered={true} assignmentid={assignment.id} onClick={() => setAssignment({ 'name': assignment.name, 'id': assignment.id })}>
-                        <p style={{ fontSize: 'smaller' }}>{assignment.due}</p>
-                        <p style={{ fontSize: 'smaller' }}>{course.name}</p>
+                        <p className="course-card-content">Due: {moment(assignment.due, 'YYYY-MM-DD HH:mm').format('HH:mm DD-MM-YYYY')}</p>
+                        <p className="course-card-content">Status: <Typography.Text type="warning">Not submit yet</Typography.Text></p>
                     </Card>
                 </Col>
             )

@@ -27,10 +27,25 @@ const Courses = ({ token, setCourse, refresh, setRefresh }) => {
             return (
                 <Col span={8} key={index}>
                     <Card hoverable={true} title={course.name} bordered={true} courseid={course.id} onClick={() => setCourse({ 'name': course.name, 'id': course.id })}>
-                        <p style={{ fontSize: 'smaller' }}>{course.class}</p>
+                        {/* <p style={{ fontSize: 'smaller' }}>{course.class}</p>
                         <p style={{ fontSize: 'smaller' }}>{course.school}</p>
                         <p style={{ fontSize: 'smaller' }}>{course.teacher.name}</p>
-                        <p style={{ fontSize: 'smaller' }}>Sĩ số: {course.total}</p>
+                        <p style={{ fontSize: 'smaller' }}>Sĩ số: {course.total}</p> */}
+                        <Card.Grid hoverable={false} style={{
+                            width: '50%',
+                            textAlign: 'center',
+                        }}>
+                            <p className="course-card-content" >Lớp: {course.class}</p>
+                            <p className="course-card-content" >Trường: {course.school}</p>
+                        </Card.Grid>
+                        <Card.Grid hoverable={false} style={{
+                            width: '50%',
+                            textAlign: 'center',
+                        }}>
+                            <p className="course-card-content" >Giáo viên: {course.teacher.name}</p>
+                            <p className="course-card-content" >Sĩ số: {course.total}</p>
+                        </Card.Grid>
+
                     </Card>
                 </Col>
             )
