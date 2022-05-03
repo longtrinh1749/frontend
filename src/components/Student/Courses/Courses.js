@@ -12,7 +12,7 @@ const Courses = ({ token, setCourse, refresh, setRefresh }) => {
 
     useEffect(() => {
         let params = {
-            user_id: 12
+            user_id: sessionStorage.getItem('id')
         }
 
         axios.get(BASE_URL, { params }).then((res) => {
