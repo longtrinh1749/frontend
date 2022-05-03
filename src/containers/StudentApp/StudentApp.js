@@ -114,6 +114,7 @@ const StudentApp = ({ setToken, token }) => {
                 <Sider id='main-content' width={'15%'} className="site-layout-background" style={{
                     overflow: 'auto',
                     height: "calc(100vh - 64px)",
+                    padding: '0 5px 0 5px',
                 }}>
                     <Dropdown overlay={notiFilterMenu} trigger={['click']}>
                         <Button id="noti-filter-button" shape="round" type="primary">
@@ -222,7 +223,10 @@ const StudentApp = ({ setToken, token }) => {
                         />
                     </Card>
                 </Sider>
-                <Layout style={{ padding: '0 24px 24px' }}>
+                <Layout style={{
+                    padding: '0 24px 24px',
+                    height: 'calc(100vh - 64px)',
+                }}>
                     <Breadcrumb style={{ margin: '16px 0' }}>
                         <Breadcrumb.Item onClick={() => { setAssignment(''); setCourse('') }}>
                             <Typography.Title level={4} italic={true}>Your Courses</Typography.Title>
