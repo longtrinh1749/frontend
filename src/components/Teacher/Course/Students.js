@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Card, Col, Row } from 'antd'
+import { Card, Col, Row, Typography } from 'antd'
 import axios from "axios";
 
-const Students = ({ setStudent, course, assignment }) => {
+const Students = ({ setStudent, course, assignment, refresh }) => {
 
     const BASE_URL = 'http://127.0.0.1:5000/users/course/students'
 
@@ -11,14 +11,15 @@ const Students = ({ setStudent, course, assignment }) => {
     useEffect(() => {
         console.log('Call get all students within course')
         let params = {
-            course_id: course.id
+            course_id: course.id,
+            assignment_id: assignment.id,
         }
 
         axios.get(BASE_URL, { params }).then((res) => {
             console.log(res.data.students)
             setStudents(res.data.students)
         })
-    }, [])
+    }, [refresh])
     let studentsHTML = (
         <div></div>
     )
@@ -26,8 +27,9 @@ const Students = ({ setStudent, course, assignment }) => {
         studentsHTML = students.map((student, index) => {
             return (
                 <Col span={8} key={index}>
-                    <Card hoverable={true} title={student.name} bordered={true} studentid={student.id} onClick={() => setStudent({ 'name': student.name, 'id': student.id })}>
-                        <p style={{ fontSize: 'smaller' }}>{student.name}</p>
+                    <Card hoverable={true} bordered={true} studentid={student.id} onClick={() => setStudent({ 'name': student.name, 'id': student.id })}>
+                        <p className="course-card-content" style={{display: 'inline-block'}}>Học sinh: {student.name}</p>
+                        <p className="course-card-content" style={{display: 'inline-block', float: 'right'}}><Typography.Text type="warning">{student.status == 'graded' ? 'Đã chấm' : 'Chưa chấm'}</Typography.Text></p>
                     </Card>
                 </Col>
             )

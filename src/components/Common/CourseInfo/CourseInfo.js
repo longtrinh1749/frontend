@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Descriptions, Button } from 'antd'
 import EditCourseForm from '../../Teacher/EditCourse/EditCourseInfo'
+import './CourseInfo.css'
 
 const CourseInfo = ({ course, refresh, setRefresh }) => {
     let BASE_URL = 'http://127.0.0.1:5000/courses'

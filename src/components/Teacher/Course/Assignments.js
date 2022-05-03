@@ -31,10 +31,21 @@ const Assignments = ({ token, course, setAssignment, refresh, setRefresh }) => {
             return (
                 <Col span={8} key={index}>
                     <Card hoverable={true} title={assignment.name} bordered={true} assignmentid={assignment.id} onClick={() => setAssignment({ 'name': assignment.name, 'id': assignment.id })}>
-                        <p style={{ fontSize: 'smaller' }}>{moment(assignment.due, 'YYYY-MM-DD HH:mm').format('HH:mm DD-MM-YYYY')}</p>
-                        <p style={{ fontSize: 'smaller' }}>{course.name}</p>
-                        <p style={{ fontSize: 'smaller' }}>Đã nộp: {assignment.submit}/{course.total}</p>
-                        <p style={{ fontSize: 'smaller' }}>Đã chấm: {assignment.graded}/{course.total}</p>
+
+                        <Card.Grid hoverable={false} style={{
+                            width: '50%',
+                            textAlign: 'center',
+                        }}>
+                            <p className="course-card-content">Hạn nộp: </p>
+                            <p className="course-card-content">{moment(assignment.due, 'YYYY-MM-DD HH:mm').format('HH:mm DD-MM-YYYY')}</p>
+                        </Card.Grid>
+                        <Card.Grid hoverable={false} style={{
+                            width: '50%',
+                            textAlign: 'center',
+                        }}>
+                            <p className="course-card-content">Đã nộp: {assignment.submit}/{course.total}</p>
+                            <p className="course-card-content">Đã chấm: {assignment.graded}/{course.total}</p>
+                        </Card.Grid>
                     </Card>
                 </Col>
             )
