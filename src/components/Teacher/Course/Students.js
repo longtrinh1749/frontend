@@ -29,7 +29,7 @@ const Students = ({ setStudent, course, assignment, refresh }) => {
                 <Col span={8} key={index}>
                     <Card hoverable={true} bordered={true} studentid={student.id} onClick={() => setStudent({ 'name': student.name, 'id': student.id })}>
                         <p className="course-card-content" style={{display: 'inline-block'}}>Học sinh: {student.name}</p>
-                        <p className="course-card-content" style={{display: 'inline-block', float: 'right'}}><Typography.Text type="warning">{student.status == 'graded' ? 'Đã chấm' : 'Chưa chấm'}</Typography.Text></p>
+                        <p className="course-card-content" style={{display: 'inline-block', float: 'right'}}><Typography.Text type="warning">{student.status == 'graded' ? 'Đã chấm' : (student.status == 'handed in' ? 'Chưa chấm' : 'Chưa nộp')}</Typography.Text></p>
                     </Card>
                 </Col>
             )

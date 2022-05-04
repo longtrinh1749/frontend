@@ -241,7 +241,7 @@ const Assignment = ({ assignment, refresh, setRefresh }) => {
                 <Typography.Text italic={true} type="danger" style={{
                     marginLeft: '5px',
                 }}>
-                    {submitData.comment}
+                    {submitData? submitData.comment : ''}
                 </Typography.Text>
             </Typography.Text>
             {/* <Descriptions title="Result" layout="vertical">

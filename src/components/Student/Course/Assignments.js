@@ -36,6 +36,8 @@ const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRef
                 status = 'Submitted'
             } else if (assignment.status == 'handed in') {
                 status = 'Handed in'
+            } else if (assignment.status == 'graded') {
+                status = 'Graded'
             }
             return (
                 <Col span={8} key={index}>
