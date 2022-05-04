@@ -234,6 +234,16 @@ const Assignment = ({ assignment, refresh, setRefresh }) => {
             <Typography.Title level={4} italic={true} style={{
                 display: 'inline-block',
             }}>Results:</Typography.Title>
+            <Typography.Text strong={true} style={{
+                display: 'block',
+            }}>
+                Teacher notes:
+                <Typography.Text italic={true} type="danger" style={{
+                    marginLeft: '5px',
+                }}>
+                    {submitData.comment}
+                </Typography.Text>
+            </Typography.Text>
             {/* <Descriptions title="Result" layout="vertical">
                 <Descriptions.Item>
                     <Image

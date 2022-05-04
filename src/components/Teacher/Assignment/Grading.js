@@ -342,7 +342,7 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
             imgHtml.src = img;
             // document.getElementById('image-layer').append(imgHtml);
 
-            formData.append('submit_id', submitData.id)
+            formData.append('id', submitData.id)
             formData.append('score', score.current)
             formData.append('comment', finalComment.current)
             formData.append('file', img)
