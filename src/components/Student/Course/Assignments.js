@@ -13,7 +13,8 @@ const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRef
 
     useEffect(() => {
         let params = {
-            course_id: course.id
+            course_id: course.id,
+            user_id: sessionStorage.getItem('id')
         }
 
         axios.get(BASE_URL, { params }).then((res) => {
@@ -30,11 +31,17 @@ const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRef
 
     if (assignments.length > 0) {
         assignmentsHTML = assignments.map((assignment, index) => {
+            let status = 'Not submit yet'
+            if (assignment.status == 'submitted') {
+                status = 'Submitted'
+            } else if (assignment.status == 'handed in') {
+                status = 'Handed in'
+            }
             return (
                 <Col span={8} key={index}>
                     <Card hoverable={true} title={assignment.name} bordered={true} assignmentid={assignment.id} onClick={() => setAssignment({ 'name': assignment.name, 'id': assignment.id })}>
                         <p className="course-card-content">Due: {moment(assignment.due, 'YYYY-MM-DD HH:mm').format('HH:mm DD-MM-YYYY')}</p>
-                        <p className="course-card-content">Status: <Typography.Text type="warning">Not submit yet</Typography.Text></p>
+                        <p className="course-card-content">Status: <Typography.Text type="warning">{status}</Typography.Text></p>
                     </Card>
                 </Col>
             )
