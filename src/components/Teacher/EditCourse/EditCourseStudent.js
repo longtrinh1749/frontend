@@ -4,7 +4,7 @@ import { List, Skeleton, Avatar } from 'antd'
 import './EditCourseStudent.css'
 
 const ManageStudentList = ({ courseInfo, refresh, visible }) => {
-    let BASE_URL = 'http://127.0.0.1:5000/users/course/students'
+    let BASE_URL = 'http://192.168.1.10:5000/users/course/students'
 
     const [students, setStudents] = useState([{ name: 'Error' }])
 

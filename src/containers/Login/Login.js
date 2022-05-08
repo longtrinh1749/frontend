@@ -49,10 +49,10 @@ const Login = ({ setToken }) => {
         //     body: JSON.stringify(credentials)
         // })
         //     .then(data => data.json())
-        let id = 12
+        let id = 1
         console.log(data)
-        if (data.username == "teacher") {
-            id = 11
+        if (data.username == "teacher51") {
+            id = 51
         }
         return { "username": data.username, "role": data.role, "id": id }
     }
@@ -74,7 +74,7 @@ const Login = ({ setToken }) => {
                 <div className="fadeIn first">
                     <img src="https://t4.ftcdn.net/jpg/01/90/50/61/360_F_190506160_coExNloNdTd1OcvJe3cbdddUDqoqiJ2B.jpg" id="icon" alt="User Icon" />
                 </div>
-                <form onSubmit={onFinish}>
+                <form className="login-form" onSubmit={onFinish}>
                     <input type="text" id="login" className="fadeIn first" name="login" placeholder="Username" />
                     <input type="password" id="password" className="fadeIn second" name="login" placeholder="Password" /><br />
                     <input type="radio" id="roleStudent" name="role" value="ROLE.STUDENT" /><label htmlFor="roleStudent">Login as Student</label><br />

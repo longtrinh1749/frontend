@@ -6,15 +6,14 @@ import axios from "axios";
 import { upload } from "@testing-library/user-event/dist/upload";
 
 const Assignment = ({ assignment, refresh, setRefresh }) => {
-    let BASE_ASM_URL = 'http://127.0.0.1:5000/assignments'
-    let BASE_SUBMIT_URL = 'http://127.0.0.1:5000/submits'
-    let BASE_WORK_URL = 'http://127.0.0.1:5000/work'
+    let BASE_ASM_URL = 'http://192.168.1.10:5000/assignments'
+    let BASE_SUBMIT_URL = 'http://192.168.1.10:5000/submits'
+    let BASE_WORK_URL = 'http://192.168.1.10:5000/work'
 
     // Data
     const [asmData, setAsmData] = useState(false)
     const [submitData, setSubmitData] = useState(false)
     const [worksData, setWorksData] = useState([])
-
     // UI effect
     const [handin, setHandin] = useState(false)
 
@@ -25,32 +24,32 @@ const Assignment = ({ assignment, refresh, setRefresh }) => {
         axios.get(BASE_ASM_URL, { params }).then(res => {
             setAsmData(res.data.assignments[0])
             console.log('Assignment Data:', asmData)
-        })
 
-        params = {
-            user_id: sessionStorage.getItem('id'),
-            assignment_id: assignment.id,
-        }
+            params = {
+                user_id: sessionStorage.getItem('id'),
+                assignment_id: res.data.assignments[0].id,
+            }
 
-        axios.get(BASE_SUBMIT_URL, { params }).then(res => {
-            setSubmitData(res.data.submits[0])
-            console.log('Submitted:', submitData)
-        })
+            axios.get(BASE_SUBMIT_URL, { params }).then(res => {
+                setSubmitData(res.data.submits[0])
+                console.log('Submitted:', submitData)
 
-        params = {
-            submit_id: submitData ? (submitData.id) : 0,
-        }
-
-        axios.get(BASE_WORK_URL, { params }).then(res => {
-            setWorksData(res.data.works)
-            console.log('Work:', worksData)
-            setFileList(worksData.map((workData) => {
-                return {
-                    id: workData.id,
-                    status: 'done',
-                    url: workData.image_path,
+                params = {
+                    submit_id: res.data.submits[0] ? (res.data.submits[0].id) : 0,
                 }
-            }))
+
+                axios.get(BASE_WORK_URL, { params }).then(res => {
+                    setWorksData(res.data.works)
+                    console.log('Work:', worksData)
+                    setFileList(res.data.works.map((workData) => {
+                        return {
+                            id: workData.id,
+                            status: 'done',
+                            url: workData.image_path,
+                        }
+                    }))
+                })
+            })
         })
     }, [refresh])
 
@@ -156,6 +155,7 @@ const Assignment = ({ assignment, refresh, setRefresh }) => {
                 id: file.id,
                 active: false,
             })
+            setRefresh(!refresh)
             resolve(true)
         });
     }
@@ -188,6 +188,17 @@ const Assignment = ({ assignment, refresh, setRefresh }) => {
             <div style={{ marginTop: 8 }}>Upload</div>
         </div>
     );
+
+    let resultHtml = worksData.map(workData => {
+        if (workData.result_path) {
+            return (
+                <Image
+                    width={200}
+                    src={workData.result_path}
+                />
+            )
+        }
+    })
     return (
         <>
             <Typography.Title level={4} italic={true} style={{
@@ -213,7 +224,9 @@ const Assignment = ({ assignment, refresh, setRefresh }) => {
                     listType="picture-card"
                     fileList={fileList}
                     onPreview={handlePreview}
-                    onChange={() => setRefresh(!refresh)}
+                    onChange={() => {
+                        setRefresh(!refresh)
+                    }}
                     disabled={handin}
                     // onRemove={(file) => console.log('Work id', file.id)}
                     onRemove={deactivateWork}
@@ -241,21 +254,14 @@ const Assignment = ({ assignment, refresh, setRefresh }) => {
                 <Typography.Text italic={true} type="danger" style={{
                     marginLeft: '5px',
                 }}>
-                    {submitData? submitData.comment : ''}
+                    {submitData ? submitData.comment : ''}
                 </Typography.Text>
             </Typography.Text>
-            {/* <Descriptions title="Result" layout="vertical">
+            <Descriptions title="" layout="vertical">
                 <Descriptions.Item>
-                    <Image
-                        width={200}
-                        src="img/sample/data/AssignmentDetail/Trần Vũ Tuấn Kiệt/trang_0.jpg"
-                    />
-                    <Image
-                        width={200}
-                        src="img/sample/data/AssignmentDetail/Trần Vũ Tuấn Kiệt/trang_1.jpg"
-                    />
+                    {resultHtml}
                 </Descriptions.Item>
-            </Descriptions> */}
+            </Descriptions>
         </>
     )
 }

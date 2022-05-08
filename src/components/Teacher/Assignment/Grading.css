@@ -1,47 +1,66 @@
 .image-work {
-    width: 100%;
-    /* margin-bottom: 8px; */
+  width: 100%;
+  /* margin-bottom: 8px; */
 }
 
 .layer {
-    position: absolute;
+  position: absolute;
 }
 
 .symbol-container {
-    position: absolute;
+  position: absolute;
 }
 
 .ant-radio-button-wrapper {
-    display: block;
-    margin: 5%;
-    text-align: center;
+  display: inline-block;
+  margin: 0.5%;
+  text-align: center;
 }
 
 .input-comment-container {
-    position: absolute;
-    width: max-content;
+  position: absolute;
+  width: max-content;
 }
 
 .comment-container {
-    position: absolute;
+  position: absolute;
+  width: max-content;
+  font-size: 18px;
 }
 
 .final-grade {
-    border: 1px solid;
-    margin: inherit;
+  border: 1px solid;
+  margin: inherit;
 }
 
 .score {
-    height: 200px;
-    text-align: center;
+  height: 200px;
+  text-align: center;
 }
 
 .ant-radio-button-wrapper {
-    border-radius: 20px !important;
+  border-radius: 20px !important;
+  background-color: aqua;
+  color: blueviolet;
 }
 
 #tool-container {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.ant-radio-button-wrapper:not(:first-child)::before {
+  background-color: transparent !important;
+}
+
+.ant-radio-group {
+  width: 100%;
+}
+
+#grading-button {
+  margin: 1% 0;
 }

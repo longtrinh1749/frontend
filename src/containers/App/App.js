@@ -38,17 +38,17 @@ const App = () => {
     const profileMenu = (
         <Menu>
             <Menu.Item>
-                <a rel="noopener noreferrer" href="#" key={'profile'}>
+                <a rel="noopener noreferrer" href="#" key='profile'>
                     Profile
                 </a>
             </Menu.Item>
             <Menu.Item>
-                <a rel="noopener noreferrer" href="#" key={'saved'}>
+                <a rel="noopener noreferrer" href="#" key='saved'>
                     Saved Items
                 </a>
             </Menu.Item>
             <Menu.Item>
-                <a rel="noopener noreferrer" href="#" key={'logout'} onClick={() => setToken(null)}>
+                <a rel="noopener noreferrer" href="#" key='logout' onClick={() => setToken(null)}>
                     Logout
                 </a>
             </Menu.Item>
@@ -59,17 +59,17 @@ const App = () => {
     const notiFilterMenu = (
         <Menu>
             <Menu.Item>
-                <a rel="noopener noreferrer" href="#" key={'due-filter'}>
+                <a rel="noopener noreferrer" href="#" key='due-filter'>
                     Due
                 </a>
             </Menu.Item>
             <Menu.Item>
-                <a rel="noopener noreferrer" href="#" key={'submitted-filter'}>
+                <a rel="noopener noreferrer" href="#" key='submitted-filter'>
                     Submitted
                 </a>
             </Menu.Item>
             <Menu.Item>
-                <a rel="noopener noreferrer" href="#" key={'chat-filter'}>
+                <a rel="noopener noreferrer" href="#" key='chat-filter'>
                     Chat
                 </a>
             </Menu.Item>
@@ -84,14 +84,16 @@ const App = () => {
     // Login
     const { token, setToken } = useToken();
 
-    if (!token) {
+    if (!sessionStorage.getItem('id')) {
+        console.log('Ko có token')
         return <Login setToken={setToken}></Login>
     } else {
-        if (token.role == 'ROLE.STUDENT') {
+        console.log('Có token')
+        if (sessionStorage.getItem('role') == '"ROLE.STUDENT"') {
             return (
                 <StudentApp setToken={setToken} token={token}></StudentApp>
             )
-        } else if (token.role == 'ROLE.TEACHER') {
+        } else if (sessionStorage.getItem('role') == '"ROLE.TEACHER"') {
             return (
                 <TeacherApp setToken={setToken} token={token}></TeacherApp>
             )

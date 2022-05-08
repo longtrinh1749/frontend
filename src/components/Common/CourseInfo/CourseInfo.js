@@ -5,7 +5,7 @@ import EditCourseForm from '../../Teacher/EditCourse/EditCourseInfo'
 import './CourseInfo.css'
 
 const CourseInfo = ({ course, refresh, setRefresh }) => {
-    let BASE_URL = 'http://127.0.0.1:5000/courses'
+    let BASE_URL = 'http://192.168.1.10:5000/courses'
     const [courseInfo, setCourseInfo] = useState(1)
     console.log("CourseInfo ", course)
     useEffect(() => {

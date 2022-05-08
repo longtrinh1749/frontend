@@ -26,9 +26,9 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
     }
 
     // URL
-    let BASE_WORK_URL = 'http://127.0.0.1:5000/work'
-    let BASE_SUBMIT_URL = 'http://127.0.0.1:5000/submits'
-    let BASE_GRADING_URL = 'http://127.0.0.1:5000/grading'
+    let BASE_WORK_URL = 'http://192.168.1.10:5000/work'
+    let BASE_SUBMIT_URL = 'http://192.168.1.10:5000/submits'
+    let BASE_GRADING_URL = 'http://192.168.1.10:5000/grading'
 
     // Data state
     const [worksData, setWorksData] = useState([])
@@ -67,6 +67,10 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
         })
     }, [refresh])
 
+    // Render
+    const [renderCanvas, setRenderCanvas] = useState(false)
+    const [initFabric, setInitFabric] = useState(false)
+
     // UI
     useEffect(() => {
         console.log('Tool Changed')
@@ -92,7 +96,7 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
                 }
                 canvases.current[i] = new fabric.Canvas(_canvasId, {
                     isDrawingMode: true,
-                    freeDrawingBrush: new fabric.PencilBrush({ width: 2 })
+                    freeDrawingBrush: new fabric.PencilBrush({ width: 2 }),
                 })
                 // For grading to image
 
@@ -124,9 +128,10 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
                 for (let j = 0; j < worksData[i].objects.length; j++) {
                     let o = worksData[i].objects[j]
                     console.log('Object', o)
-                    objects.push({ left: o.left, top: o.top, image: o.image, workId: o.work_id, type: o.type, widthSize: o.width_size, value: o.value })
+                    _objects.push({ left: o.left, top: o.top, image: o.image, workId: o.work_id, type: o.type, widthSize: o.width_size, value: o.value })
+                    console.log('Objects', _objects)
+                    setObjects(_objects)
                 }
-                setObjects(objects)
                 updateObjectSpan()
                 console.log('Object Load', objects)
                 // Click handler
@@ -139,7 +144,10 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
                 })
             }
         }
-    }, [canvasRender, refresh])
+        if (document.getElementsByClassName('canvas-work').length == 0) {
+            setRenderCanvas(true)
+        }
+    }, [canvasRender, refresh, document.getElementsByClassName('canvas-work')])
 
     let worksHtml = worksData.map((work, index) => {
         return (
@@ -179,7 +187,7 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
             }
             if (object.type == objectConst.TYPE_COMMENT) {
                 return (
-                    <span className="comment-container" onClick={(e) => objectClick(e, object.left, object.top)} style={{ left: object.left, top: (object.top + _imgHeight), color: "red", fontWeight: "bold" }}>
+                    <span className="comment-container" onClick={(e) => objectClick(e, object.left, object.top)} style={{ left: 8 + object.left, top: 4 + (object.top + _imgHeight), color: "red", fontWeight: "bold" }}>
                         {object.value}
                     </span>
                 )
@@ -310,7 +318,6 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
     const onGraded = (e) => {
         // Uncomment tat ca ok
         saveGrading()
-        let formData = new FormData()
 
         notification.open({
             message: 'Cham diem',
@@ -321,34 +328,66 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
             },
         });
         // them vong for work ben ngoai
-        console.log("Grading objects", objects)
-        // for (let i = 0; i < objects.length; i++) {
-        //     if (objects[i].image == 6) {
-        //         let o = objects[i]
-        //         let _img = document.createElement('img')
-        //         if (o.type == objectConst.TYPE_RIGHT) {
-        //             _img.src = objectConst.RIGHT_URL
-        //         } else if (o.type == objectConst.TYPE_WRONG) {
-        //             _img.src = objectConst.WRONG_URL
-        //         }
-        //         let imageInstance = new fabric.Image(_img)
-        //         canvases.current[6].add(imageInstance)
-        //     }
-        // }
+        for (let j = 0; j < worksData.length; j++) {
+            let formData = new FormData()
+            console.log("Grading objects", objects)
+            console.log("workData", worksData[j])
+            for (let i = 0; i < objects.length; i++) {
+                if (objects[i].image == j) {
+                    let o = objects[i]
+                    if (o.type == objectConst.TYPE_COMMENT) {
+                        let text = new fabric.Text(o.value, {
+                            fontSize: 20,
+                            top: o.top,
+                            left: o.left,
+                            fontWeight: 'bold',
+                            fontFamily: 'san-serif',
+                            fill: 'red',
+                        })
+                        canvases.current[j].add(text)
+                    }
+                    let _img = document.createElement('img')
+                    if (o.type == objectConst.TYPE_RIGHT) {
+                        _img.src = objectConst.RIGHT_URL
+                    } else if (o.type == objectConst.TYPE_WRONG) {
+                        _img.src = objectConst.WRONG_URL
+                    }
+                    let imageInstance = new fabric.Image(_img, {
+                        left: o.left,
+                        top: o.top,
+                    })
+                    canvases.current[j].add(imageInstance)
+                }
+            }
+            let _img = document.getElementById('work' + worksData[j].id)
+            let _imgInstance = new fabric.Image(_img, {
+                scaleX: _img.width / _img.naturalWidth,
+                scaleY: _img.height / _img.naturalHeight,
+            })
+            console.log("Img Instance", _imgInstance)
+            canvases.current[j].setBackgroundImage(_imgInstance, canvases.current[j].renderAll.bind(canvases.current[j]))
 
-        html2canvas(document.getElementById('canvas21')).then(canvas => {
-            var img = canvas.toDataURL("image/png");
-            var imgHtml = document.createElement('img');
-            imgHtml.src = img;
-            // document.getElementById('image-layer').append(imgHtml);
+            html2canvas(document.getElementById('canvas' + worksData[j].id)).then(canvas => {
+                var img = canvas.toDataURL("image/png");
+                var imgHtml = document.createElement('img');
+                imgHtml.src = img;
+                // document.getElementById('image-layer').append(imgHtml);
 
-            formData.append('id', submitData.id)
-            formData.append('score', score.current)
-            formData.append('comment', finalComment.current)
-            formData.append('file', img)
+                formData.append('id', worksData[j].submit_id)
+                formData.append('score', score.current)
+                formData.append('comment', finalComment.current)
+                console.log('Work data image', worksData[j].id)
+                formData.append('work_id', worksData[j].id)
+                formData.append('file', img)
 
-            axios.put(BASE_GRADING_URL, formData)
-        })
+                axios.put(BASE_GRADING_URL, formData)
+            })
+
+            // formData.append('id', submitData.id)
+            // formData.append('score', score.current)
+            // formData.append('comment', finalComment.current)
+            // axios.put(BASE_GRADING_URL, formData)
+        }
     }
     //
     return (
@@ -371,6 +410,7 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
                     }}
                     optionType="button"
                     buttonStyle="outline"
+                    defaultValue={options[0].label}
                 />
                 {/* <Button onClick={saveGrading}>Save</Button> */}
                 {/* <Button onClick={rescoring}>Re-scoring</Button> */}
@@ -425,7 +465,20 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
                             </Col>
                         </Row>
                         <div>
-                            <Button style={{
+                            <Button id="grading-button" style={{
+                                display: 'block',
+                                width: '100%',
+                                border: 'none',
+                                backgroundColor: 'green',
+                                fontSize: '16px',
+                                cursor: 'pointer',
+                                textAlign: 'center',
+                                height: '5rem',
+                                color: 'white',
+                            }} onClick={saveGrading}>
+                                <Typography.Title style={{ color: 'white', textAlign: 'center', margin: '1.25%' }}><i>Save</i></Typography.Title>
+                            </Button>
+                            <Button id="grading-button" style={{
                                 display: 'block',
                                 width: '100%',
                                 border: 'none',
@@ -436,7 +489,7 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
                                 height: '5rem',
                                 color: 'white',
                             }} onClick={onGraded}>
-                                <Typography.Title style={{ color: 'white', textAlign: 'center', margin: '1.25%' }}><i>Save</i></Typography.Title>
+                                <Typography.Title style={{ color: 'white', textAlign: 'center', margin: '1.25%' }}><i>Finish Grading</i></Typography.Title>
                             </Button>
                         </div>
                     </div>

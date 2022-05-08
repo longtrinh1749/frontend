@@ -26,7 +26,7 @@ const Register = ({setRegister}) => {
                 <div className="fadeIn first">
                     <img src="https://t4.ftcdn.net/jpg/01/90/50/61/360_F_190506160_coExNloNdTd1OcvJe3cbdddUDqoqiJ2B.jpg" id="icon" alt="User Icon" />
                 </div>
-                <form onSubmit={onFinish}>
+                <form className="login-form" onSubmit={onFinish}>
                     <input type="text" id="login" className="fadeIn first" name="login" placeholder="Username" />
                     <input type="password" id="password" className="fadeIn second" name="login" placeholder="Password" />
                     <input type="text" id="name" className="fadeIn second" name="register" placeholder="Name" />

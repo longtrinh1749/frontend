@@ -25,7 +25,7 @@ const CreateAssignment = ({ course, visible, onEdit, onCancel }) => {
 
     const [form] = Form.useForm();
 
-    let BASE_URL = 'http://127.0.0.1:5000/assignments'
+    let BASE_URL = 'http://192.168.1.10:5000/assignments'
 
     const callCreateAssignment = (values) => {
         return new Promise((resolve) => {
