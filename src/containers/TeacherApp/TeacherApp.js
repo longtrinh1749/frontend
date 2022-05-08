@@ -6,6 +6,8 @@ import Courses from '../../components/Teacher/Courses/Courses'
 import Assignments from "../../components/Teacher/Course/Assignments";
 import Students from "../../components/Teacher/Course/Students"
 import Grading from "../../components/Teacher/Assignment/Grading";
+import Profile from "../../components/Common/Account/Profile";
+import Saved from "../../components/Common/Account/Saved";
 
 const TeacherApp = ({ setToken, token }) => {
 
@@ -51,12 +53,12 @@ const TeacherApp = ({ setToken, token }) => {
     const profileMenu = (
         <Menu>
             <Menu.Item>
-                <a rel="noopener noreferrer" href="#" key='profile'>
+                <a rel="noopener noreferrer" href="#" key='profile' onClick={(() => setProfileVisible(true))}>
                     Profile
                 </a>
             </Menu.Item>
             <Menu.Item>
-                <a rel="noopener noreferrer" href="#" key='saved'>
+                <a rel="noopener noreferrer" href="#" key='saved' onClick={(() => setSavedVisible(true))}>
                     Saved Items
                 </a>
             </Menu.Item>
@@ -67,6 +69,12 @@ const TeacherApp = ({ setToken, token }) => {
             </Menu.Item>
         </Menu>
     )
+
+    // Profile modal
+    const [profileVisible, setProfileVisible] = useState(false)
+
+    // Saved modal
+    const [savedVisible, setSavedVisible] = useState(false)
 
     // Notification Menu
     const notiFilterMenu = (
@@ -116,6 +124,8 @@ const TeacherApp = ({ setToken, token }) => {
 
     return (
         <Layout>
+            <Profile modalVisible={profileVisible} setModalVisible={setProfileVisible}></Profile>
+            <Saved modalVisible={savedVisible} setModalVisible={setSavedVisible}></Saved>
             <Header className="header">
                 <div className="logo">
                     <img style={{
