@@ -24,7 +24,7 @@ const CourseInfo = ({ course, refresh, setRefresh }) => {
     }
     return (
         <>
-            <EditCourseForm courseInfo={courseInfo} visible={visible} onEdit={onEdit} onCancel={() => setVisible(false)} refresh={refresh}></EditCourseForm>
+            <EditCourseForm courseInfo={courseInfo} visible={visible} onEdit={onEdit} onCancel={() => setVisible(false)} refresh={refresh} setRefresh={setRefresh}></EditCourseForm>
             <Descriptions
                 bordered
                 title="Class Information"

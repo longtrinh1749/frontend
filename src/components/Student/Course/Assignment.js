@@ -95,14 +95,14 @@ const Assignment = ({ assignment, refresh, setRefresh }) => {
     const [previewVisible, setPreviewVisible] = useState(false)
     const [previewImage, setPreviewImage] = useState('')
     const [previewTitle, setPreviewTitle] = useState('')
-    const [fileList, setFileList] = useState([]
-        // [
-        //     {
-        //         uid: '-1',
-        //         name: 'image.png',
-        //         status: 'done',
-        //         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        //     },
+    const [fileList, setFileList] = useState(
+        [
+            // {
+            //     uid: '-1',
+            //     name: 'image.png',
+            //     status: 'done',
+            //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+            // },
         //     {
         //         uid: '-2',
         //         name: 'image.png',
@@ -133,7 +133,7 @@ const Assignment = ({ assignment, refresh, setRefresh }) => {
         //         name: 'image.png',
         //         status: 'error',
         //     },
-        // ]
+        ]
     )
 
     let uploadFile = (file) => {
@@ -142,8 +142,10 @@ const Assignment = ({ assignment, refresh, setRefresh }) => {
             formData.append('file', file)
             formData.append('assignment_id', asmData.id)
             formData.append('user_id', sessionStorage.getItem('id'))
-            axios.post(BASE_WORK_URL, formData)
-            setRefresh(!refresh)
+            axios.post(BASE_WORK_URL, formData).then(function (response) {
+                setRefresh(!refresh)
+                console.log(response)
+            })
             resolve(true)
         })
     }

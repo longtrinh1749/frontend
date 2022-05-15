@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import { Layout, Menu, Breadcrumb, Dropdown, Card, Avatar, Button, Input, Typography } from 'antd';
+import React, { useEffect, useRef, useState } from "react";
+import { Layout, Menu, Breadcrumb, Dropdown, Card, Avatar, Button, Input, Typography, Badge } from 'antd';
 import { UserOutlined, DownOutlined, RedoOutlined, NotificationOutlined, BellOutlined, SendOutlined } from '@ant-design/icons';
 import '../App/App.css'
 import Courses from '../../components/Student/Courses/Courses'
@@ -7,6 +7,7 @@ import Assignments from "../../components/Student/Course/Assignments";
 import Assignment from '../../components/Student/Course/Assignment'
 import Profile from "../../components/Common/Account/Profile";
 import Saved from "../../components/Common/Account/Saved";
+import Chat from "../../components/Common/Chat/Chat";
 
 const StudentApp = ({ setToken, token }) => {
 
@@ -90,6 +91,19 @@ const StudentApp = ({ setToken, token }) => {
     const chatSuffix = (
         <SendOutlined />
     )
+
+    // let scope = useRef('GLOBAL')
+    // let scopeId = useRef(0)
+    // useEffect(() => {
+    //     if (course != '') {
+    //         scope.current = 'COURSE'
+    //         scopeId.current = course.id
+    //     }
+    //     if (assignment != '') {
+    //         scope.current = 'PRIVATE'
+    //         scopeId.current = course
+    //     }
+    // }, [course, assignment])
     // Content
     let content = (
         <Courses token={token} setCourse={setCourse} refresh={refresh} setRefresh={setRefresh}></Courses>
@@ -251,10 +265,11 @@ const StudentApp = ({ setToken, token }) => {
                         {content}
                     </Content>
                 </Layout>
-                <Sider width={'20%'} className="site-layout-background">
-                    <Input.Group compact>
-                        <Input.TextArea id="chat-input" placeholder="Chat" autoSize={{ minRows: 2, maxRows: 4 }} onPressEnter={() => console.log("asd")} />
-                    </Input.Group>
+                <Sider width={'20%'} className="site-layout-background" style={{
+                    overflow: 'auto',
+                    height: "calc(100vh - 64px)",
+                }}>
+                    <Chat courseId={course.id} assignmentId={assignment.id} userId={course.created_by}></Chat>
                 </Sider>
             </Layout>
         </Layout>

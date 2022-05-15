@@ -3,7 +3,7 @@ import { Button, Modal, Form, Input, Radio, Tabs, Switch } from 'antd';
 import ManageStudentList from './EditCourseStudent';
 import axios from 'axios';
 
-const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel, refresh }) => {
+const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel, refresh, setRefresh }) => {
     let BASE_URL = 'http://192.168.1.10:5000/courses'
 
     const [form] = Form.useForm();
@@ -94,7 +94,7 @@ const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel, refresh }) => {
                     </Form>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab='Students List' key='2'>
-                    <ManageStudentList courseInfo={courseInfo} refresh={refresh} visible={visible}></ManageStudentList>
+                    <ManageStudentList courseInfo={courseInfo} refresh={refresh} visible={visible} setRefresh={setRefresh}></ManageStudentList>
                 </Tabs.TabPane>
             </Tabs>
         </Modal>

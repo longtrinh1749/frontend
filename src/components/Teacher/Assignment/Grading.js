@@ -89,6 +89,7 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
         })
         setCanvasHtml(_canvasHtml)
         if (!canvasState.current) {
+            let _objects = []
             for (let i = 0; i < worksData.length; i++) {
                 let _canvasId = 'canvas' + worksData[i].id
                 if (document.getElementById(_canvasId)) {
@@ -124,14 +125,13 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
                         console.log(o, object)
                     })
                 }
-                let _objects = []
                 for (let j = 0; j < worksData[i].objects.length; j++) {
                     let o = worksData[i].objects[j]
                     console.log('Object', o)
                     _objects.push({ left: o.left, top: o.top, image: o.image, workId: o.work_id, type: o.type, widthSize: o.width_size, value: o.value })
                     console.log('Objects', _objects)
-                    setObjects(_objects)
                 }
+                setObjects(_objects)
                 updateObjectSpan()
                 console.log('Object Load', objects)
                 // Click handler
@@ -327,7 +327,6 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
                 console.log('Notification Clicked!');
             },
         });
-        // them vong for work ben ngoai
         for (let j = 0; j < worksData.length; j++) {
             let formData = new FormData()
             console.log("Grading objects", objects)
@@ -345,18 +344,22 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
                             fill: 'red',
                         })
                         canvases.current[j].add(text)
+                    } else {
+                        let _img = document.createElement('img')
+                        if (o.type == objectConst.TYPE_RIGHT) {
+                            console.log("asd")
+                            _img.src = objectConst.RIGHT_URL
+                        } else if (o.type == objectConst.TYPE_WRONG) {
+                            _img.src = objectConst.WRONG_URL
+                        }
+                        let imageInstance = new fabric.Image(_img, {
+                            left: o.left,
+                            top: o.top,
+                        })
+                        console.log("keke", j)
+                        canvases.current[j].add(imageInstance)
                     }
-                    let _img = document.createElement('img')
-                    if (o.type == objectConst.TYPE_RIGHT) {
-                        _img.src = objectConst.RIGHT_URL
-                    } else if (o.type == objectConst.TYPE_WRONG) {
-                        _img.src = objectConst.WRONG_URL
-                    }
-                    let imageInstance = new fabric.Image(_img, {
-                        left: o.left,
-                        top: o.top,
-                    })
-                    canvases.current[j].add(imageInstance)
+                    console.log("keke", canvases.current[j].toJSON())
                 }
             }
             let _img = document.getElementById('work' + worksData[j].id)
@@ -382,11 +385,6 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
 
                 axios.put(BASE_GRADING_URL, formData)
             })
-
-            // formData.append('id', submitData.id)
-            // formData.append('score', score.current)
-            // formData.append('comment', finalComment.current)
-            // axios.put(BASE_GRADING_URL, formData)
         }
     }
     //
@@ -412,32 +410,8 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
                     buttonStyle="outline"
                     defaultValue={options[0].label}
                 />
-                {/* <Button onClick={saveGrading}>Save</Button> */}
-                {/* <Button onClick={rescoring}>Re-scoring</Button> */}
             </div>
             <Row>
-                {/* <Col span={3} style={{ backgroundColor: 'lightblue', textAlign: 'center' }}>
-                    <Radio.Group
-                        options={options}
-                        onChange={(e) => {
-                            tool.current = e.target.value
-                            if (tool.current == toolConst.PEN) {
-                                for (let i = 0; i < canvases.current.length; i++) {
-                                    canvases.current[i].isDrawingMode = true
-                                }
-                            } else {
-                                for (let i = 0; i < canvases.current.length; i++) {
-                                    canvases.current[i].isDrawingMode = false
-                                }
-                            }
-                            console.log('Set tool to', tool)
-                        }}
-                        optionType="button"
-                        buttonStyle="solid"
-                    />
-                    <Button onClick={saveGrading}>Save</Button> */}
-                {/* <Button onClick={rescoring}>Re-scoring</Button> */}
-                {/* </Col> */}
                 <Col span={24} style={{ backgroundColor: 'lightcyan' }}>
 
                     <div className="img-layer layer" id="image-layer">
@@ -446,14 +420,17 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
                             <Col flex="20%" className="final-grade score">
                                 <Typography.Title style={{ color: 'red', textAlign: 'center' }}><i>Score</i></Typography.Title>
                                 <Input onChange={scoreChange}
+                                    value={submitData ? submitData.result : undefined}
                                     style={{
                                         'fontSize': '50px',
-                                        border: 'none'
+                                        border: 'none',
+                                        textAlign: 'center',
                                     }} />
                             </Col>
                             <Col flex="auto" className='final-grade criticism'>
                                 <Typography.Title style={{ color: 'red', textAlign: 'center' }}><i>Comment</i></Typography.Title>
                                 <Input.TextArea onChange={onFinalCommentChange}
+                                    value={submitData ? submitData.comment : undefined}
                                     style={{
                                         border: 'none',
                                         marginTop: '7px',

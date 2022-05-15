@@ -26,7 +26,11 @@ const Courses = ({ token, setCourse, refresh, setRefresh }) => {
         coursesHTML = courses.map((course, index) => {
             return (
                 <Col span={8} key={index}>
-                    <Card hoverable={true} title={course.name} bordered={true} courseid={course.id} onClick={() => setCourse({ 'name': course.name, 'id': course.id })}>
+                    <Card hoverable={true} title={course.name} bordered={true} courseid={course.id} onClick={() => {
+                        console.log('hihi', course)
+                        setCourse({ 'name': course.name, 'id': course.id, 'created_by': course.created_by })
+                    }
+                    }>
                         {/* <p style={{ fontSize: 'smaller' }}>{course.class}</p>
                         <p style={{ fontSize: 'smaller' }}>{course.school}</p>
                         <p style={{ fontSize: 'smaller' }}>{course.teacher.name}</p>
