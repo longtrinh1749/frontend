@@ -30,7 +30,7 @@ const Assignments = ({ token, course, setAssignment, refresh, setRefresh }) => {
         assignmentsHTML = assignments.map((assignment, index) => {
             return (
                 <Col span={8} key={index}>
-                    <Card hoverable={true} title={assignment.name} bordered={true} assignmentid={assignment.id} onClick={() => setAssignment({ 'name': assignment.name, 'id': assignment.id })}>
+                    <Card hoverable={true} title={assignment.name} bordered={true} assignmentid={assignment.id} onClick={() => setAssignment(assignment)}>
 
                         <Card.Grid hoverable={false} style={{
                             width: '50%',

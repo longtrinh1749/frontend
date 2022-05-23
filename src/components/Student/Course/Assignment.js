@@ -4,6 +4,7 @@ import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import './Assignment.css'
 import axios from "axios";
 import { upload } from "@testing-library/user-event/dist/upload";
+import EditAssignment from "../../Teacher/Assignment/EditAssignment";
 
 const Assignment = ({ assignment, refresh, setRefresh }) => {
     let BASE_ASM_URL = 'http://192.168.1.10:5000/assignments'
@@ -103,36 +104,36 @@ const Assignment = ({ assignment, refresh, setRefresh }) => {
             //     status: 'done',
             //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
             // },
-        //     {
-        //         uid: '-2',
-        //         name: 'image.png',
-        //         status: 'done',
-        //         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        //     },
-        //     {
-        //         uid: '-3',
-        //         name: 'image.png',
-        //         status: 'done',
-        //         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        //     },
-        //     {
-        //         uid: '-4',
-        //         name: 'image.png',
-        //         status: 'done',
-        //         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        //     },
-        //     {
-        //         uid: '-xxx',
-        //         percent: 50,
-        //         name: 'image.png',
-        //         status: 'uploading',
-        //         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        //     },
-        //     {
-        //         uid: '-5',
-        //         name: 'image.png',
-        //         status: 'error',
-        //     },
+            //     {
+            //         uid: '-2',
+            //         name: 'image.png',
+            //         status: 'done',
+            //         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+            //     },
+            //     {
+            //         uid: '-3',
+            //         name: 'image.png',
+            //         status: 'done',
+            //         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+            //     },
+            //     {
+            //         uid: '-4',
+            //         name: 'image.png',
+            //         status: 'done',
+            //         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+            //     },
+            //     {
+            //         uid: '-xxx',
+            //         percent: 50,
+            //         name: 'image.png',
+            //         status: 'uploading',
+            //         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+            //     },
+            //     {
+            //         uid: '-5',
+            //         name: 'image.png',
+            //         status: 'error',
+            //     },
         ]
     )
 
@@ -201,12 +202,23 @@ const Assignment = ({ assignment, refresh, setRefresh }) => {
             )
         }
     })
+
+    //Edit Assignment Form
+    const [visible, setVisible] = useState(false);
+    const onEdit = (values) => {
+        console.log('Received values from form', values)
+        setVisible(false)
+    }
     return (
         <>
             <Typography.Title level={4} italic={true} style={{
                 display: 'inline-block',
             }}>{asmData.name}</Typography.Title>
-            <Descriptions title='' layout="vertical" size="middle">
+            <Descriptions
+                title=''
+                layout="vertical"
+                size="middle"
+            >
                 <Descriptions.Item label="Due"><i>{asmData.due}</i></Descriptions.Item>
                 <Descriptions.Item label="Description">
                     <i>Doing homework 5 in page 23</i>
