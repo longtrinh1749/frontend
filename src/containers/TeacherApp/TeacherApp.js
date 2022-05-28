@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Layout, Menu, Breadcrumb, Dropdown, Card, Avatar, Button, Input, Typography } from 'antd';
 import { UserOutlined, DownOutlined, LaptopOutlined, NotificationOutlined, BellOutlined, SendOutlined, RedoOutlined } from '@ant-design/icons';
 import '../App/App.css'
@@ -8,6 +8,10 @@ import Students from "../../components/Teacher/Course/Students"
 import Grading from "../../components/Teacher/Assignment/Grading";
 import Profile from "../../components/Common/Account/Profile";
 import Saved from "../../components/Common/Account/Saved";
+import Chat from "../../components/Common/Chat/Chat";
+import Sort from "../../components/Common/Sort/Sort";
+import Filter from "../../components/Common/Filter/Filter";
+import Notification from "../../components/Common/Notification/Notification";
 
 const TeacherApp = ({ setToken, token }) => {
 
@@ -22,6 +26,8 @@ const TeacherApp = ({ setToken, token }) => {
 
     // Student
     const [student, setStudent] = useState('')
+
+    const [students, setStudents] = useState(1)
 
     // Breadcrumbs
     let brcrumb = useRef({ course: '', assignment: '', student: '' })
@@ -102,17 +108,69 @@ const TeacherApp = ({ setToken, token }) => {
         <SendOutlined />
     )
 
+    const [filterList, setFilterList] = useState([])
+    const [sort, setSort] = useState()
+    const [filter, setFilter] = useState()
+    const [sortOptions, setSortOptions] = useState([])
+    const [filterOptions, setFilterOptions] = useState([])
+    let sortList, setSortList
+
     // Content
     let content = (
-        <Courses token={token} setCourse={setCourse} refresh={refresh} setRefresh={setRefresh}></Courses>
+        <Courses
+            token={token}
+            setCourse={setCourse}
+            refresh={refresh}
+            setRefresh={setRefresh}
+            setSortOptions={setSortOptions}
+            sort={sort}
+            setFilterOptions={setFilterOptions}
+            filter={filter}
+        >
+
+        </Courses>
     )
     if (course && !assignment && !student) {
         content = (
-            <Assignments token={token} course={course} setAssignment={setAssignment} refresh={refresh} setRefresh={setRefresh}></Assignments>
+            <Assignments
+                token={token}
+                course={course}
+                setAssignment={setAssignment}
+                refresh={refresh}
+                setRefresh={setRefresh}
+                setSortList={setSortList}
+                setFilterList={setFilterList}
+                setSortOptions={setSortOptions}
+                sort={sort}
+                setFilterOptions={setFilterOptions}
+                filter={filter}
+            >
+
+            </Assignments>
         )
     } else if (course && assignment && !student) {
+        sortList = students
+        setSortList = setStudents
         content = (
-            <Students token={token} course={course} assignment={assignment} setStudent={setStudent} refresh={refresh}></Students>
+            <Students
+                token={token}
+                course={course}
+                assignment={assignment}
+                setStudent={setStudent}
+                setSortList={setSortList}
+                setFilterList={setFilterList}
+                setRefresh={setRefresh}
+                refresh={refresh}
+                students={students}
+                setStudents={setStudents}
+                sortOptions={sortOptions}
+                setSortOptions={setSortOptions}
+                sort={sort}
+                setFilterOptions={setFilterOptions}
+                filter={filter}
+            >
+
+            </Students>
         )
     } else if (course && assignment && student) {
         content = (
@@ -139,139 +197,14 @@ const TeacherApp = ({ setToken, token }) => {
                 </Dropdown>
             </Header>
             <Layout>
-                <Sider id='main-content' width={'15%'} className="site-layout-background" style={{
-                    overflow: 'auto',
-                    height: "calc(100vh - 64px)",
-                    padding: '0 5px 0 5px',
-                }}>
-                    <Dropdown overlay={notiFilterMenu} trigger={['click']}>
-                        <Button id="noti-filter-button" shape="round" type="primary">
-                            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                                Filter <DownOutlined />
-                            </a>
-                        </Button>
-                    </Dropdown>
-                    <BellOutlined />
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Submitted"
-                            description="Nguyen Hanh Kien has submitted Bai 5 SGK Tieng Viet"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Due"
-                            description="Bai tap toan lop 2 is about to pass due in 1 day"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Past due"
-                            description="Bai tap TV lop 3 has passed graded due"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Bui Gia Khanh has a question in Lop 2A3"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Kim Thuy Ngan has a question in assignment Bai tap Toan giua ki"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Giang A Thuy has a question in his submitted for Bai tap Toan giua ki"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Pham Gia Tuan replied your chat in class 2A3"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Giang A Thuy has a question in his submitted for Bai tap Toan giua ki"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Pham Gia Tuan replied your chat in class 2A3"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Giang A Thuy has a question in his submitted for Bai tap Toan giua ki"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Pham Gia Tuan replied your chat in class 2A3"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Giang A Thuy has a question in his submitted for Bai tap Toan giua ki"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Pham Gia Tuan replied your chat in class 2A3"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Giang A Thuy has a question in his submitted for Bai tap Toan giua ki"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Pham Gia Tuan replied your chat in class 2A3"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Giang A Thuy has a question in his submitted for Bai tap Toan giua ki"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Pham Gia Tuan replied your chat in class 2A3"
-                        />
-                    </Card>
-                </Sider>
+                <Notification
+                    notiFilterMenu={notiFilterMenu}
+                    refresh={refresh}
+                    setRefresh={setRefresh}
+                    setCourse={setCourse}
+                    setAssignment={setAssignment}
+                    setStudent={setStudent}
+                />
                 <Layout style={{
                     padding: '0 24px 24px',
                     height: 'calc(100vh - 64px',
@@ -284,17 +217,20 @@ const TeacherApp = ({ setToken, token }) => {
                         {brcrumb.current.assignment}
                         {brcrumb.current.student}
                     </Breadcrumb>
-                    <div>
+                    <div id='utils'>
                         <RedoOutlined style={{ float: 'right', margin: '10px', fontSize: '125%' }} onClick={() => setRefresh(!refresh)} />
+                        <Sort sortList={students} setSortList={setStudents} setSort={setSort} sortOptions={sortOptions}></Sort>
+                        <Filter setFilter={setFilter} filterOptions={filterOptions}></Filter>
                     </div>
                     <Content className="site-layout-background">
                         {content}
                     </Content>
                 </Layout>
-                <Sider width={'20%'} className="site-layout-background">
-                    <Input.Group compact>
-                        <Input.TextArea id="chat-input" placeholder="Chat" autoSize={{ minRows: 2, maxRows: 4 }} onPressEnter={() => console.log("asd")} />
-                    </Input.Group>
+                <Sider width={'20%'} className="site-layout-background" style={{
+                    overflow: 'auto',
+                    height: "calc(100vh - 64px)",
+                }}>
+                    <Chat courseId={course.id} assignmentId={assignment.id} userId={student.id}></Chat>
                 </Sider>
             </Layout>
         </Layout>

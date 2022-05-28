@@ -26,9 +26,9 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
     }
 
     // URL
-    let BASE_WORK_URL = 'http://192.168.1.10:5000/work'
-    let BASE_SUBMIT_URL = 'http://192.168.1.10:5000/submits'
-    let BASE_GRADING_URL = 'http://192.168.1.10:5000/grading'
+    let BASE_WORK_URL = 'http://192.168.1.9:5000/work'
+    let BASE_SUBMIT_URL = 'http://192.168.1.9:5000/submits'
+    let BASE_GRADING_URL = 'http://192.168.1.9:5000/grading'
 
     // Data state
     const [worksData, setWorksData] = useState([])

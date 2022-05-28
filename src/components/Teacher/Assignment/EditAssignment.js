@@ -3,7 +3,7 @@ import { Button, Modal, Form, Input, Radio, Tabs, Switch } from 'antd';
 import axios from 'axios';
 
 const EditAssignment = ({ assignment, visible, onEdit, onCancel, refresh, setRefresh }) => {
-    let BASE_URL = 'http://192.168.1.10:5000/assignments'
+    let BASE_URL = 'http://192.168.1.9:5000/assignments'
 
     const [form] = Form.useForm();
 

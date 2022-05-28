@@ -20,7 +20,7 @@
 
 .site-layout-background .noti-card {
   width: 100%;
-  margin: auto;
+  margin: 10px 0;
 }
 
 #noti-filter-button {
@@ -95,4 +95,9 @@ button {
   font-size: small;
   font-style: italic;
   font-weight: bold;
+}
+
+#utils > * {
+    float: right;
+    margin: 0 10px;
 }

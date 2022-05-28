@@ -20,7 +20,7 @@ import {
 } from 'antd';
 const LeaveCourse = ({ course, leaveCourse }) => {
 
-    let BASE_URL = 'http://192.168.1.10:5000/course'
+    let BASE_URL = 'http://192.168.1.9:5000/course'
 
     const callLeaveCourse = () => {
         return new Promise((resolve) => {

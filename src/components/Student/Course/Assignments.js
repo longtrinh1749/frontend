@@ -5,9 +5,9 @@ import CourseInfo from '../../Common/CourseInfo/CourseInfo'
 import axios from "axios";
 import moment from 'moment';
 
-const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRefresh }) => {
+const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRefresh, setSortOptions, sort, setFilterOptions, filter }) => {
 
-    const BASE_URL = 'http://192.168.1.10:5000/assignments'
+    const BASE_URL = 'http://192.168.1.9:5000/assignments'
 
     const [assignments, setAssignments] = useState(1)
 
@@ -20,6 +20,40 @@ const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRef
         axios.get(BASE_URL, { params }).then((res) => {
             setAssignments(res.data.assignments)
         })
+        setSortOptions([
+            {
+                value: 'name',
+                display: 'Name'
+            },
+            {
+                value: 'due',
+                display: 'Due date'
+            },
+            {
+                value: 'status',
+                display: 'Status'
+            }
+        ])
+
+        setFilterOptions([
+            {
+                display: 'Status',
+                values: [
+                    {
+                        d: 'Chưa chấm',
+                        v: 'statusSubmitted'
+                    },
+                    {
+                        d: 'Chưa nộp',
+                        v: 'statusUnsubmitted'
+                    },
+                    {
+                        d: 'Đã chấm',
+                        v: 'graded'
+                    }
+                ]
+            }
+        ])
     }, [refresh])
 
     let assignmentsHTML = (

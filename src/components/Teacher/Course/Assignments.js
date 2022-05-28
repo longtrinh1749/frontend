@@ -6,9 +6,9 @@ import axios from "axios";
 import CreateAssignment from './CreateAssignment/CreateAssignment'
 import moment from 'moment';
 
-const Assignments = ({ token, course, setAssignment, refresh, setRefresh }) => {
+const Assignments = ({ token, course, setAssignment, refresh, setRefresh, setSortOptions, sort, setFilterOptions, filter }) => {
 
-    const BASE_URL = 'http://192.168.1.10:5000/assignments'
+    const BASE_URL = 'http://192.168.1.9:5000/assignments'
 
     const [assignments, setAssignments] = useState(1)
     useEffect(() => {
@@ -22,6 +22,27 @@ const Assignments = ({ token, course, setAssignment, refresh, setRefresh }) => {
             console.log(res.data.assignments)
             setAssignments(res.data.assignments)
         })
+
+        setSortOptions([
+            {
+                value: 'name',
+                display: 'Name'
+            },
+            {
+                value: 'due',
+                display: 'Due date'
+            },
+            {
+                value: 'submitted',
+                display: 'Total submitted'
+            },
+            {
+                value: 'graded',
+                display: 'Total graded'
+            }
+        ])
+
+        setFilterOptions([])
     }, [refresh])
     let assignmentsHTML = (
         <div></div>

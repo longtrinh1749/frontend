@@ -5,7 +5,7 @@ import EditCourseForm from '../../Teacher/EditCourse/EditCourseInfo'
 import './CourseInfo.css'
 
 const CourseInfo = ({ course, refresh, setRefresh }) => {
-    let BASE_URL = 'http://192.168.1.10:5000/courses'
+    let BASE_URL = 'http://192.168.1.9:5000/courses'
     const [courseInfo, setCourseInfo] = useState(1)
     console.log("CourseInfo ", course)
     useEffect(() => {
@@ -31,7 +31,7 @@ const CourseInfo = ({ course, refresh, setRefresh }) => {
                 size='middle'
                 extra={<Button size="large" type="primary" onClick={() => {
                     setVisible(true);
-                }}>Edit</Button>}
+                }}>Edit Course</Button>}
             >
                 <Descriptions.Item label="Name">{courseInfo.name ? courseInfo.name : 'None'}</Descriptions.Item>
                 <Descriptions.Item label="School">{courseInfo.school ? courseInfo.school : 'None'}</Descriptions.Item>

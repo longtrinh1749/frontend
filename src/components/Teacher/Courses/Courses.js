@@ -3,9 +3,9 @@ import { Card, Col, Divider, Row, Button, Modal } from 'antd'
 import axios from "axios";
 import CreateCourse from "../CreateCourse/CreateCourse";
 
-const Courses = ({ token, setCourse, refresh, setRefresh }) => {
+const Courses = ({ token, setCourse, refresh, setRefresh, setSortOptions, sort, setFilterOptions, filter }) => {
 
-    let BASE_URL = 'http://192.168.1.10:5000/courses'
+    let BASE_URL = 'http://192.168.1.9:5000/courses'
 
     // Courses List
 
@@ -22,6 +22,17 @@ const Courses = ({ token, setCourse, refresh, setRefresh }) => {
             console.log(res.data.courses)
             setCourses(res.data.courses)
         })
+        setSortOptions([
+            {
+                value: 'name',
+                display: 'Name'
+            },
+            {
+                value: 'total',
+                display: 'Total students'
+            }
+        ])
+        setFilterOptions([])
     }, [refresh])
 
     let coursesHTML = (

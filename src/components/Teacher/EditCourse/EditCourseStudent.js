@@ -5,8 +5,8 @@ import { UserOutlined } from '@ant-design/icons';
 import './EditCourseStudent.css'
 
 const ManageStudentList = ({ courseInfo, refresh, visible, setRefresh }) => {
-    let BASE_STUDENTS_URL = 'http://192.168.1.10:5000/users/course/students'
-    let BASE_COURSE_USER_URL = 'http://192.168.1.10:5000/course'
+    let BASE_STUDENTS_URL = 'http://192.168.1.9:5000/users/course/students'
+    let BASE_COURSE_USER_URL = 'http://192.168.1.9:5000/course'
 
     const [students, setStudents] = useState([{ name: 'Error' }])
     let student = useRef(false)

@@ -4,9 +4,9 @@ import axios from "axios";
 import JoinCourse from "../JoinCourse/JoinCourse";
 import './Courses.css'
 
-const Courses = ({ token, setCourse, refresh, setRefresh }) => {
+const Courses = ({ token, setCourse, refresh, setRefresh, setSortOptions, sort, setFilterOptions, filter }) => {
 
-    const BASE_URL = 'http://192.168.1.10:5000/courses'
+    const BASE_URL = 'http://192.168.1.9:5000/courses'
 
     const [courses, setCourses] = useState(1)
 
@@ -18,6 +18,21 @@ const Courses = ({ token, setCourse, refresh, setRefresh }) => {
         axios.get(BASE_URL, { params }).then((res) => {
             setCourses(res.data.courses)
         })
+        setSortOptions([
+            {
+                value: 'name',
+                display: 'Name'
+            },
+            {
+                value: 'total',
+                display: 'Total students'
+            },
+            {
+                value: 'class',
+                display: 'Class'
+            }
+        ])
+        setFilterOptions([])
     }, [refresh])
     let coursesHTML = (
         <div></div>

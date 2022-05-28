@@ -7,9 +7,9 @@ import { upload } from "@testing-library/user-event/dist/upload";
 import EditAssignment from "../../Teacher/Assignment/EditAssignment";
 
 const Assignment = ({ assignment, refresh, setRefresh }) => {
-    let BASE_ASM_URL = 'http://192.168.1.10:5000/assignments'
-    let BASE_SUBMIT_URL = 'http://192.168.1.10:5000/submits'
-    let BASE_WORK_URL = 'http://192.168.1.10:5000/work'
+    let BASE_ASM_URL = 'http://192.168.1.9:5000/assignments'
+    let BASE_SUBMIT_URL = 'http://192.168.1.9:5000/submits'
+    let BASE_WORK_URL = 'http://192.168.1.9:5000/work'
 
     // Data
     const [asmData, setAsmData] = useState(false)

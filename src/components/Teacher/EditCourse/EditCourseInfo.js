@@ -4,7 +4,7 @@ import ManageStudentList from './EditCourseStudent';
 import axios from 'axios';
 
 const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel, refresh, setRefresh }) => {
-    let BASE_URL = 'http://192.168.1.10:5000/courses'
+    let BASE_URL = 'http://192.168.1.9:5000/courses'
 
     const [form] = Form.useForm();
 
@@ -69,7 +69,7 @@ const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel, refresh, setRef
                     <Input />
                 </Form.Item> */}
                         <Form.Item name="name" label="Name" rules={[{ required: true }]}>
-                            <Input type="textarea" readonly="readonly"/>
+                            <Input type="textarea" readonly="readonly" />
                         </Form.Item>
                         <Form.Item name="class" label="Class">
                             <Input type="textarea" />

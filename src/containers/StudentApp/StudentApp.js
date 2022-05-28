@@ -8,6 +8,9 @@ import Assignment from '../../components/Student/Course/Assignment'
 import Profile from "../../components/Common/Account/Profile";
 import Saved from "../../components/Common/Account/Saved";
 import Chat from "../../components/Common/Chat/Chat";
+import Sort from "../../components/Common/Sort/Sort";
+import Filter from "../../components/Common/Filter/Filter";
+import Notification from "../../components/Common/Notification/Notification";
 
 const StudentApp = ({ setToken, token }) => {
 
@@ -92,6 +95,11 @@ const StudentApp = ({ setToken, token }) => {
         <SendOutlined />
     )
 
+    const [filterList, setFilterList] = useState([])
+    const [sort, setSort] = useState()
+    const [filter, setFilter] = useState()
+    const [sortOptions, setSortOptions] = useState([])
+    const [filterOptions, setFilterOptions] = useState([])
     // let scope = useRef('GLOBAL')
     // let scopeId = useRef(0)
     // useEffect(() => {
@@ -106,15 +114,46 @@ const StudentApp = ({ setToken, token }) => {
     // }, [course, assignment])
     // Content
     let content = (
-        <Courses token={token} setCourse={setCourse} refresh={refresh} setRefresh={setRefresh}></Courses>
+        <Courses
+            token={token}
+            setCourse={setCourse}
+            refresh={refresh}
+            setRefresh={setRefresh}
+            setSortOptions={setSortOptions}
+            sort={sort}
+            setFilterOptions={setFilterOptions}
+            filter={filter}
+        >
+
+        </Courses>
     )
     if (course && !assignment) {
         content = (
-            <Assignments token={token} course={course} setAssignment={setAssignment} setBrCrumb={() => { setAssignment(''); setCourse('') }} refresh={refresh} setRefresh={setRefresh}></Assignments>
+            <Assignments
+                token={token}
+                course={course}
+                setAssignment={setAssignment}
+                setBrCrumb={() => { setAssignment(''); setCourse('') }}
+                refresh={refresh}
+                setRefresh={setRefresh}
+                setSortOptions={setSortOptions}
+                sort={sort}
+                setFilterOptions={setFilterOptions}
+                filter={filter}
+            >
+
+            </Assignments>
         )
     } else if (course && assignment) {
         content = (
-            <Assignment token={token} assignment={assignment} refresh={refresh} setRefresh={setRefresh}></Assignment>
+            <Assignment
+                token={token}
+                assignment={assignment}
+                refresh={refresh}
+                setRefresh={setRefresh}
+            >
+
+            </Assignment>
         )
     }
 
@@ -135,118 +174,14 @@ const StudentApp = ({ setToken, token }) => {
                 </Dropdown>
             </Header>
             <Layout>
-                <Sider id='main-content' width={'15%'} className="site-layout-background" style={{
-                    overflow: 'auto',
-                    height: "calc(100vh - 64px)",
-                    padding: '0 5px 0 5px',
-                }}>
-                    <Dropdown overlay={notiFilterMenu} trigger={['click']}>
-                        <Button id="noti-filter-button" shape="round" type="primary">
-                            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                                Filter <DownOutlined />
-                            </a>
-                        </Button>
-                    </Dropdown>
-                    <BellOutlined />
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Submitted"
-                            description="Bai 5 SGK Tieng Viet has been graded"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Due"
-                            description="Bai tap toan lop 2 is about to pass due in 1 day"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Past due"
-                            description="Bai tap TV lop 3 has passed due"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Bui Gia Khanh has a question in Lop 2A3"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Kim Thuy Ngan has a question in assignment Bai tap Toan giua ki"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Ms Thuy has reply to your question in Bai tap Toan giua ki"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Pham Gia Tuan replied your chat in class 2A3"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Submitted"
-                            description="Bai 5 SGK Tieng Viet has been graded"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Due"
-                            description="Bai tap toan lop 2 is about to pass due in 1 day"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Past due"
-                            description="Bai tap TV lop 3 has passed due"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Bui Gia Khanh has a question in Lop 2A3"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Kim Thuy Ngan has a question in assignment Bai tap Toan giua ki"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Ms Thuy has reply to your question in Bai tap Toan giua ki"
-                        />
-                    </Card>
-                    <Card className="noti-card" loading={false}>
-                        <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Question"
-                            description="Pham Gia Tuan replied your chat in class 2A3"
-                        />
-                    </Card>
-                </Sider>
+                <Notification
+                    refresh={refresh}
+                    setRefresh={setRefresh}
+                    notiFilterMenu={notiFilterMenu}
+                    setCourse={setCourse}
+                    setAssignment={setAssignment}
+
+                />
                 <Layout style={{
                     padding: '0 24px 24px',
                     height: 'calc(100vh - 64px)',
@@ -258,8 +193,10 @@ const StudentApp = ({ setToken, token }) => {
                         {brcrumb.current.course}
                         {brcrumb.current.assignment}
                     </Breadcrumb>
-                    <div>
+                    <div id='utils'>
                         <RedoOutlined style={{ float: 'right', margin: '10px', fontSize: '125%' }} onClick={() => setRefresh(!refresh)} />
+                        <Sort setSort={setSort} sortOptions={sortOptions}></Sort>
+                        <Filter filterOptions={filterOptions} setFilter={setFilter}></Filter>
                     </div>
                     <Content className="site-layout-background">
                         {content}
