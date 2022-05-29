@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Card, Col, Row, Typography, Descriptions, Divider, Button, Menu, Dropdown } from 'antd'
+import { Card, Col, Row, Typography, Descriptions, Divider, Button, Menu, Dropdown, message } from 'antd'
 import axios from "axios";
 import EditAssignment from "../Assignment/EditAssignment";
 import { UserOutlined } from '@ant-design/icons';
+import Saved from "../../Common/Saved/Saved";
 
-const Students = ({ setStudent, course, assignment, refresh, setRefresh, students, setStudents, setSortOptions, sort, setFilterOptions, filter }) => {
+const Students = ({ setStudent, course, assignment, refresh, setRefresh, students, setStudents, setSortOptions, sort, setFilterOptions, filter, setAssignment, setCourse }) => {
 
     const BASE_URL = 'http://192.168.1.9:5000/users/course/students'
 
@@ -128,29 +129,6 @@ const Students = ({ setStudent, course, assignment, refresh, setRefresh, student
         console.log('click', e);
     };
 
-    const menu = (
-        <Menu
-            onClick={handleMenuClick}
-            items={[
-                {
-                    label: '1st menu item',
-                    key: '1',
-                    icon: <UserOutlined />,
-                },
-                {
-                    label: '2nd menu item',
-                    key: '2',
-                    icon: <UserOutlined />,
-                },
-                {
-                    label: '3rd menu item',
-                    key: '3',
-                    icon: <UserOutlined />,
-                },
-            ]}
-        />
-    );
-
     let studentsHTML = (
         <div></div>
     )
@@ -170,9 +148,6 @@ const Students = ({ setStudent, course, assignment, refresh, setRefresh, student
             }
             return (
                 <Col span={8} key={index}>
-                    <Dropdown.Button overlay={menu}>
-                        Dropdown
-                    </Dropdown.Button>
                     <Card hoverable={true} bordered={true} studentid={student.id} onClick={() => setStudent({ 'name': student.name, 'id': student.id })}>
                         <p className="course-card-content" style={{ display: 'inline-block' }}>Học sinh: {student.name}</p>
                         <p className="course-card-content" style={{ marginLeft: '20px', display: 'inline-block', float: 'right' }}>
@@ -194,7 +169,20 @@ const Students = ({ setStudent, course, assignment, refresh, setRefresh, student
             <EditAssignment assignment={assignment} visible={visible} onEdit={onEdit} onCancel={() => setVisible(false)} refresh={refresh} setRefresh={setRefresh}></EditAssignment>
             <Typography.Title level={4} italic={true} style={{
                 display: 'inline-block',
-            }}>{assignment.name}</Typography.Title>
+            }}>
+                {assignment.name}
+            </Typography.Title>
+
+            <Saved
+                object={assignment}
+                type="assignment"
+                setAssignment={setAssignment}
+                setCourse={setCourse}
+                setStudent={setStudent}
+                refresh={refresh}
+            >
+
+            </Saved>
             <Descriptions
                 title=''
                 layout="vertical"

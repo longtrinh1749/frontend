@@ -157,6 +157,8 @@ const TeacherApp = ({ setToken, token }) => {
                 course={course}
                 assignment={assignment}
                 setStudent={setStudent}
+                setAssignment={setAssignment}
+                setCourse={setCourse}
                 setSortList={setSortList}
                 setFilterList={setFilterList}
                 setRefresh={setRefresh}
@@ -175,7 +177,18 @@ const TeacherApp = ({ setToken, token }) => {
     } else if (course && assignment && student) {
         content = (
             <>
-                <Grading token={token} course={course} assignment={assignment} student={student} refresh={refresh}></Grading>
+                <Grading
+                    token={token}
+                    course={course}
+                    assignment={assignment}
+                    student={student}
+                    refresh={refresh}
+                    setAssignment={setAssignment}
+                    setCourse={setCourse}
+                    setStudent={setStudent}
+                >
+
+                </Grading>
             </>
         )
     }
@@ -183,7 +196,15 @@ const TeacherApp = ({ setToken, token }) => {
     return (
         <Layout>
             <Profile modalVisible={profileVisible} setModalVisible={setProfileVisible}></Profile>
-            <Saved modalVisible={savedVisible} setModalVisible={setSavedVisible}></Saved>
+            <Saved
+                modalVisible={savedVisible}
+                setModalVisible={setSavedVisible}
+                setAssignment={setAssignment}
+                setCourse={setCourse}
+                setStudent={setStudent}
+            >
+
+            </Saved>
             <Header className="header">
                 <div className="logo">
                     <img style={{

@@ -5,11 +5,13 @@ import './Assignment.css'
 import axios from "axios";
 import { upload } from "@testing-library/user-event/dist/upload";
 import EditAssignment from "../../Teacher/Assignment/EditAssignment";
+import Saved from "../../Common/Saved/Saved";
 
-const Assignment = ({ assignment, refresh, setRefresh }) => {
+const Assignment = ({ assignment, refresh, setRefresh, setAssignment, setCourse, setStudent }) => {
     let BASE_ASM_URL = 'http://192.168.1.9:5000/assignments'
     let BASE_SUBMIT_URL = 'http://192.168.1.9:5000/submits'
     let BASE_WORK_URL = 'http://192.168.1.9:5000/work'
+    let BASE_URL = 'http://192.168.1.9:5000'
 
     // Data
     const [asmData, setAsmData] = useState(false)
@@ -214,6 +216,16 @@ const Assignment = ({ assignment, refresh, setRefresh }) => {
             <Typography.Title level={4} italic={true} style={{
                 display: 'inline-block',
             }}>{asmData.name}</Typography.Title>
+            <Saved
+                object={assignment}
+                type="assignment"
+                setAssignment={setAssignment}
+                setCourse={setCourse}
+                setStudent={setStudent}
+                refresh={refresh}
+            >
+
+            </Saved>
             <Descriptions
                 title=''
                 layout="vertical"

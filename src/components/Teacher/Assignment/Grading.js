@@ -4,8 +4,9 @@ import axios from "axios";
 import { fabric } from 'fabric'
 import html2canvas from "html2canvas";
 import './Grading.css'
+import Saved from "../../Common/Saved/Saved";
 
-const Grading = ({ assignment, student, token, course, refresh }) => {
+const Grading = ({ assignment, student, token, course, refresh, setAssignment, setCourse, setStudent }) => {
     /*
         Handle resize: https://stackoverflow.com/questions/62846043/react-js-useeffect-with-window-resize-event-listener-not-working
     */
@@ -59,7 +60,7 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
         }
         axios.get(BASE_SUBMIT_URL, { params }).then(res => {
             setSubmitData(res.data.submits[0])
-            console.log('Works', worksData)
+            console.log('Submits', res.data.submits[0])
         })
         axios.get(BASE_WORK_URL, { params }).then(res => {
             setWorksData(res.data.works)
@@ -391,6 +392,16 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
     return (
         <>
             <div id="tool-container">
+                <Saved
+                    object={submitData}
+                    type="submit"
+                    setAssignment={setAssignment}
+                    setCourse={setCourse}
+                    setStudent={setStudent}
+                    refresh={refresh}
+                >
+
+                </Saved>
                 <Radio.Group
                     options={options}
                     onChange={(e) => {
@@ -409,6 +420,9 @@ const Grading = ({ assignment, student, token, course, refresh }) => {
                     optionType="button"
                     buttonStyle="outline"
                     defaultValue={options[0].label}
+                    style={{
+                        display: 'inline',
+                    }}
                 />
             </div>
             <Row>

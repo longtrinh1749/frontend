@@ -151,6 +151,8 @@ const StudentApp = ({ setToken, token }) => {
                 assignment={assignment}
                 refresh={refresh}
                 setRefresh={setRefresh}
+                setAssignment={setAssignment}
+                setCourse={setCourse}
             >
 
             </Assignment>
@@ -160,7 +162,14 @@ const StudentApp = ({ setToken, token }) => {
     return (
         <Layout>
             <Profile modalVisible={profileVisible} setModalVisible={setProfileVisible}></Profile>
-            <Saved modalVisible={savedVisible} setModalVisible={setSavedVisible}></Saved>
+            <Saved
+                modalVisible={savedVisible}
+                setModalVisible={setSavedVisible}
+                setAssignment={setAssignment}
+                setCourse={setCourse}
+            >
+
+            </Saved>
             <Header className="header">
                 <div className="logo">
                     <img src="img/text-logo2.png" style={{
