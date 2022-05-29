@@ -44,6 +44,66 @@ const Assignments = ({ token, course, setAssignment, refresh, setRefresh, setSor
 
         setFilterOptions([])
     }, [refresh])
+
+    useEffect(() => {
+        if (sort) {
+            console.log('Sort', sort)
+            if (sort.type == 'name') {
+                console.log('Sort name', sort)
+                let new_assignments = assignments.sort((a, b) => {
+                    let as = a.name.split(' ')
+                    let bs = b.name.split(' ')
+                    return as.join(' ').localeCompare(bs.join(' '))
+                })
+                console.log(new_assignments)
+                setAssignments(new_assignments)
+            } else if (sort.type == 'due') {
+                assignments.sort((a, b) => {
+                    if (!a.due) {
+                        a.due = ''
+                    }
+                    if (!b.due) {
+                        b.due = ''
+                    }
+                    return a.due.localeCompare(b.due)
+                })
+            } else if (sort.type == 'submitted') {
+                assignments.sort((a, b) => {
+                    return a.submitted - b.submitted
+                })
+            }else if (sort.type == 'graded') {
+                assignments.sort((a, b) => {
+                    return a.graded - b.graded
+                })
+            }
+            if (sort.direction == 'desc') {
+                assignments.reverse()
+            }
+        }
+        console.log(assignments)
+    }, [sort])
+
+    useEffect(() => {
+        console.log('Filter', filter)
+        if (filter) {
+            console.log('Filter', filter)
+            let newAssignments = []
+            for (let i = 0; i < assignments.length; i++) {
+                let checked = true
+                if (filter.name) {
+                    if (!assignments[i].name.includes(filter.name)) {
+                        checked = false
+                    }
+                }
+                if (checked) {
+                    newAssignments.push(assignments[i])
+                }
+            }
+            setAssignments(newAssignments)
+        }
+        console.log('Filter student', assignments)
+    }, [filter])
+
     let assignmentsHTML = (
         <div></div>
     )

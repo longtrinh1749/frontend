@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Card, Col, Row, Typography, Descriptions, Divider, Button } from 'antd'
+import { Card, Col, Row, Typography, Descriptions, Divider, Button, Menu, Dropdown } from 'antd'
 import axios from "axios";
 import EditAssignment from "../Assignment/EditAssignment";
+import { UserOutlined } from '@ant-design/icons';
 
 const Students = ({ setStudent, course, assignment, refresh, setRefresh, students, setStudents, setSortOptions, sort, setFilterOptions, filter }) => {
 
@@ -35,14 +36,15 @@ const Students = ({ setStudent, course, assignment, refresh, setRefresh, student
         setFilterOptions([
             {
                 display: 'Status',
-                values: [
+                value: 'status',
+                childs: [
                     {
                         d: 'Chưa chấm',
-                        v: 'statusSubmitted'
+                        v: 'handed in'
                     },
                     {
                         d: 'Chưa nộp',
-                        v: 'statusUnsubmitted'
+                        v: ''
                     },
                     {
                         d: 'Đã chấm',
@@ -69,7 +71,13 @@ const Students = ({ setStudent, course, assignment, refresh, setRefresh, student
                 setStudents(new_students)
             } else if (sort.type == 'status') {
                 students.sort((a, b) => {
-                    return a.status - b.status
+                    if (!a.status) {
+                        a.status = ''
+                    }
+                    if (!b.status) {
+                        b.status = ''
+                    }
+                    return a.status.localeCompare(b.status)
                 })
                 // } else if (sort.type == 'score') {
                 //     students.sort((a,b) => {
@@ -82,6 +90,66 @@ const Students = ({ setStudent, course, assignment, refresh, setRefresh, student
         }
         console.log(students)
     }, [sort])
+
+    useEffect(() => {
+        console.log('Filter', filter)
+        if (filter) {
+            console.log('Filter', filter)
+            let newStudents = []
+            for (let i = 0; i < students.length; i++) {
+                let checked = true
+                if (filter.name) {
+                    if (!students[i].name.includes(filter.name)) {
+                        checked = false
+                    }
+                }
+                if (filter.status && filter.status.length > 0) {
+                    if (students[i].status != null) {
+                        if (!filter.status.includes(students[i].status)) {
+                            checked = false
+                        }
+                    } else {
+                        if (!filter.status.includes('')) {
+                            checked = false
+                        }
+                    }
+                }
+                if (checked) {
+                    newStudents.push(students[i])
+                }
+            }
+            setStudents(newStudents)
+        }
+        console.log('Filter student', students)
+    }, [filter])
+
+    const handleMenuClick = (e) => {
+        message.info('Click on menu item.');
+        console.log('click', e);
+    };
+
+    const menu = (
+        <Menu
+            onClick={handleMenuClick}
+            items={[
+                {
+                    label: '1st menu item',
+                    key: '1',
+                    icon: <UserOutlined />,
+                },
+                {
+                    label: '2nd menu item',
+                    key: '2',
+                    icon: <UserOutlined />,
+                },
+                {
+                    label: '3rd menu item',
+                    key: '3',
+                    icon: <UserOutlined />,
+                },
+            ]}
+        />
+    );
 
     let studentsHTML = (
         <div></div>
@@ -102,9 +170,12 @@ const Students = ({ setStudent, course, assignment, refresh, setRefresh, student
             }
             return (
                 <Col span={8} key={index}>
+                    <Dropdown.Button overlay={menu}>
+                        Dropdown
+                    </Dropdown.Button>
                     <Card hoverable={true} bordered={true} studentid={student.id} onClick={() => setStudent({ 'name': student.name, 'id': student.id })}>
                         <p className="course-card-content" style={{ display: 'inline-block' }}>Học sinh: {student.name}</p>
-                        <p className="course-card-content" style={{ display: 'inline-block', float: 'right' }}>
+                        <p className="course-card-content" style={{ marginLeft: '20px', display: 'inline-block', float: 'right' }}>
                             {studentStatus}
                         </p>
                     </Card>

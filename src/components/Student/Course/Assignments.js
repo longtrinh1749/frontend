@@ -38,23 +38,100 @@ const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRef
         setFilterOptions([
             {
                 display: 'Status',
-                values: [
+                value: 'status',
+                childs: [
                     {
                         d: 'Chưa chấm',
-                        v: 'statusSubmitted'
+                        v: 'handed in'
                     },
                     {
                         d: 'Chưa nộp',
-                        v: 'statusUnsubmitted'
+                        v: ''
                     },
                     {
                         d: 'Đã chấm',
                         v: 'graded'
+                    },
+                    {
+                        d: 'Đã nộp',
+                        v: 'submitted'
                     }
                 ]
             }
         ])
     }, [refresh])
+
+    useEffect(() => {
+        if (sort) {
+            console.log('Sort', sort)
+            if (sort.type == 'name') {
+                console.log('Sort name', sort)
+                let new_assignments = assignments.sort((a, b) => {
+                    let as = a.name.split(' ')
+                    let bs = b.name.split(' ')
+                    return as.join(' ').localeCompare(bs.join(' '))
+                })
+                console.log(new_assignments)
+                setAssignments(new_assignments)
+            } else if (sort.type == 'status') {
+                assignments.sort((a, b) => {
+                    if (!a.status) {
+                        a.status = ''
+                    }
+                    if (!b.status) {
+                        b.status = ''
+                    }
+                    return a.status.localeCompare(b.status)
+                })
+            } else if (sort.type == 'due') {
+                assignments.sort((a, b) => {
+                    if (!a.due) {
+                        a.due = ''
+                    }
+                    if (!b.due) {
+                        b.due = ''
+                    }
+                    return a.due.localeCompare(b.due)
+                })
+            }
+            if (sort.direction == 'desc') {
+                assignments.reverse()
+            }
+        }
+        console.log(assignments)
+    }, [sort])
+
+    useEffect(() => {
+        console.log('Filter', filter)
+        if (filter) {
+            console.log('Filter', filter)
+            let newAssignments = []
+            for (let i = 0; i < assignments.length; i++) {
+                let checked = true
+                if (filter.name) {
+                    if (!assignments[i].name.includes(filter.name)) {
+                        checked = false
+                    }
+                }
+                if (filter.status && filter.status.length > 0) {
+                    if (assignments[i].status != ""){
+                        if (!filter.status.includes(assignments[i].status) ) {
+                            checked = false
+                        }
+                    } else {
+                        if (!filter.status.includes('')) {
+                            checked = false
+                        }
+                    }
+                }
+                if (checked) {
+                    newAssignments.push(assignments[i])
+                }
+            }
+            setAssignments(newAssignments)
+        }
+        console.log('Filter student', assignments)
+    }, [filter])
 
     let assignmentsHTML = (
         <div>

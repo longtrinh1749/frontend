@@ -34,6 +34,62 @@ const Courses = ({ token, setCourse, refresh, setRefresh, setSortOptions, sort, 
         ])
         setFilterOptions([])
     }, [refresh])
+
+    useEffect(() => {
+        if (sort) {
+            console.log('Sort', sort)
+            if (sort.type == 'name') {
+                console.log('Sort name', sort)
+                let new_courses = courses.sort((a, b) => {
+                    let as = a.name.split(' ')
+                    let bs = b.name.split(' ')
+                    return as.join(' ').localeCompare(bs.join(' '))
+                })
+                console.log(new_courses)
+                setCourses(new_courses)
+            } else if (sort.type == 'total') {
+                courses.sort((a, b) => {
+                    return a.total - b.total
+                })
+            } else if (sort.type == 'class') {
+                courses.sort((a, b) => {
+                    if (!a.class) {
+                        a.class = ''
+                    }
+                    if (!b.class) {
+                        b.class = ''
+                    }
+                    return a.class.localeCompare(b.class)
+                })
+            }
+            if (sort.direction == 'desc') {
+                courses.reverse()
+            }
+        }
+        console.log(courses)
+    }, [sort])
+
+    useEffect(() => {
+        console.log('Filter', filter)
+        if (filter) {
+            console.log('Filter', filter)
+            let newCourses = []
+            for (let i = 0; i < courses.length; i++) {
+                let checked = true
+                if (filter.name) {
+                    if (!courses[i].name.includes(filter.name)) {
+                        checked = false
+                    }
+                }
+                if (checked) {
+                    newCourses.push(courses[i])
+                }
+            }
+            setCourses(newCourses)
+        }
+        console.log('Filter student', courses)
+    }, [filter])
+
     let coursesHTML = (
         <div></div>
     )
