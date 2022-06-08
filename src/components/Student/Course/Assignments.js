@@ -4,10 +4,14 @@ import LeaveCourse from '../LeaveCourse/LeaveCourse'
 import CourseInfo from '../../Common/CourseInfo/CourseInfo'
 import axios from "axios";
 import moment from 'moment';
+import Statistic from "./Statistic";
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS } from 'chart.js'
+import Chart from 'chart.js/auto';
 
 const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRefresh, setSortOptions, sort, setFilterOptions, filter }) => {
 
-    const BASE_URL = 'http://192.168.1.9:5000/assignments'
+    const BASE_URL = 'http://192.168.1.12:5000/assignments'
 
     const [assignments, setAssignments] = useState(1)
 
@@ -114,8 +118,8 @@ const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRef
                     }
                 }
                 if (filter.status && filter.status.length > 0) {
-                    if (assignments[i].status != ""){
-                        if (!filter.status.includes(assignments[i].status) ) {
+                    if (assignments[i].status != "") {
+                        if (!filter.status.includes(assignments[i].status)) {
                             checked = false
                         }
                     } else {
@@ -166,12 +170,72 @@ const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRef
                 display: 'inline-block',
             }}>Assignments:</Typography.Title>
             <LeaveCourse course={course} leaveCourse={setBrCrumb}></LeaveCourse>
+            <Statistic></Statistic>
             <Divider />
             <Row gutter={16}>
                 {assignmentsHTML}
             </Row>
         </div>
     )
+
+    const UserData = [
+        {
+            id: 1,
+            year: 2016,
+            userGain: 80000,
+            userLost: 823,
+        },
+        {
+            id: 2,
+            year: 2017,
+            userGain: 45677,
+            userLost: 345,
+        },
+        {
+            id: 3,
+            year: 2018,
+            userGain: 78888,
+            userLost: 555,
+        },
+        {
+            id: 4,
+            year: 2019,
+            userGain: 90000,
+            userLost: 4555,
+        },
+        {
+            id: 5,
+            year: 2020,
+            userGain: 4300,
+            userLost: 234,
+        },
+    ];
+    const userData = {
+        labels: UserData.map((data) => data.year),
+        datasets: [
+            {
+                label: "Users Gained",
+                data: UserData.map((data) => data.userGain),
+                backgroundColor: [
+                    "rgba(75,192,192,1)",
+                    "#ecf0f1",
+                    "#50AF95",
+                    "#f3ba2f",
+                    "#2a71d0",
+                ],
+                borderColor: "black",
+                borderWidth: 2,
+            },
+        ],
+    }
+
+    return (
+        <>
+            <Bar
+                data={userData}
+            />
+        </>
+    );
 }
 
 export default Assignments

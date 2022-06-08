@@ -3,8 +3,8 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import './Saved.css'
 
-const Saved = ({ object, type, refresh }) => {
-    const BASE_URL = 'http://192.168.1.9:5000'
+const Saved = ({ object, type, refresh, style }) => {
+    const BASE_URL = 'http://192.168.1.12:5000'
 
     const [bookmarkButton, setBookmarkButton] = useState('Bookmark')
 
@@ -16,9 +16,9 @@ const Saved = ({ object, type, refresh }) => {
         let params = {
             user_id: sessionStorage.getItem('id'),
             type: type,
-            type_id: object.id,
+            type_id: object?.id,
         }
-        axios.get(BASE_URL + '/saved', {params}).then(res => {
+        axios.get(BASE_URL + '/saved', { params }).then(res => {
             if (res.data.saves.length > 0) {
                 setBookmarkButton('Bookmarked')
             }
@@ -66,10 +66,16 @@ const Saved = ({ object, type, refresh }) => {
     }
     return (
         <>
-            <Button id='saved-button' onClick={bookmarkClick}>
+            <Button id='saved-button' onClick={bookmarkClick} style={style}>
                 {bookmarkButton}
             </Button>
-            <Modal title="Create new Bookmark" visible={modalVisible} onOk={callBookmarkAPI} onCancel={modalCancel}>
+            <Modal
+                title="Create new Bookmark"
+                visible={modalVisible}
+                onOk={callBookmarkAPI}
+                onCancel={modalCancel}
+
+            >
                 <Input placeholder="Bookmark descripton" onChange={(e) => bookmarkDescription.current = e.target.value}></Input>
             </Modal>
         </>

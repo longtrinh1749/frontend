@@ -11,7 +11,7 @@ import moment from 'moment';
 import axios from "axios";
 
 const Chat = ({ courseId, assignmentId, userId }) => {
-    const BASE_USER_URL = 'http://192.168.1.9:5000/users'
+    const BASE_USER_URL = 'http://192.168.1.12:5000/users'
     const [isTokenFound, setIsTokenFound] = useState();
     const [notification, setNotification] = useState({ title: '', body: '' });
     const [userInfo, setUserInfo] = useState()
@@ -95,7 +95,7 @@ const Chat = ({ courseId, assignmentId, userId }) => {
                                 margin: '0 10px'
                             }} />
                         </Col>
-                        <Col span={20}>
+                        <Col span={19}>
                             <b>
                                 {message.user_name}
                             </b>
@@ -107,7 +107,7 @@ const Chat = ({ courseId, assignmentId, userId }) => {
                             </i>
                             <p style={{
                                 width: '100%',
-                                wordBreak: 'break-word'
+                                wordBreak: 'break-word',
                             }}>
                                 {message.text}
                             </p>
@@ -126,27 +126,31 @@ const Chat = ({ courseId, assignmentId, userId }) => {
                 {messagesHtml}
             </div>
             <Input.Group>
-                <Input.TextArea id="chat-input" placeholder="Chat" autoSize={{ minRows: 2, maxRows: 4 }} onPressEnter={(e) => {
-                    try {
-                        e.preventDefault()
-                        let _text = e.target.value
-                        const docRef = addDoc(collection(db, "Chat"), {
-                            text: _text,
-                            created_at: moment().format('MMMM Do YYYY, h:mm:s a'),
-                            user_id: sessionStorage.getItem('id'),
-                            user_name: userInfo.name,
-                            course_id: courseId ? courseId : '',
-                            assignment_id: assignmentId ? assignmentId : '',
-                            created_to: userId ? userId : '',
-                            created_by: sessionStorage.getItem('id'),
-                        });
-                        console.log("Document written with ID: ", _text);
-                    } catch (e) {
-                        console.error("Error adding document: ", e);
-                    } finally {
-                        e.target.value = ''
-                    }
-                }} />
+                <Input.TextArea
+                    id="chat-input"
+                    placeholder="Chat"
+                    autoSize={{ minRows: 2, maxRows: 4 }}
+                    onPressEnter={(e) => {
+                        try {
+                            e.preventDefault()
+                            let _text = e.target.value
+                            const docRef = addDoc(collection(db, "Chat"), {
+                                text: _text,
+                                created_at: moment().format('MMMM Do YYYY, h:mm:s a'),
+                                user_id: sessionStorage.getItem('id'),
+                                user_name: userInfo.name,
+                                course_id: courseId ? courseId : '',
+                                assignment_id: assignmentId ? assignmentId : '',
+                                created_to: userId ? userId : '',
+                                created_by: sessionStorage.getItem('id'),
+                            });
+                            console.log("Document written with ID: ", _text);
+                        } catch (e) {
+                            console.error("Error adding document: ", e);
+                        } finally {
+                            e.target.value = ''
+                        }
+                    }} />
             </Input.Group>
         </>
     )

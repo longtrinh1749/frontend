@@ -5,8 +5,8 @@ import './Profile.css'
 
 const Profile = ({ modalVisible, setModalVisible }) => {
 
-    const BASE_URL = 'http://192.168.1.9:5000/users'
-    const BASE_ACCOUNT_URL = 'http://192.168.1.9:5000/users/account'
+    const BASE_URL = 'http://192.168.1.12:5000/users'
+    const BASE_ACCOUNT_URL = 'http://192.168.1.12:5000/users/account'
 
     const [user, setUser] = useState(false)
 

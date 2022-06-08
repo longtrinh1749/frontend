@@ -5,7 +5,7 @@ import CreateCourse from "../CreateCourse/CreateCourse";
 
 const Courses = ({ token, setCourse, refresh, setRefresh, setSortOptions, sort, setFilterOptions, filter }) => {
 
-    let BASE_URL = 'http://192.168.1.9:5000/courses'
+    let BASE_URL = 'http://192.168.1.12:5000/courses'
 
     // Courses List
 

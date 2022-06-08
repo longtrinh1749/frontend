@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import { Descriptions, Button } from 'antd'
 import EditCourseForm from '../../Teacher/EditCourse/EditCourseInfo'
 import './CourseInfo.css'
+import Statistic from "../../Teacher/Course/Statistic";
 
 const CourseInfo = ({ course, refresh, setRefresh }) => {
-    let BASE_URL = 'http://192.168.1.9:5000/courses'
+    let BASE_URL = 'http://192.168.1.12:5000/courses'
     const [courseInfo, setCourseInfo] = useState(1)
     console.log("CourseInfo ", course)
     useEffect(() => {
@@ -25,13 +26,17 @@ const CourseInfo = ({ course, refresh, setRefresh }) => {
     return (
         <>
             <EditCourseForm courseInfo={courseInfo} visible={visible} onEdit={onEdit} onCancel={() => setVisible(false)} refresh={refresh} setRefresh={setRefresh}></EditCourseForm>
+            <Statistic course={course}></Statistic>
             <Descriptions
                 bordered
                 title="Class Information"
                 size='middle'
                 extra={<Button size="large" type="primary" onClick={() => {
                     setVisible(true);
-                }}>Edit Course</Button>}
+                }}
+                    style={{
+                        marginRight: '10px'
+                    }}>Edit Course</Button>}
             >
                 <Descriptions.Item label="Name">{courseInfo.name ? courseInfo.name : 'None'}</Descriptions.Item>
                 <Descriptions.Item label="School">{courseInfo.school ? courseInfo.school : 'None'}</Descriptions.Item>

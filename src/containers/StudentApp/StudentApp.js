@@ -11,6 +11,7 @@ import Chat from "../../components/Common/Chat/Chat";
 import Sort from "../../components/Common/Sort/Sort";
 import Filter from "../../components/Common/Filter/Filter";
 import Notification from "../../components/Common/Notification/Notification";
+import Leaderboard from "../../components/Student/Leaderboard/Leaderboard";
 
 const StudentApp = ({ setToken, token }) => {
 
@@ -94,6 +95,13 @@ const StudentApp = ({ setToken, token }) => {
     const chatSuffix = (
         <SendOutlined />
     )
+
+    let rightSider;
+    if (!course) {
+        rightSider = <Leaderboard />
+    } else {
+        rightSider = <Chat courseId={course.id} assignmentId={assignment.id} userId={course.created_by}></Chat>
+    }
 
     const [filterList, setFilterList] = useState([])
     const [sort, setSort] = useState()
@@ -215,7 +223,7 @@ const StudentApp = ({ setToken, token }) => {
                     overflow: 'auto',
                     height: "calc(100vh - 64px)",
                 }}>
-                    <Chat courseId={course.id} assignmentId={assignment.id} userId={course.created_by}></Chat>
+                    {rightSider}
                 </Sider>
             </Layout>
         </Layout>

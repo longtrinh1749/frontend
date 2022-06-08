@@ -8,7 +8,7 @@ import moment from 'moment';
 
 const Assignments = ({ token, course, setAssignment, refresh, setRefresh, setSortOptions, sort, setFilterOptions, filter }) => {
 
-    const BASE_URL = 'http://192.168.1.9:5000/assignments'
+    const BASE_URL = 'http://192.168.1.12:5000/assignments'
 
     const [assignments, setAssignments] = useState(1)
     useEffect(() => {
@@ -71,7 +71,7 @@ const Assignments = ({ token, course, setAssignment, refresh, setRefresh, setSor
                 assignments.sort((a, b) => {
                     return a.submitted - b.submitted
                 })
-            }else if (sort.type == 'graded') {
+            } else if (sort.type == 'graded') {
                 assignments.sort((a, b) => {
                     return a.graded - b.graded
                 })

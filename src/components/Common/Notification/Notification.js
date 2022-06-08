@@ -5,7 +5,7 @@ import axios from "axios";
 
 const Notification = ({ notiFilterMenu, refresh, setRefresh, setCourse, setAssignment, setStudent }) => {
 
-    const BASE_URL = 'http://192.168.1.9:5000'
+    const BASE_URL = 'http://192.168.1.12:5000'
 
     const [notifications, setNotifications] = useState(0)
 
@@ -40,7 +40,8 @@ const Notification = ({ notiFilterMenu, refresh, setRefresh, setCourse, setAssig
             axios.get(BASE_URL + '/assignments', { params }).then((res) => {
                 setAssignment(res.data.assignments[0])
             })
-        } 
+        }
+        setRefresh(!refresh)
     }
     let notificationsHtml = (
         <div></div>

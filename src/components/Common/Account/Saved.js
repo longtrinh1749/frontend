@@ -4,7 +4,7 @@ import axios from "axios";
 
 const Saved = ({ modalVisible, setModalVisible, setAssignment, setCourse, setStudent }) => {
 
-    const BASE_URL = 'http://192.168.1.9:5000'
+    const BASE_URL = 'http://192.168.1.12:5000'
 
     const [savedItems, setSavedItems] = useState(0)
 
@@ -83,7 +83,16 @@ const Saved = ({ modalVisible, setModalVisible, setAssignment, setCourse, setStu
         })
     }
     return (
-        <Modal title="Bookmark Items" visible={modalVisible} onOk={modalOk} onCancel={modalCancel}>
+        <Modal
+            title="Bookmark Items"
+            visible={modalVisible}
+            onOk={modalOk}
+            onCancel={modalCancel}
+            style={{
+                overflow: 'auto',
+                height: 'calc(75vh)'
+            }}
+        >
             {saveListHtml}
         </Modal>
     )

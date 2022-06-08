@@ -7,7 +7,7 @@ import Saved from "../../Common/Saved/Saved";
 
 const Students = ({ setStudent, course, assignment, refresh, setRefresh, students, setStudents, setSortOptions, sort, setFilterOptions, filter, setAssignment, setCourse }) => {
 
-    const BASE_URL = 'http://192.168.1.9:5000/users/course/students'
+    const BASE_URL = 'http://192.168.1.12:5000/users/course/students'
 
     useEffect(() => {
         console.log('Call get all students within course')
@@ -169,6 +169,7 @@ const Students = ({ setStudent, course, assignment, refresh, setRefresh, student
             <EditAssignment assignment={assignment} visible={visible} onEdit={onEdit} onCancel={() => setVisible(false)} refresh={refresh} setRefresh={setRefresh}></EditAssignment>
             <Typography.Title level={4} italic={true} style={{
                 display: 'inline-block',
+                float: 'left'
             }}>
                 {assignment.name}
             </Typography.Title>
@@ -180,6 +181,10 @@ const Students = ({ setStudent, course, assignment, refresh, setRefresh, student
                 setCourse={setCourse}
                 setStudent={setStudent}
                 refresh={refresh}
+                style={{
+                    float: 'left',
+                    margin: '0px 20px',
+                }}
             >
 
             </Saved>

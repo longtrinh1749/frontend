@@ -58,7 +58,7 @@
 }
 
 .ant-layout-sider::-webkit-scrollbar-thumb {
-  background: black;
+  /* background: black; */
   border-radius: 1px;
 }
 

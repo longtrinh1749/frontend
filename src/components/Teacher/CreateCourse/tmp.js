@@ -19,7 +19,7 @@ import {
 } from 'antd';
 const CreateCourse = () => {
 
-    let BASE_URL = 'http://192.168.1.9:5000/courses'
+    let BASE_URL = 'http://192.168.1.12:5000/courses'
 
     const waitTime = (time = 100) => {
         return new Promise((resolve) => {
