@@ -1,9 +1,49 @@
 // https://codepen.io/sumitmsn/pen/yLXXBZZ
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { EllipsisOutlined } from '@ant-design/icons';
 import './Leaderboard.css'
+import axios from "axios";
 
-const Leaderboard = () => {
+const Leaderboard = ({setCourse}) => {
+
+    const BASE_URL = "http://192.168.1.12:5000"
+
+    const [courses, setCourses] = useState([])
+    const [coursesHtml, setCoursesHtml] = useState([])
+
+    const toCoursePage = (course) => {
+        setCourse(course)
+    }
+
+    useEffect(() => {
+        let params = {
+            student_id: sessionStorage.getItem("id"),
+        }
+
+
+        axios.get(BASE_URL + "/grading/courses", { params }).then(res => {
+            setCourses(res.data.courses)
+            setCoursesHtml(res.data.courses.map((c, i) => {
+                return (
+                    <div class="leader" key={i} onClick={() => toCoursePage(c)}>
+                        <div class="leaderboard-user">
+                            <div class="leaderboard-number">{i}</div>
+                            <div class="leaderboard-user-pic"></div>
+                        </div>
+                        <div class="leaderboard-user-info">
+                            <div class="leaderboard-user-name">{c.name}</div>
+                            <div class="leaderboard-view-count"></div>
+                        </div>
+                        <div class="leaderboard-gallery">
+                            <div class="leaderboard-gallery-item">
+                                <div>{c.avg_score.toFixed(2)}</div>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }))
+        })
+    }, [])
 
     return (
         <div class="leaderboard-frame">
@@ -13,81 +53,7 @@ const Leaderboard = () => {
                 <button>All time</button> */}
             </div>
             <div class="leaderboard-score-card">
-                <div class="leader">
-                    <div class="leaderboard-user">
-                        <div class="leaderboard-number">1</div>
-                        <div class="leaderboard-user-pic"></div>
-                    </div>
-                    <div class="leaderboard-user-info">
-                        <div class="leaderboard-user-name">Thể dục lớp 2</div>
-                        <div class="leaderboard-view-count"></div>
-                    </div>
-                    <div class="leaderboard-gallery">
-                        <div class="leaderboard-gallery-item"> 
-                        <div>10</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="leader">
-                    <div class="leaderboard-user">
-                        <div class="leaderboard-number">2</div>
-                        <div class="leaderboard-user-pic"></div>
-                    </div>
-                    <div class="leaderboard-user-info">
-                        <div class="leaderboard-user-name">Tự nhiên xã hội lớp 2</div>
-                    </div>
-                    <div class="leaderboard-gallery">
-                        <div class="leaderboard-gallery-item"> 9.5 </div>
-                    </div>
-                </div>
-                <div class="leader">
-                    <div class="leaderboard-user">
-                        <div class="leaderboard-number">3</div>
-                        <div class="leaderboard-user-pic"></div>
-                    </div>
-                    <div class="leaderboard-user-info">
-                        <div class="leaderboard-user-name">Đạo đức lớp 2</div>
-                    </div>
-                    <div class="leaderboard-gallery">
-                        <div class="leaderboard-gallery-item"> 8.5 </div>
-                    </div>
-                </div>
-                <div class="leader">
-                    <div class="leaderboard-user">
-                        <div class="leaderboard-number">4</div>
-                        <div class="leaderboard-user-pic"></div>
-                    </div>
-                    <div class="leaderboard-user-info">
-                        <div class="leaderboard-user-name">Tiếng Anh lớp 2</div>
-                    </div>
-                    <div class="leaderboard-gallery">
-                        <div class="leaderboard-gallery-item"> 7.5 </div>
-                    </div>
-                </div>
-                <div class="leader">
-                    <div class="leaderboard-user">
-                        <div class="leaderboard-number">5</div>
-                        <div class="leaderboard-user-pic"></div>
-                    </div>
-                    <div class="leaderboard-user-info">
-                        <div class="leaderboard-user-name">Tiếng Việt lớp 2</div>
-                    </div>
-                    <div class="leaderboard-gallery">
-                        <div class="leaderboard-gallery-item"> 7 </div>
-                    </div>
-                </div>
-                <div class="leader">
-                    <div class="leaderboard-user">
-                        <div class="leaderboard-number">6</div>
-                        <div class="leaderboard-user-pic"></div>
-                    </div>
-                    <div class="leaderboard-user-info">
-                        <div class="leaderboard-user-name">Toán lớp 2</div>
-                    </div>
-                    <div class="leaderboard-gallery">
-                        <div class="leaderboard-gallery-item"> 6 </div>
-                    </div>
-                </div>
+                {coursesHtml}
             </div>
             {/* <button class="cta-primary">Load more</button> */}
         </div>

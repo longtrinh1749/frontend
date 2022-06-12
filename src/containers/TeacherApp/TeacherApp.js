@@ -152,6 +152,7 @@ const TeacherApp = ({ setToken, token }) => {
                 sort={sort}
                 setFilterOptions={setFilterOptions}
                 filter={filter}
+                setStudent={setStudent}
             >
 
             </Assignments>

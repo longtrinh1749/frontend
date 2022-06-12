@@ -4,13 +4,21 @@ import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS } from 'chart.js'
 import axios from "axios";
 
-const Statistic = ({course}) => {
+const Statistic = ({course, setAssignment, setStudent}) => {
     const BASE_URL = 'http://192.168.1.12:5000'
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [dataSource, setDataSource] = useState([])
     const [columns, setColumns] = useState([])
 
     const [students, setStudents] = useState(0)
+
+    const toStudentPage = (assignment, student) => {
+        console.log('ToStudentPage', assignment)
+        console.log('ToStudentPage', student)
+        setIsModalVisible(false)
+        setAssignment(assignment)
+        setStudent(student)
+    }
 
     useEffect(() => {
         console.log('Yo statistic')
@@ -30,6 +38,7 @@ const Statistic = ({course}) => {
                     new_student[student.assignments[i].name] = student.assignments[i].score
                     if (student.assignments[i].status != 'graded') {
                         new_student[student.assignments[i].name] = '-'
+                        new_student['student'] = student
                     }
                 }
                 return new_student
@@ -45,6 +54,9 @@ const Statistic = ({course}) => {
                         title: assignment.name,
                         dataIndex: assignment.name,
                         key: assignment.name,
+                        render: (_, record) => (
+                            <a onClick={() => toStudentPage(assignment, record['student'])}>{record[assignment.name]}</a>
+                        )
                     }
                 })
                 setColumns(c)

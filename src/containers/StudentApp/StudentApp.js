@@ -98,7 +98,9 @@ const StudentApp = ({ setToken, token }) => {
 
     let rightSider;
     if (!course) {
-        rightSider = <Leaderboard />
+        rightSider = <Leaderboard 
+            setCourse={setCourse}
+        />
     } else {
         rightSider = <Chat courseId={course.id} assignmentId={assignment.id} userId={course.created_by}></Chat>
     }

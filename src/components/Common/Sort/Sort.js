@@ -10,9 +10,9 @@ const Sort = ({ sortList, setSortList, setSort, sort, objectList, sortOptions })
     let sortOption = useRef()
     let sortOptionsHtml
     if (sortOptions.length > 0) {
-        sortOptionsHtml = sortOptions.map(option => {
+        sortOptionsHtml = sortOptions.map((option, index) => {
             return (
-                <Radio.Button value={option.value}>{option.display}</Radio.Button>
+                <Radio.Button key={index} value={option.value}>{option.display}</Radio.Button>
             )
         })
     }

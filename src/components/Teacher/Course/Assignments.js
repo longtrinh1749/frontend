@@ -6,7 +6,7 @@ import axios from "axios";
 import CreateAssignment from './CreateAssignment/CreateAssignment'
 import moment from 'moment';
 
-const Assignments = ({ token, course, setAssignment, refresh, setRefresh, setSortOptions, sort, setFilterOptions, filter }) => {
+const Assignments = ({ token, course, setAssignment, refresh, setRefresh, setSortOptions, sort, setFilterOptions, filter, setStudent }) => {
 
     const BASE_URL = 'http://192.168.1.12:5000/assignments'
 
@@ -141,7 +141,13 @@ const Assignments = ({ token, course, setAssignment, refresh, setRefresh, setSor
     }
     return (
         <div className="site-card-wrapper">
-            <CourseInfo course={course} refresh={refresh} setRefresh={setRefresh}></CourseInfo>
+            <CourseInfo
+                course={course}
+                refresh={refresh}
+                setRefresh={setRefresh}
+                setAssignment={setAssignment}
+                setStudent={setStudent}
+            ></CourseInfo>
             <Divider />
             <b>Assignments</b>
             <Row gutter={16}>

@@ -5,7 +5,7 @@ import EditCourseForm from '../../Teacher/EditCourse/EditCourseInfo'
 import './CourseInfo.css'
 import Statistic from "../../Teacher/Course/Statistic";
 
-const CourseInfo = ({ course, refresh, setRefresh }) => {
+const CourseInfo = ({ course, refresh, setRefresh, setAssignment, setStudent }) => {
     let BASE_URL = 'http://192.168.1.12:5000/courses'
     const [courseInfo, setCourseInfo] = useState(1)
     console.log("CourseInfo ", course)
@@ -26,7 +26,11 @@ const CourseInfo = ({ course, refresh, setRefresh }) => {
     return (
         <>
             <EditCourseForm courseInfo={courseInfo} visible={visible} onEdit={onEdit} onCancel={() => setVisible(false)} refresh={refresh} setRefresh={setRefresh}></EditCourseForm>
-            <Statistic course={course}></Statistic>
+            <Statistic
+                course={course}
+                setAssignment={setAssignment}
+                setStudent={setStudent}
+            ></Statistic>
             <Descriptions
                 bordered
                 title="Class Information"

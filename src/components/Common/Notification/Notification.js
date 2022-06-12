@@ -49,7 +49,7 @@ const Notification = ({ notiFilterMenu, refresh, setRefresh, setCourse, setAssig
     if (notifications.length > 0) {
         notificationsHtml = notifications.map((noti, index) => {
             return (
-                <Card className="noti-card" hoverable={true} loading={false} onClick={() => notificationJump(noti.path)}>
+                <Card key={index} className="noti-card" hoverable={true} loading={false} onClick={() => notificationJump(noti.path)}>
                     <Meta
                         avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
                         title={noti.type}
