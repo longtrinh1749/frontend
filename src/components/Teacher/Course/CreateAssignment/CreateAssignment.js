@@ -37,6 +37,10 @@ const CreateAssignment = ({ course, visible, onEdit, onCancel }) => {
                 due: moment(values.due, 'YYYY-MM-DDTHH:mm:ssZ').format('YYYY-MM-DD HH:mm:ss'),
                 instruction: values.instruction,
                 course_id: course.id,
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
+                }
             })
             resolve(true)
         });

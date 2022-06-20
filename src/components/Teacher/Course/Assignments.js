@@ -13,12 +13,15 @@ const Assignments = ({ token, course, setAssignment, refresh, setRefresh, setSor
     const [assignments, setAssignments] = useState(1)
     useEffect(() => {
         console.log('Call GetAssignments')
-        let params = {
-            'user_id': sessionStorage.getItem('id'),
-            'course_id': course.id,
-        }
+        const config = {
+            headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
+            params: {
+                'user_id': sessionStorage.getItem('id'),
+                'course_id': course.id,
+            }
+        };
 
-        axios.get(BASE_URL, { params }).then((res) => {
+        axios.get(BASE_URL, config).then((res) => {
             console.log(res.data.assignments)
             setAssignments(res.data.assignments)
         })

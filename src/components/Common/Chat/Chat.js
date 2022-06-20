@@ -35,10 +35,13 @@ const Chat = ({ courseId, assignmentId, userId }) => {
     }, [])
 
     useEffect(() => {
-        let params = {
-            id: sessionStorage.getItem('id')
-        }
-        axios.get(BASE_USER_URL, { params }).then(res => setUserInfo(res.data))
+        const config = {
+            headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
+            params: {
+                id: sessionStorage.getItem('id')
+            }
+        };
+        axios.get(BASE_USER_URL, config).then(res => setUserInfo(res.data))
     }, [])
 
     // Chat

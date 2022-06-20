@@ -24,6 +24,10 @@ const Profile = ({ modalVisible, setModalVisible }) => {
                 address: values.address,
                 phone: values.phone,
                 email: values.email,
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
+                }
             })
             resolve(true)
         });
@@ -36,16 +40,23 @@ const Profile = ({ modalVisible, setModalVisible }) => {
                 id: sessionStorage.getItem('id'),
                 old_password: values.oldPassword,
                 new_password: values.newPassword,
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
+                }
             })
             resolve(true)
         })
     }
 
     useEffect(() => {
-        let params = {
-            id: sessionStorage.getItem('id')
-        }
-        axios.get(BASE_URL, { params }).then(res => {
+        const config = {
+            headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
+            params: {
+                id: sessionStorage.getItem('id')
+            }
+        };
+        axios.get(BASE_URL, config).then(res => {
             setUser(res.data)
             formProfile.setFieldsValue({
                 name: res.data.name,

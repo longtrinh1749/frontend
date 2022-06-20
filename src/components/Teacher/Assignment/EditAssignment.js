@@ -15,6 +15,10 @@ const EditAssignment = ({ assignment, visible, onEdit, onCancel, refresh, setRef
                 name: values.name,
                 due: values.due,
                 instruction: values.instruction,
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
+                }
             })
             resolve(true)
         });

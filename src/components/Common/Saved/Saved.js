@@ -13,12 +13,15 @@ const Saved = ({ object, type, refresh, style }) => {
     let bookmarkDescription = useRef('')
 
     useEffect(() => {
-        let params = {
-            user_id: sessionStorage.getItem('id'),
-            type: type,
-            type_id: object?.id,
-        }
-        axios.get(BASE_URL + '/saved', { params }).then(res => {
+        const config = {
+            headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
+            params: {
+                user_id: sessionStorage.getItem('id'),
+                type: type,
+                type_id: object?.id,
+            }
+        };
+        axios.get(BASE_URL + '/saved', config).then(res => {
             if (res.data.saves.length > 0) {
                 setBookmarkButton('Bookmarked')
             }
@@ -34,12 +37,19 @@ const Saved = ({ object, type, refresh, style }) => {
                 type_id: object.id,
                 type_name: object.name,
                 description: bookmarkDescription.current
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
+                }
             }).then(res => {
                 console.log(res)
                 setBookmarkButton('Bookmarked')
             })
         } else {
             axios.delete(BASE_URL + '/saved', {
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`,
+                },
                 data: {
                     user_id: sessionStorage.getItem('id'),
                     type: type,

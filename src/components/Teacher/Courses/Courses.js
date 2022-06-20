@@ -18,7 +18,14 @@ const Courses = ({ token, setCourse, refresh, setRefresh, setSortOptions, sort, 
             user_id: sessionStorage.getItem('id')
         }
 
-        axios.get(BASE_URL, { params }).then((res) => {
+        const config = {
+            headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
+            params: {
+                user_id: sessionStorage.getItem('id')
+            }
+        };
+
+        axios.get(BASE_URL, config).then((res) => {
             console.log(res.data.courses)
             setCourses(res.data.courses)
         })

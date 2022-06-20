@@ -10,10 +10,13 @@ const CourseInfo = ({ course, refresh, setRefresh, setAssignment, setStudent }) 
     const [courseInfo, setCourseInfo] = useState(1)
     console.log("CourseInfo ", course)
     useEffect(() => {
-        let params = {
-            id: course.id
-        }
-        axios.get(BASE_URL, { params }).then(res => setCourseInfo(res.data.courses[0]))
+        const config = {
+            headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
+            params: {
+                id: course.id
+            }
+        };
+        axios.get(BASE_URL, config).then(res => setCourseInfo(res.data.courses[0]))
     }, [refresh])
 
     //Edit Course Form

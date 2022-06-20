@@ -4,8 +4,11 @@ import { Form, Input, Button, Checkbox, Divider, Space, Typography, Row, Col } f
 import './OtherLogin.css'
 import Register from "../Register/Register"
 import PropTypes from 'prop-types'
+import axios from "axios";
 
 const Login = ({ setToken }) => {
+
+    const BASE_URL = 'http://192.168.1.12:5000'
 
     // const [username, setUsername] = useState();
     // const [password, setPassword] = useState();
@@ -28,33 +31,71 @@ const Login = ({ setToken }) => {
         } else {
             role.current = e.target[3].value
         }
-        const token = loginUser({
+        let token = loginUser({
             'username': username.current,
             'password': password.current,
             'role': role.current
         });
-        setToken(token.username, token.role, token.id);
+        token.then(res => setToken(res.username, res.role, res.id, res.token))
+        refreshToken(3, JSON.parse(sessionStorage.getItem('token')))
+    }
+
+    const refreshToken = (expired_in, jwt) => {
+        setTimeout(() => {
+            console.log('Call refresh token')
+            const token = callRefreshToken(jwt);
+            token.then(res => setToken(res.username, res.role, res.id, res.token));
+            refreshToken(expired_in)
+        }, 60000)
+    }
+
+    const callRefreshToken = async (token) => {
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+
+        const bodyParameters = {
+            key: "value"
+        };
+
+        let res = await axios.post(
+            BASE_URL + '/users/token',
+            bodyParameters, {
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
+                }
+            }
+        ).then(res => {
+            console.log(res)
+        }).catch(console.log);
+
+        return {
+            'token': res.data.token,
+            'role': res.data.role,
+            'username': 'abc',
+            'id': 1,
+            'expired_in': 7
+        }
     }
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
 
-    function loginUser(data) {
-        // return fetch('http://localhost:8080/login', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(credentials)
-        // })
-        //     .then(data => data.json())
-        let id = 1
-        console.log(data)
-        if (data.username == "teacher51") {
-            id = 51
+    async function loginUser(data) {
+        let res = await axios.get(BASE_URL + '/users/token', {
+            auth: {
+                username: data.username,
+                password: data.password
+            }
+        })
+        return {
+            'token': res.data.token,
+            'role': res.data.role,
+            'username': 'abc',
+            'id': 1,
+            'expired_in': 7
         }
-        return { "username": data.username, "role": data.role, "id": id }
     }
 
     function registerClicked() {
@@ -78,7 +119,7 @@ const Login = ({ setToken }) => {
                     <input type="text" id="login" className="fadeIn first" name="login" placeholder="Username" />
                     <input type="password" id="password" className="fadeIn second" name="login" placeholder="Password" /><br />
                     <input type="radio" id="roleStudent" name="role" value="ROLE.STUDENT" /><label htmlFor="roleStudent">Login as Student</label><br />
-                    <input type="radio" id="roleTeacher" name="role" value="ROLE.TEACHER" defaultChecked="checked"/><label htmlFor="roleTeacher">Login as Teacher</label><br />
+                    <input type="radio" id="roleTeacher" name="role" value="ROLE.TEACHER" defaultChecked="checked" /><label htmlFor="roleTeacher">Login as Teacher</label><br />
                     <input type="submit" className="fadeIn third" value="Log In" />
                 </form>
                 <div id="formFooter">

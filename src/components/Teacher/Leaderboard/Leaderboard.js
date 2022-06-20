@@ -17,10 +17,13 @@ const Leaderboard = () => {
     const [studentsNotTop, setStudentsNotTop] = useState([])
 
     useEffect(() => {
-        let params = {
-            user_id: sessionStorage.getItem("id")
-        }
-        axios.get(BASE_URL + "/courses", { params }).then(res => {
+        const config = {
+            headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
+            params: {
+                user_id: sessionStorage.getItem("id")
+            }
+        };
+        axios.get(BASE_URL + "/courses", config).then(res => {
             setCourses(res.data.courses)
             setCourse(res.data.courses[0])
             setCoursesHtml(res.data.courses.map((c, i) => {
@@ -33,12 +36,15 @@ const Leaderboard = () => {
 
     useEffect(() => {
         if (course != undefined) {
-            let params = {
-                course_id: course.id,
-                display: false
-            }
+            const config = {
+                headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
+                params: {
+                    course_id: course.id,
+                    display: false
+                }
+            };
 
-            axios.get(BASE_URL + "/grading/students", { params }).then(res => {
+            axios.get(BASE_URL + "/grading/students", config).then(res => {
                 setStudents(res.data.students)
                 if (res.data.students.length > -1) {
                     setStudentsTop1((
@@ -46,7 +52,7 @@ const Leaderboard = () => {
                             <div className="pos">
                                 1
                             </div>
-                            <div className="pic" style={{ backgroundImage: `url("https://randomuser.me/api/portraits/men/44.jpg")` }}></div>
+                            <div className="pic" style={{ backgroundImage: `url("https://iptc.org/wp-content/uploads/2018/05/avatar-anonymous-300x300.png")` }}></div>
                             <div className="name">
                                 {res.data.students[0].name}
                             </div>
@@ -64,7 +70,7 @@ const Leaderboard = () => {
                             <div className="pos">
                                 2
                             </div>
-                            <div className="pic" style={{ backgroundImage: `url("https://randomuser.me/api/portraits/men/44.jpg")` }}></div>
+                            <div className="pic" style={{ backgroundImage: `url("https://iptc.org/wp-content/uploads/2018/05/avatar-anonymous-300x300.png")` }}></div>
                             <div className="name">
                                 {res.data.students[1].name}
                             </div>
@@ -82,7 +88,7 @@ const Leaderboard = () => {
                             <div className="pos">
                                 3
                             </div>
-                            <div className="pic" style={{ backgroundImage: `url("https://randomuser.me/api/portraits/men/44.jpg")` }}></div>
+                            <div className="pic" style={{ backgroundImage: `url("https://iptc.org/wp-content/uploads/2018/05/avatar-anonymous-300x300.png")` }}></div>
                             <div className="name">
                                 {res.data.students[2].name}
                             </div>
@@ -101,7 +107,7 @@ const Leaderboard = () => {
                                 <div className="pos">
                                     {i + 1}
                                 </div>
-                                <div className="pic" style={{ backgroundImage: `url("https://randomuser.me/api/portraits/men/44.jpg")` }}></div>
+                                <div className="pic" style={{ backgroundImage: `url("https://iptc.org/wp-content/uploads/2018/05/avatar-anonymous-300x300.png")` }}></div>
                                 <div className="name">
                                     {s.name}
                                 </div>

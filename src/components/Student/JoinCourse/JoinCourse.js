@@ -31,6 +31,10 @@ const JoinCourse = () => {
             axios.post(BASE_URL, {
                 course_id: values.code,
                 user_id: sessionStorage.getItem('id'),
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
+                }
             })
             resolve(true)
         });

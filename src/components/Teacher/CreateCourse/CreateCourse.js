@@ -33,6 +33,10 @@ const CreateCourse = ({ setCount, count }) => {
                 school: values.school,
                 school_year: values.year,
                 user_id: sessionStorage.getItem('id'),
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
+                }
             })
             setCount(count + 1)
             resolve(true)

@@ -28,6 +28,9 @@ const LeaveCourse = ({ course, leaveCourse }) => {
             //     resolve(true);
             // }, 2000);
             axios.delete(BASE_URL, {
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`,
+                },
                 data: {
                     course_id: course.id,
                     user_id: sessionStorage.getItem('id'),

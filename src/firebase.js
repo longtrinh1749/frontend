@@ -4,19 +4,21 @@ import { getFirestore } from 'firebase/firestore';
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 var firebaseConfig = {
-    apiKey: "AIzaSyB4UPIM-FLjb8Xg5_7kQ3MERpO-WU6Gja4",
-    authDomain: "homewerk-349712.firebaseapp.com",
-    projectId: "homewerk-349712",
-    storageBucket: "homewerk-349712.appspot.com",
-    messagingSenderId: "1034758990075",
-    appId: "1:1034758990075:web:b3f871cf81fb96e582685e",
+    apiKey: "AIzaSyCdk4MLlIDq7rBwMB_7TguZR8Xup9oIFeE",
+    authDomain: "homewerk-cloud.firebaseapp.com",
+    databaseURL: "https://homewerk-cloud-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "homewerk-cloud",
+    storageBucket: "homewerk-cloud.appspot.com",
+    messagingSenderId: "1035988075574",
+    appId: "1:1035988075574:web:bb6d412a29757a87b98497",
+    measurementId: "G-TRDJJ6S5JF"
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
 const messaging = getMessaging(firebaseApp);
 
 export const getFCMToken = (setTokenFound) => {
-    return getToken(messaging, { vapidKey: 'BJZWQLbTInOAXE97ZYvAdJs_3CO6S2bCFbYLe3OmAW-DU0f8Z4dOszzCHep9LocKje9lo0yy6p5H0M7aX2UnEJ8' }).then((currentToken) => {
+    return getToken(messaging, { vapidKey: 'BK6Sj9Loe8GxCYPaoJR5-Ki4PBtLb0AW4Pe78_gm9pwCE9Ej5ZuOyrX4wtshviMCIIyg8XvY0Ac7iCVl6N5fGM4' }).then((currentToken) => {
         if (currentToken) {
             console.log('current token for client: ', currentToken);
             setTokenFound(true);

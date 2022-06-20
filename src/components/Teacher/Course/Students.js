@@ -11,12 +11,15 @@ const Students = ({ setStudent, course, assignment, refresh, setRefresh, student
 
     useEffect(() => {
         console.log('Call get all students within course')
-        let params = {
-            course_id: course.id,
-            assignment_id: assignment.id,
-        }
+        const config = {
+            headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
+            params: {
+                course_id: course.id,
+                assignment_id: assignment.id,
+            }
+        };
 
-        axios.get(BASE_URL, { params }).then((res) => {
+        axios.get(BASE_URL, config).then((res) => {
             console.log(res.data.students)
             setStudents(res.data.students)
         })

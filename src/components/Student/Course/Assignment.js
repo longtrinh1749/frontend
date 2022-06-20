@@ -21,27 +21,36 @@ const Assignment = ({ assignment, refresh, setRefresh, setAssignment, setCourse,
     const [handin, setHandin] = useState(false)
 
     useEffect(() => {
-        let params = {
-            id: assignment.id
-        }
-        axios.get(BASE_ASM_URL, { params }).then(res => {
+        const config = {
+            headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
+            params: {
+                id: assignment.id
+            }
+        };
+        axios.get(BASE_ASM_URL, config).then(res => {
             setAsmData(res.data.assignments[0])
             console.log('Assignment Data:', asmData)
 
-            params = {
-                user_id: sessionStorage.getItem('id'),
-                assignment_id: res.data.assignments[0].id,
-            }
+            const config = {
+                headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
+                params: {
+                    user_id: sessionStorage.getItem('id'),
+                    assignment_id: res.data.assignments[0].id,
+                }
+            };
 
-            axios.get(BASE_SUBMIT_URL, { params }).then(res => {
+            axios.get(BASE_SUBMIT_URL, config).then(res => {
                 setSubmitData(res.data.submits[0])
                 console.log('Submitted:', submitData)
 
-                params = {
-                    submit_id: res.data.submits[0] ? (res.data.submits[0].id) : 0,
-                }
+                const config = {
+                    headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
+                    params: {
+                        submit_id: res.data.submits[0] ? (res.data.submits[0].id) : 0,
+                    }
+                };
 
-                axios.get(BASE_WORK_URL, { params }).then(res => {
+                axios.get(BASE_WORK_URL, config).then(res => {
                     setWorksData(res.data.works)
                     console.log('Work:', worksData)
                     setFileList(res.data.works.map((workData) => {
@@ -66,6 +75,10 @@ const Assignment = ({ assignment, refresh, setRefresh, setAssignment, setCourse,
             axios.put(BASE_SUBMIT_URL, {
                 id: submitData ? submitData.id : 0,
                 status: 'submitted',
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
+                }
             })
         } else {
             console.log(submitData)
@@ -83,6 +96,10 @@ const Assignment = ({ assignment, refresh, setRefresh, setAssignment, setCourse,
                 axios.put(BASE_SUBMIT_URL, {
                     id: submitData ? submitData.id : 0,
                     status: 'handed in',
+                }, {
+                    headers: {
+                        'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
+                    }
                 })
             }
         }
@@ -145,7 +162,11 @@ const Assignment = ({ assignment, refresh, setRefresh, setAssignment, setCourse,
             formData.append('file', file)
             formData.append('assignment_id', asmData.id)
             formData.append('user_id', sessionStorage.getItem('id'))
-            axios.post(BASE_WORK_URL, formData).then(function (response) {
+            axios.post(BASE_WORK_URL, formData, {
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
+                }
+            }).then(function (response) {
                 setRefresh(!refresh)
                 console.log(response)
             })
@@ -159,6 +180,10 @@ const Assignment = ({ assignment, refresh, setRefresh, setAssignment, setCourse,
             axios.put(BASE_WORK_URL, {
                 id: file.id,
                 active: false,
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
+                }
             })
             setRefresh(!refresh)
             resolve(true)

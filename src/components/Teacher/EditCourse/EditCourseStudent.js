@@ -16,10 +16,13 @@ const ManageStudentList = ({ courseInfo, refresh, visible, setRefresh }) => {
     }
 
     useEffect(() => {
-        let params = {
-            course_id: courseInfo.id
-        }
-        axios.get(BASE_STUDENTS_URL, { params }).then(res => { setStudents(res.data.students); console.log(res) })
+        const config = {
+            headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
+            params: {
+                course_id: courseInfo.id
+            }
+        };
+        axios.get(BASE_STUDENTS_URL, config).then(res => { setStudents(res.data.students); console.log(res) })
     }, [refresh])
 
     let studentsHtml = students.map((student, index) => {
@@ -64,6 +67,9 @@ const ManageStudentList = ({ courseInfo, refresh, visible, setRefresh }) => {
     // API call
     const removeStudent = () => {
         axios.delete(BASE_COURSE_USER_URL, {
+            headers: {
+                'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`,
+            },
             data: {
                 course_id: courseInfo.id,
                 user_id: student.current.id,

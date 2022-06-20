@@ -17,6 +17,10 @@ const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel, refresh, setRef
                 school: values.school,
                 year: values.year,
                 active: values.active,
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
+                }
             })
             resolve(true)
         });

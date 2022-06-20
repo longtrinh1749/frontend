@@ -36,6 +36,7 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
     const [submitData, setSubmitData] = useState(false)
     const [canvasHtml, setCanvasHtml] = useState(false)
     const [objects, setObjects] = useState([])
+    const [selectState, setSelectState] = useState('Select')
 
     // UI State
     let canvasRender = useRef(false)
@@ -54,15 +55,18 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
         console.log('Assignment', assignment)
         console.log('Token', token)
         console.log('Course', course)
-        let params = {
-            user_id: student.id,
-            assignment_id: assignment.id,
-        }
-        axios.get(BASE_SUBMIT_URL, { params }).then(res => {
+        const config = {
+            headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
+            params: {
+                user_id: student.id,
+                assignment_id: assignment.id,
+            }
+        };
+        axios.get(BASE_SUBMIT_URL, config).then(res => {
             setSubmitData(res.data.submits[0])
             console.log('Submits', res.data.submits[0])
         })
-        axios.get(BASE_WORK_URL, { params }).then(res => {
+        axios.get(BASE_WORK_URL, config).then(res => {
             setWorksData(res.data.works)
             console.log('Works', worksData)
         })
@@ -97,9 +101,11 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
                     canvasState.current = true
                 }
                 canvases.current[i] = new fabric.Canvas(_canvasId, {
-                    isDrawingMode: true,
+                    isDrawingMode: false,
                     freeDrawingBrush: new fabric.PencilBrush({ width: 2 }),
                 })
+                canvases.current[i].freeDrawingBrush.color = 'red'
+                canvases.current[i].freeDrawingBrush.width = 3
                 // For grading to image
 
                 // let _img = document.getElementById('work' + worksData[i].id)
@@ -277,6 +283,10 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
                 id: worksData[i].id,
                 canvas_json: _canvasData,
                 objects: _objects
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
+                }
             })
         }
     }
@@ -296,11 +306,24 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
                 id: worksData[i].id,
                 canvas_json: _canvasData,
                 objects: objects
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
+                }
             })
+        }
+    }
+    const deleteDrawing = () => {
+        console.log('Select')
+        setSelectState('Remove')
+        for (let i = 0; i < worksData.length; i++) {
+            // canvases.current[i].getActiveObject().remove()
+            canvases.current[i].remove(canvases.current[i].getActiveObject())
         }
     }
     //
     const options = [
+        { label: 'Select', value: 'select' },
         { label: 'Pen', value: toolConst.PEN },
         { label: 'Check', value: toolConst.CHECK },
         { label: 'Comment', value: toolConst.COMMENT },
@@ -384,7 +407,11 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
                 formData.append('work_id', worksData[j].id)
                 formData.append('file', img)
 
-                axios.put(BASE_GRADING_URL, formData)
+                axios.put(BASE_GRADING_URL, formData, {
+                    headers: {
+                        'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
+                    }
+                })
             })
         }
     }
@@ -402,14 +429,23 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
                 >
 
                 </Saved>
+                {/* <Button onClick={() => deleteDrawing()}>Delete</Button> */}
                 <Radio.Group
-                    options={options}
+                    // options={options}
                     onChange={(e) => {
                         tool.current = e.target.value
+                        if (e.target.value != 'select') {
+                            setSelectState('Select')
+                        }
                         if (tool.current == toolConst.PEN) {
                             for (let i = 0; i < canvases.current.length; i++) {
                                 canvases.current[i].isDrawingMode = true
+                                canvases.current[i].freeDrawingBrush.color = 'red'
+                                canvases.current[i].freeDrawingBrush.width = 3
                             }
+                            // } else if (e.target.value == 'delete') {
+                            //     deleteDrawing()
+
                         } else {
                             for (let i = 0; i < canvases.current.length; i++) {
                                 canvases.current[i].isDrawingMode = false
@@ -423,7 +459,14 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
                     style={{
                         display: 'inline',
                     }}
-                />
+                >
+                    <Radio.Button value='select' onClick={() => deleteDrawing()}>
+                        {selectState}
+                    </Radio.Button>
+                    <Radio.Button value={toolConst.PEN}>Pen</Radio.Button>
+                    <Radio.Button value={toolConst.CHECK}>Check</Radio.Button>
+                    <Radio.Button value={toolConst.COMMENT}>Comment</Radio.Button>
+                </Radio.Group>
             </div>
             <Row>
                 <Col span={24} style={{ backgroundColor: 'lightcyan' }}>
@@ -434,7 +477,7 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
                             <Col flex="20%" className="final-grade score">
                                 <Typography.Title style={{ color: 'red', textAlign: 'center' }}><i>Score</i></Typography.Title>
                                 <Input onChange={scoreChange}
-                                    value={submitData ? submitData.result : undefined}
+                                    // value={submitData ? submitData.result : undefined}
                                     style={{
                                         'fontSize': '50px',
                                         border: 'none',
@@ -444,7 +487,7 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
                             <Col flex="auto" className='final-grade criticism'>
                                 <Typography.Title style={{ color: 'red', textAlign: 'center' }}><i>Comment</i></Typography.Title>
                                 <Input.TextArea onChange={onFinalCommentChange}
-                                    value={submitData ? submitData.comment : undefined}
+                                    // value={submitData ? submitData.comment : undefined}
                                     style={{
                                         border: 'none',
                                         marginTop: '7px',

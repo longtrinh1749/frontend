@@ -11,11 +11,14 @@ const Courses = ({ token, setCourse, refresh, setRefresh, setSortOptions, sort, 
     const [courses, setCourses] = useState(1)
 
     useEffect(() => {
-        let params = {
-            user_id: sessionStorage.getItem('id')
-        }
+        const config = {
+            headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
+            params: {
+                user_id: sessionStorage.getItem('id')
+            }
+        };
 
-        axios.get(BASE_URL, { params }).then((res) => {
+        axios.get(BASE_URL, config).then((res) => {
             setCourses(res.data.courses)
         })
         setSortOptions([

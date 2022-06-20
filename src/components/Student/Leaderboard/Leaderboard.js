@@ -16,12 +16,14 @@ const Leaderboard = ({setCourse}) => {
     }
 
     useEffect(() => {
-        let params = {
-            student_id: sessionStorage.getItem("id"),
-        }
+        const config = {
+            headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
+            params: {
+                student_id: sessionStorage.getItem("id"),
+            }
+        };
 
-
-        axios.get(BASE_URL + "/grading/courses", { params }).then(res => {
+        axios.get(BASE_URL + "/grading/courses", config).then(res => {
             setCourses(res.data.courses)
             setCoursesHtml(res.data.courses.map((c, i) => {
                 return (
