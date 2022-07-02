@@ -1,15 +1,55 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Checkbox, Divider, Space, Typography, Row, Col } from 'antd';
+import { Form, Input, Button, Checkbox, Divider, Space, Typography, Row, Col, notification } from 'antd';
 // import './Register.css'
 import './OtherRegister.css'
+import { useRef } from "react";
+import axios from "axios";
 
 const Register = ({setRegister}) => {
-    const [username, setUsername] = useState();
-    const [password, setPassword] = useState();
+    // const [username, setUsername] = useState();
+    // const [password, setPassword] = useState();
+
+    const BASE_URL = "http://192.168.1.12:5000"
+    let username = useRef()
+    let password = useRef()
+    let name = useRef()
+    let email = useRef()
+    let phone = useRef()
+    let clazz = useRef()
+    let school = useRef()
+    let role = useRef()
 
     const onFinish = (e) => {
         e.preventDefault();
-        console.log('Success:', e)
+        // console.log(e)
+        username.current = e.target[0].value
+        password.current = e.target[1].value
+        name.current = e.target[2].value
+        email.current = e.target[3].value
+        phone.current = e.target[4].value
+        clazz.current = e.target[5].value
+        school.current = e.target[6].value
+        if (e.target[7].checked === true) {
+            role.current = e.target[7].value
+        } else {
+            role.current = e.target[8].value
+        }
+
+        axios.post(BASE_URL + '/users', {
+            username: username.current,
+            password: password.current,
+            name: name.current,
+            email: email.current,
+            class: clazz.current,
+            school: school.current,
+            role: role.current
+        }).then(res => {
+            console.log(res)
+            notification.open({
+                message: "Register successful"
+            })
+            loginClicked()
+        })
     }
 
     const onFinishFailed = (errorInfo) => {

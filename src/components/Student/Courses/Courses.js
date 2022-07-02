@@ -96,7 +96,7 @@ const Courses = ({ token, setCourse, refresh, setRefresh, setSortOptions, sort, 
     let coursesHTML = (
         <div></div>
     )
-    if (courses.length > 0) {
+    if (courses?.length > 0) {
         coursesHTML = courses.map((course, index) => {
             return (
                 <Col span={8} key={index}>

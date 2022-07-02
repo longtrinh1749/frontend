@@ -40,7 +40,7 @@ const Leaderboard = () => {
                 headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
                 params: {
                     course_id: course.id,
-                    display: false
+                    display: 0
                 }
             };
 

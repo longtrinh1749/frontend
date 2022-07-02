@@ -43,10 +43,12 @@ const Login = ({ setToken }) => {
     const refreshToken = (expired_in, jwt) => {
         setTimeout(() => {
             console.log('Call refresh token')
-            const token = callRefreshToken(jwt);
-            token.then(res => setToken(res.username, res.role, res.id, res.token));
-            refreshToken(expired_in)
-        }, 60000)
+            if (JSON.parse(sessionStorage.getItem('token')) != null) {
+                const token = callRefreshToken(jwt);
+                token.then(res => setToken(res.username, res.role, res.id, res.token));
+                refreshToken(expired_in)
+            }
+        }, 7*3600*1000)
     }
 
     const callRefreshToken = async (token) => {
