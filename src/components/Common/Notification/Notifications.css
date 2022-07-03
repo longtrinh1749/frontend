@@ -1,0 +1,22 @@
+#notification-menu {
+  border-radius: inherit;
+}
+
+.notification-filters {
+  margin: 20px;
+}
+
+#notifications-list::-webkit-scrollbar {
+  background-color: #f5f5f5;
+}
+
+#notifications-list::-webkit-scrollbar-thumb {
+  background: grey;
+  border-radius: 10px;
+  width: 5px;
+}
+
+#notifications-list {
+  height: 400px;
+  overflow-y: scroll;
+}

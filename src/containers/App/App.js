@@ -6,6 +6,7 @@ import useToken from '../../hooks/useToken'
 import Login from '../Login/Login'
 import StudentApp from "../StudentApp/StudentApp";
 import TeacherApp from "../TeacherApp/TeacherApp";
+import Leftbar from "../../components/Sidebar/Sider";
 
 const App = () => {
 

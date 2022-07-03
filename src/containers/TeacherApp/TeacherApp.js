@@ -1,6 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+} from "react-router-dom";
 import { Layout, Menu, Breadcrumb, Dropdown, Card, Avatar, Button, Input, Typography } from 'antd';
-import { UserOutlined, DownOutlined, LaptopOutlined, NotificationOutlined, BellOutlined, SendOutlined, RedoOutlined } from '@ant-design/icons';
+import { UserOutlined, DownOutlined, LaptopOutlined, NotificationOutlined, BellOutlined, SendOutlined, RedoOutlined, HomeOutlined } from '@ant-design/icons';
 import '../App/App.css'
 import Courses from '../../components/Teacher/Courses/Courses'
 import Assignments from "../../components/Teacher/Course/Assignments";
@@ -13,6 +18,8 @@ import Sort from "../../components/Common/Sort/Sort";
 import Filter from "../../components/Common/Filter/Filter";
 import Notification from "../../components/Common/Notification/Notification";
 import Leaderboard from "../../components/Teacher/Leaderboard/Leaderboard";
+import Leftbar from "../../components/Sidebar/Sider";
+import Bookmark from "../../components/Common/Saved/Bookmark";
 
 const TeacherApp = ({ setToken, token }) => {
 
@@ -34,18 +41,18 @@ const TeacherApp = ({ setToken, token }) => {
     let brcrumb = useRef({ course: '', assignment: '', student: '' })
 
     const setBrCrumbCourse = (courseName) => {
-        brcrumb.current.course = <Breadcrumb.Item onClick={() => { setAssignment(''); setStudent('') }}>{courseName}</Breadcrumb.Item>
+        brcrumb.current.course = <Breadcrumb.Item id='course-breadscrum' onClick={() => { setAssignment(''); setStudent('') }}>{courseName}</Breadcrumb.Item>
         brcrumb.current.assignment = ''
         brcrumb.current.student = ''
     }
 
     const setBrCrumbAssignment = (assignmentName) => {
-        brcrumb.current.assignment = <Breadcrumb.Item onClick={() => setStudent('')}>{assignmentName}</Breadcrumb.Item>
+        brcrumb.current.assignment = <Breadcrumb.Item id='course-breadscrum' onClick={() => setStudent('')}>{assignmentName}</Breadcrumb.Item>
         brcrumb.current.student = ''
     }
 
     const setBrCrumbStudent = (studentName) => {
-        brcrumb.current.student = <Breadcrumb.Item>{studentName}</Breadcrumb.Item>
+        brcrumb.current.student = <Breadcrumb.Item id='course-breadscrum'>{studentName}</Breadcrumb.Item>
     }
 
     setBrCrumbCourse(course.name)
@@ -225,43 +232,124 @@ const TeacherApp = ({ setToken, token }) => {
                         Teacher Profile! <UserOutlined />
                     </a>
                 </Dropdown>
+                <Notification />
             </Header>
             <Layout>
-                <Notification
+                {/* <Notification
                     notiFilterMenu={notiFilterMenu}
                     refresh={refresh}
                     setRefresh={setRefresh}
                     setCourse={setCourse}
                     setAssignment={setAssignment}
                     setStudent={setStudent}
-                />
-                <Layout style={{
-                    padding: '0 24px 24px',
-                    height: 'calc(100vh - 64px',
-                }}>
-                    <Breadcrumb style={{ margin: '16px 0' }}>
-                        <Breadcrumb.Item onClick={() => { setAssignment(''); setCourse(''); setStudent('') }}>
-                            <Typography.Title level={4} italic={true}>Your Courses</Typography.Title>
-                        </Breadcrumb.Item>
-                        {brcrumb.current.course}
-                        {brcrumb.current.assignment}
-                        {brcrumb.current.student}
-                    </Breadcrumb>
-                    <div id='utils'>
-                        <RedoOutlined style={{ float: 'right', margin: '10px', fontSize: '125%' }} onClick={() => setRefresh(!refresh)} />
-                        <Sort sortList={students} setSortList={setStudents} setSort={setSort} sortOptions={sortOptions}></Sort>
-                        <Filter setFilter={setFilter} filterOptions={filterOptions}></Filter>
-                    </div>
-                    <Content className="site-layout-background">
-                        {content}
-                    </Content>
-                </Layout>
-                <Sider width={'20%'} className="site-layout-background" style={{
-                    overflow: 'auto',
-                    height: "calc(100vh - 64px)",
-                }}>
-                    {rightSider}
-                </Sider>
+                /> */}
+                <Leftbar></Leftbar>
+                <Router>
+                    <Routes>
+                        <Route path="/courses" element={<>
+                            <Layout style={{
+                                padding: '0 24px 24px',
+                                height: 'calc(100vh - 64px)',
+                            }}>
+                                <Breadcrumb style={{ margin: '16px 0' }}>
+                                    <Breadcrumb.Item onClick={() => { setAssignment(''); setCourse(''); setStudent('') }}>
+                                        <Typography.Title level={4} italic={true}>Your Courses</Typography.Title>
+                                        <HomeOutlined />
+                                    </Breadcrumb.Item>
+                                    {brcrumb.current.course}
+                                    {brcrumb.current.assignment}
+                                    {brcrumb.current.student}
+                                </Breadcrumb>
+                                <div id='utils'>
+                                    <RedoOutlined style={{ float: 'right', margin: '10px', fontSize: '125%' }} onClick={() => setRefresh(!refresh)} />
+                                    <Sort sortList={students} setSortList={setStudents} setSort={setSort} sortOptions={sortOptions}></Sort>
+                                    <Filter setFilter={setFilter} filterOptions={filterOptions}></Filter>
+                                </div>
+                                <Content className="site-layout-background">
+                                    {content}
+                                </Content>
+                            </Layout>
+                            <Sider width={'20%'} className="site-layout-background" style={{
+                                overflow: 'auto',
+                                height: "calc(100vh - 64px)",
+                            }}>
+                                {rightSider}
+                            </Sider>
+                        </>}>
+                        </Route>
+                        <Route path="/" element={<>
+                            <Layout style={{
+                                padding: '0 24px 24px',
+                                height: 'calc(100vh - 64px)',
+                            }}>
+                                <Breadcrumb style={{ margin: '16px 0' }}>
+                                    <Breadcrumb.Item id='course-breadscrum' onClick={() => { setAssignment(''); setCourse(''); setStudent('') }}>
+                                        <Typography.Title level={4} italic={true}>Your Courses</Typography.Title>
+                                        <HomeOutlined />
+                                    </Breadcrumb.Item>
+                                    {brcrumb.current.course}
+                                    {brcrumb.current.assignment}
+                                    {brcrumb.current.student}
+                                </Breadcrumb>
+                                <div id='utils'>
+                                    <RedoOutlined style={{ float: 'right', margin: '10px', fontSize: '125%' }} onClick={() => setRefresh(!refresh)} />
+                                    <Sort sortList={students} setSortList={setStudents} setSort={setSort} sortOptions={sortOptions}></Sort>
+                                    <Filter setFilter={setFilter} filterOptions={filterOptions}></Filter>
+                                </div>
+                                <Content className="site-layout-background">
+                                    {content}
+                                </Content>
+                            </Layout>
+                            <Sider width={'20%'} className="site-layout-background" style={{
+                                overflow: 'auto',
+                                height: "calc(100vh - 64px)",
+                            }}>
+                                {rightSider}
+                            </Sider>
+                        </>}>
+                        </Route>
+                        <Route path="/assignments" element={
+                            <>
+                                <Layout style={{
+                                    padding: '0 24px 24px',
+                                    height: 'calc(100vh - 64px)',
+                                }}>
+                                    Assignment
+                                </Layout>
+                            </>}>
+                        </Route>
+                        <Route path="/bookmark" element={
+                            <>
+                                <Layout style={{
+                                    padding: '0 24px 24px',
+                                    height: 'calc(100vh - 64px)',
+                                }}>
+                                    <Bookmark />
+                                </Layout>
+                            </>}>
+                        </Route>
+                        <Route path="/statistic" element={
+                            <>
+                                <Layout style={{
+                                    padding: '0 24px 24px',
+                                    height: 'calc(100vh - 64px)',
+                                }}>
+                                    Statistic
+                                </Layout>
+                            </>}>
+                        </Route>
+                        <Route path="/account" element={
+                            <>
+                                <Layout style={{
+                                    padding: '0 24px 24px',
+                                    height: 'calc(100vh - 64px)',
+                                }}>
+                                    Account
+                                </Layout>
+                            </>}>
+                        </Route>
+                    </Routes>
+                </Router>
             </Layout>
         </Layout>
     )

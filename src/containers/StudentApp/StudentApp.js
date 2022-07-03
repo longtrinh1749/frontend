@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Layout, Menu, Breadcrumb, Dropdown, Card, Avatar, Button, Input, Typography, Badge } from 'antd';
-import { UserOutlined, DownOutlined, RedoOutlined, NotificationOutlined, BellOutlined, SendOutlined } from '@ant-design/icons';
+import { UserOutlined, DownOutlined, RedoOutlined, NotificationOutlined, BellOutlined, SendOutlined, HomeOutlined } from '@ant-design/icons';
 import '../App/App.css'
 import Courses from '../../components/Student/Courses/Courses'
 import Assignments from "../../components/Student/Course/Assignments";
@@ -28,12 +28,12 @@ const StudentApp = ({ setToken, token }) => {
     let brcrumb = useRef({ course: '', assignment: '' })
 
     const setBrCrumbCourse = (courseName) => {
-        brcrumb.current.course = <Breadcrumb.Item onClick={() => setAssignment('')}>{courseName}</Breadcrumb.Item>
+        brcrumb.current.course = <Breadcrumb.Item id='course-breadscrum' onClick={() => setAssignment('')}>{courseName}</Breadcrumb.Item>
         brcrumb.current.assignment = ''
     }
 
     const setBrCrumbAssignment = (assignmentName) => {
-        brcrumb.current.assignment = <Breadcrumb.Item>{assignmentName}</Breadcrumb.Item>
+        brcrumb.current.assignment = <Breadcrumb.Item id='course-breadscrum'>{assignmentName}</Breadcrumb.Item>
     }
 
     setBrCrumbCourse(course.name)
@@ -98,7 +98,7 @@ const StudentApp = ({ setToken, token }) => {
 
     let rightSider;
     if (!course) {
-        rightSider = <Leaderboard 
+        rightSider = <Leaderboard
             setCourse={setCourse}
         />
     } else {
@@ -193,21 +193,22 @@ const StudentApp = ({ setToken, token }) => {
                 </Dropdown>
             </Header>
             <Layout>
-                <Notification
+                {/* <Notification
                     refresh={refresh}
                     setRefresh={setRefresh}
                     notiFilterMenu={notiFilterMenu}
                     setCourse={setCourse}
                     setAssignment={setAssignment}
 
-                />
+                /> */}
                 <Layout style={{
                     padding: '0 24px 24px',
                     height: 'calc(100vh - 64px)',
                 }}>
                     <Breadcrumb style={{ margin: '16px 0' }}>
-                        <Breadcrumb.Item onClick={() => { setAssignment(''); setCourse('') }}>
+                        <Breadcrumb.Item id='course-breadscrum' onClick={() => { setAssignment(''); setCourse('') }}>
                             <Typography.Title level={4} italic={true}>Your Courses</Typography.Title>
+                            <HomeOutlined />
                         </Breadcrumb.Item>
                         {brcrumb.current.course}
                         {brcrumb.current.assignment}

@@ -101,3 +101,7 @@ button {
     float: right;
     margin: 0 10px;
 }
+
+#course-breadscrum {
+    cursor: pointer
+}
