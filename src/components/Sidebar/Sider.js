@@ -60,54 +60,74 @@ const Leftbar = () => {
         //     </Layout>
         // </Layout>
 
-        <Router>
-            <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-                <div className="logo" />
-                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-                    <Menu.Item>
-                        <Link to='/courses'>
-                        </Link>
+        // <Router>
+        <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+            <div className="logo" />
+            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+                <Menu.Item>
+                    <Link to='/courses'>
                         <FolderOutlined />
                         <span>
-                            <a className='sidebar-redirect' href='/courses' style={{color: 'white'}}>Courses</a>
+                            <a className='sidebar-redirect' href='/courses' style={{ color: 'white' }}>Courses</a>
                         </span>
-                    </Menu.Item>
-                    <Menu.Item >
-                        {/* <Link to='/assignments'>
-                            
-                        </Link> */}
+                    </Link>
+                    {/* <FolderOutlined />
+                        <span>
+                            <a className='sidebar-redirect' href='/courses' style={{ color: 'white' }}>Courses</a>
+                        </span> */}
+                </Menu.Item>
+                <Menu.Item >
+                    <Link to='/assignments'>
                         <FileExclamationOutlined />
                         <span>
-                            <a className='sidebar-redirect' href='/assignments' style={{color: 'white'}}>Assignments</a>
+                            <a className='sidebar-redirect' href='/assignments' style={{ color: 'white' }}>Assignments</a>
                         </span>
-                    </Menu.Item>
-                    <Menu.Item>
-                        <Link to='/bookmark'>
-                        </Link>
+
+                    </Link>
+                    {/* <FileExclamationOutlined />
+                        <span>
+                            <a className='sidebar-redirect' href='/assignments' style={{ color: 'white' }}>Assignments</a>
+                        </span> */}
+                </Menu.Item>
+                <Menu.Item>
+                    <Link to='/bookmark'>
                         <BookOutlined />
                         <span>
-                            <a className='sidebar-redirect' href='/bookmark' style={{color: 'white'}}>Bookmark</a>
+                            <a className='sidebar-redirect' href='/bookmark' style={{ color: 'white' }}>Bookmark</a>
                         </span>
-                    </Menu.Item>
-                    <Menu.Item>
-                        <Link to='/statistic'>
-                        </Link>
+                    </Link>
+                    {/* <BookOutlined />
+                        <span>
+                            <a className='sidebar-redirect' href='/bookmark' style={{ color: 'white' }}>Bookmark</a>
+                        </span> */}
+                </Menu.Item>
+                <Menu.Item>
+                    <Link to='/statistic'>
                         <BarChartOutlined />
                         <span>
-                            <a className='sidebar-redirect' href='/statistic' style={{color: 'white'}}>Statistic</a>
+                            <a className='sidebar-redirect' href='/statistic' style={{ color: 'white' }}>Statistic</a>
                         </span>
-                    </Menu.Item>
-                    <Menu.Item>
-                        <Link to='/account'>
-                        </Link>
+                    </Link>
+                    {/* <BarChartOutlined />
+                        <span>
+                            <a className='sidebar-redirect' href='/statistic' style={{ color: 'white' }}>Statistic</a>
+                        </span> */}
+                </Menu.Item>
+                <Menu.Item>
+                    <Link to='/account'>
                         <UserOutlined />
                         <span>
-                            <a className='sidebar-redirect' href='/account' style={{color: 'white'}}>Account</a>
+                            <a className='sidebar-redirect' href='/account' style={{ color: 'white' }}>Account</a>
                         </span>
-                    </Menu.Item>
-                </Menu>
-            </Sider>
-        </Router >
+                    </Link>
+                    {/* <UserOutlined />
+                        <span>
+                            <a className='sidebar-redirect' href='/account' style={{ color: 'white' }}>Account</a>
+                        </span> */}
+                </Menu.Item>
+            </Menu>
+        </Sider>
+        // </Router >
     );
 };
 

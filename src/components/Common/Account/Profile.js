@@ -18,7 +18,7 @@ const Profile = ({ modalVisible, setModalVisible }) => {
         return new Promise((resolve) => {
             console.log('Values:', values)
             axios.put(BASE_URL, {
-                id: sessionStorage.getItem('id'),
+                // id: sessionStorage.getItem('id'),
                 class: values.class,
                 school: values.school,
                 address: values.address,

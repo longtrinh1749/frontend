@@ -8,6 +8,7 @@ const Notification = ({ notiFilterMenu, refresh, setRefresh, setCourse, setAssig
     const BASE_URL = 'http://192.168.1.12:5000'
 
     const [notifications, setNotifications] = useState(0)
+    const [showNotifications, setShowNotifications] = useState(0)
 
     useEffect(() => {
         const config = {
@@ -19,6 +20,7 @@ const Notification = ({ notiFilterMenu, refresh, setRefresh, setCourse, setAssig
 
         axios.get(BASE_URL + '/notifications', config).then((res) => {
             setNotifications(res.data.notifications)
+            setShowNotifications(res.data.notifications)
             console.log("notifications", notifications)
         })
     }, [refresh])
@@ -55,8 +57,8 @@ const Notification = ({ notiFilterMenu, refresh, setRefresh, setCourse, setAssig
     let notificationsHtml = (
         <div></div>
     )
-    if (notifications.length > 0) {
-        notificationsHtml = notifications.map((noti, index) => {
+    if (showNotifications.length > 0) {
+        notificationsHtml = showNotifications.map((noti, index) => {
             return (
                 // <Card key={index} className="noti-card" hoverable={true} loading={false} onClick={() => notificationJump(noti.path)}>
                 //     <Meta
@@ -75,11 +77,54 @@ const Notification = ({ notiFilterMenu, refresh, setRefresh, setCourse, setAssig
             )
         })
     }
+    let filterNotification = (filterType) => {
+        switch (filterType) {
+            case 'all':
+                setShowNotifications(notifications)
+                break
+            case 'course':
+                setShowNotifications(notifications.map((notification, index) => {
+                    if (notification.type == 'Course') {
+                        return notification
+                    }
+                }).filter((notification) => {
+                    return notification != undefined
+                }))
+                break
+            case 'assignment':
+                setShowNotifications(notifications.map((notification, index) => {
+                    if (notification.type == 'Assignment') {
+                        return notification
+                    }
+                }).filter((notification) => {
+                    return notification != undefined
+                }))
+                break
+            case 'conversation':
+                setShowNotifications(notifications.map((notification, index) => {
+                    if (notification.type == 'Mention') {
+                        return notification
+                    }
+                }).filter((notification) => {
+                    return notification != undefined
+                }))
+                break
+            case 'submission':
+                setShowNotifications(notifications.map((notification, index) => {
+                    if (notification.type == 'Work') {
+                        return notification
+                    }
+                }).filter((notification) => {
+                    return notification != undefined
+                }))
+                break
+        }
+    }
     let menu = (
         <Menu
             style={{
                 height: '550px',
-                width: '450px',
+                width: '535px',
             }}
             id='notifications-menu'
         >
@@ -93,10 +138,11 @@ const Notification = ({ notiFilterMenu, refresh, setRefresh, setCourse, setAssig
             </Typography.Title>
             <div className='notification-filters'>
                 <Radio.Group defaultValue='all' buttonStyle="solid">
-                    <Radio.Button value='all'>All</Radio.Button>
-                    <Radio.Button value='course'>Courses</Radio.Button>
-                    <Radio.Button value='assignment'>Assignments</Radio.Button>
-                    <Radio.Button value='conversation'>Conversations</Radio.Button>
+                    <Radio.Button value='all' onClick={() => filterNotification('all')}>All</Radio.Button>
+                    <Radio.Button value='course' onClick={() => filterNotification('course')}>Courses</Radio.Button>
+                    <Radio.Button value='assignment' onClick={() => filterNotification('assignment')}>Assignments</Radio.Button>
+                    <Radio.Button value='conversation' onClick={() => filterNotification('conversation')}>Conversations</Radio.Button>
+                    <Radio.Button value='submission' onClick={() => filterNotification('submission')}>Submission</Radio.Button>
                 </Radio.Group>
             </div>
             <div id='notifications-list'>
@@ -108,7 +154,7 @@ const Notification = ({ notiFilterMenu, refresh, setRefresh, setCourse, setAssig
         <Dropdown
             trigger={['click']}
             overlay={menu}
-            placement='bottom'
+            placement='bottomLeft'
             arrow={{
                 pointAtCenter: true
             }}

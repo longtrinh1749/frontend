@@ -38,7 +38,7 @@ const Chat = ({ courseId, assignmentId, userId }) => {
         const config = {
             headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
             params: {
-                id: sessionStorage.getItem('id')
+                // id: sessionStorage.getItem('id')
             }
         };
         axios.get(BASE_USER_URL, config).then(res => setUserInfo(res.data))

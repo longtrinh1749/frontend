@@ -1,0 +1,15 @@
+.anticon-more {
+  float: right;
+}
+
+.bookmark-card-options {
+  margin-left: auto;
+}
+
+#bookmark-card > .ant-card-body {
+    display: flex;
+}
+
+.bookmark-card-content {
+    align-self: center;
+}

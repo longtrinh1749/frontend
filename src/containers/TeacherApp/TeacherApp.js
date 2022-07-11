@@ -243,8 +243,8 @@ const TeacherApp = ({ setToken, token }) => {
                     setAssignment={setAssignment}
                     setStudent={setStudent}
                 /> */}
-                <Leftbar></Leftbar>
                 <Router>
+                    <Leftbar></Leftbar>
                     <Routes>
                         <Route path="/courses" element={<>
                             <Layout style={{
@@ -324,7 +324,10 @@ const TeacherApp = ({ setToken, token }) => {
                                     padding: '0 24px 24px',
                                     height: 'calc(100vh - 64px)',
                                 }}>
-                                    <Bookmark />
+                                    <Bookmark
+                                        setAssignment={setAssignment}
+                                        setCourse={setCourse}
+                                        setStudent={setStudent} />
                                 </Layout>
                             </>}>
                         </Route>
