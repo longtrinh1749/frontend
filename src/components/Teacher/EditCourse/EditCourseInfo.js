@@ -81,9 +81,12 @@ const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel, refresh, setRef
                         <Form.Item name="school" label="School">
                             <Input type="textarea" />
                         </Form.Item>
-                        <Form.Item name="year" label="Year (initial year of school year)"
+                        <Form.Item name="year" label="Year"
                         // rules={[{ type: 'number' }]}
                         >
+                            <Input type="textarea" />
+                        </Form.Item>
+                        <Form.Item name="code" label="Code">
                             <Input type="textarea" />
                         </Form.Item>
                         <Form.Item label="Active" name="active" valuePropName="checked">

@@ -9,6 +9,7 @@ const Notification = ({ notiFilterMenu, refresh, setRefresh, setCourse, setAssig
 
     const [notifications, setNotifications] = useState(0)
     const [showNotifications, setShowNotifications] = useState(0)
+    const [notificationVisible, setNotificationVisible] = useState(false)
 
     useEffect(() => {
         const config = {
@@ -23,7 +24,7 @@ const Notification = ({ notiFilterMenu, refresh, setRefresh, setCourse, setAssig
             setShowNotifications(res.data.notifications)
             console.log("notifications", notifications)
         })
-    }, [refresh])
+    }, [refresh, notificationVisible])
     const { Meta } = Card;
     const notificationJump = (pathString) => {
         pathString = pathString.replace(/'/g, '"')
@@ -93,7 +94,7 @@ const Notification = ({ notiFilterMenu, refresh, setRefresh, setCourse, setAssig
                 break
             case 'assignment':
                 setShowNotifications(notifications.map((notification, index) => {
-                    if (notification.type == 'Assignment') {
+                    if (notification.type == 'Assignment' || notification.type == 'Work') {
                         return notification
                     }
                 }).filter((notification) => {
@@ -109,22 +110,13 @@ const Notification = ({ notiFilterMenu, refresh, setRefresh, setCourse, setAssig
                     return notification != undefined
                 }))
                 break
-            case 'submission':
-                setShowNotifications(notifications.map((notification, index) => {
-                    if (notification.type == 'Work') {
-                        return notification
-                    }
-                }).filter((notification) => {
-                    return notification != undefined
-                }))
-                break
         }
     }
     let menu = (
         <Menu
             style={{
                 height: '550px',
-                width: '535px',
+                width: '450px',
             }}
             id='notifications-menu'
         >
@@ -142,7 +134,6 @@ const Notification = ({ notiFilterMenu, refresh, setRefresh, setCourse, setAssig
                     <Radio.Button value='course' onClick={() => filterNotification('course')}>Courses</Radio.Button>
                     <Radio.Button value='assignment' onClick={() => filterNotification('assignment')}>Assignments</Radio.Button>
                     <Radio.Button value='conversation' onClick={() => filterNotification('conversation')}>Conversations</Radio.Button>
-                    <Radio.Button value='submission' onClick={() => filterNotification('submission')}>Submission</Radio.Button>
                 </Radio.Group>
             </div>
             <div id='notifications-list'>
@@ -158,6 +149,7 @@ const Notification = ({ notiFilterMenu, refresh, setRefresh, setCourse, setAssig
             arrow={{
                 pointAtCenter: true
             }}
+            onVisibleChange={() => setNotificationVisible(!notificationVisible)}
         >
             <BellOutlined style={{
                 color: 'white',
