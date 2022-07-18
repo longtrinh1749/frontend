@@ -204,7 +204,7 @@ const StudentApp = ({ setToken, token }) => {
                 {/* <Notification
                     refresh={refresh}
                     setRefresh={setRefresh}
-                    notiFilterMenu={notiFilterMenu}
+                    notiFilterMenu=g{notiFilterMenu}
                     setCourse={setCourse}
                     setAssignment={setAssignment}
 

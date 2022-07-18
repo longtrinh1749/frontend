@@ -25,7 +25,7 @@ const Leaderboard = () => {
         };
         axios.get(BASE_URL + "/courses", config).then(res => {
             setCourses(res.data.courses)
-            setCourse(res.data.courses[0])
+            setCourse(res.data.courses[4])
             setCoursesHtml(res.data.courses.map((c, i) => {
                 return (
                     <Option key={i} value={"course" + i}>{c.name}</Option>
@@ -135,7 +135,7 @@ const Leaderboard = () => {
                 className="leaderboard-courses-selection"
                 style={{ width: 240 }}
                 onChange={handleChange}
-                defaultValue="course0"
+                defaultValue="course4"
             >
                 {coursesHtml}
             </Select>

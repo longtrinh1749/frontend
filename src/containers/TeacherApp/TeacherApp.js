@@ -20,6 +20,7 @@ import Notification from "../../components/Common/Notification/Notification";
 import Leaderboard from "../../components/Teacher/Leaderboard/Leaderboard";
 import Leftbar from "../../components/Sidebar/Sider";
 import Bookmark from "../../components/Common/Saved/Bookmark";
+import {Profile as ProfileContainer} from "../../containers/Common/Account/Profile";
 
 const TeacherApp = ({ setToken, token }) => {
 

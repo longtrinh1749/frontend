@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input, Radio, Tabs, Switch } from 'antd';
+import { Button, Modal, Form, Input, Radio, Tabs, Switch, Typography } from 'antd';
 import ManageStudentList from './EditCourseStudent';
 import axios from 'axios';
 
@@ -86,8 +86,8 @@ const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel, refresh, setRef
                         >
                             <Input type="textarea" />
                         </Form.Item>
-                        <Form.Item name="code" label="Code">
-                            <Input type="textarea" />
+                        <Form.Item name="code" label="Join Code">
+                            <Typography.Text copyable>{courseInfo.id}</Typography.Text>
                         </Form.Item>
                         <Form.Item label="Active" name="active" valuePropName="checked">
                             <Switch />

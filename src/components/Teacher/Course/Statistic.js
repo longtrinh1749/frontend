@@ -27,7 +27,7 @@ const Statistic = ({course, setAssignment, setStudent}) => {
             headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
             params: {
                 course_id: course.id,
-                display: true,
+                display: 1,
             }
         };
         axios.get(BASE_URL + '/grading/students', config).then(res => {
