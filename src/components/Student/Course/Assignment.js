@@ -34,7 +34,7 @@ const Assignment = ({ assignment, refresh, setRefresh, setAssignment, setCourse,
             const config = {
                 headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
                 params: {
-                    user_id: sessionStorage.getItem('id'),
+                    // user_id: sessionStorage.getItem('id'),
                     assignment_id: res.data.assignments[0].id,
                 }
             };
@@ -258,10 +258,11 @@ const Assignment = ({ assignment, refresh, setRefresh, setAssignment, setCourse,
             >
                 <Descriptions.Item label="Due"><i>{asmData.due}</i></Descriptions.Item>
                 <Descriptions.Item label="Description">
-                    <i>Doing homework 5 in page 23</i>
+                    <i>None</i>
                 </Descriptions.Item>
-                <Descriptions.Item label="Score"><i>{submitData ? (submitData.result ? submitData.result : 'None') : 'None'}</i></Descriptions.Item>
+                <Descriptions.Item label="Score"><i>{submitData ? (submitData.status == 'graded' ? (submitData.result ? submitData.result : 'None') : 'None') : 'None'}</i></Descriptions.Item>
                 <Descriptions.Item label="Instruction" span={3}><i>{asmData.instruction ? asmData.instruction : 'None'}</i></Descriptions.Item>
+                <Descriptions.Item label="Attachment" span={3}><i>{asmData.attachment ? <a href={asmData.attachment}>{asmData.name}</a> : 'None'}</i></Descriptions.Item>
             </Descriptions>
             <Divider />
             <>
@@ -305,7 +306,7 @@ const Assignment = ({ assignment, refresh, setRefresh, setAssignment, setCourse,
                 <Typography.Text italic={true} type="danger" style={{
                     marginLeft: '5px',
                 }}>
-                    {submitData ? submitData.comment : ''}
+                    {submitData ? (submitData.status == 'graded' ? submitData.comment : '') : ''}
                 </Typography.Text>
             </Typography.Text>
             <Descriptions title="" layout="vertical">

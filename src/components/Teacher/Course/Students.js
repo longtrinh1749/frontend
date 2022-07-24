@@ -201,9 +201,10 @@ const Students = ({ setStudent, course, assignment, refresh, setRefresh, student
             >
                 <Descriptions.Item label="Due"><i>{assignment.due}</i></Descriptions.Item>
                 <Descriptions.Item label="Description">
-                    <i>Doing homework 5 in page 23</i>
+                    <i>None</i>
                 </Descriptions.Item>
                 <Descriptions.Item label="Instruction" span={3}><i>{assignment.instruction ? assignment.instruction : 'None'}</i></Descriptions.Item>
+                <Descriptions.Item label="Attachment" span={3}><i>{assignment.attachment ? <a href={assignment.attachment}>{assignment.name}</a> : 'None'}</i></Descriptions.Item>
             </Descriptions>
             <Divider />
             <Row gutter={16}>

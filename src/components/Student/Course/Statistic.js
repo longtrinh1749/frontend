@@ -70,7 +70,7 @@ const Statistic = () => {
                 float: 'right',
                 marginRight: '10px',
             }}>
-                Submission Status
+                Your Progress
             </Button>
             <Modal
                 title="Your Progress"

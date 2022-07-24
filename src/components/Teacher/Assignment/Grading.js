@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Col, Row, Radio, Button, Typography, InputNumber, Input, Tooltip, notification } from 'antd'
+import { Col, Row, Radio, Button, Typography, InputNumber, Input, Tooltip, notification, Form } from 'antd'
 import axios from "axios";
 import { fabric } from 'fabric'
 import html2canvas from "html2canvas";
@@ -37,6 +37,7 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
     const [canvasHtml, setCanvasHtml] = useState(false)
     const [objects, setObjects] = useState([])
     const [selectState, setSelectState] = useState('Select')
+    const [gradingForm] = Form.useForm()
 
     // UI State
     let canvasRender = useRef(false)
@@ -65,6 +66,12 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
         axios.get(BASE_SUBMIT_URL, config).then(res => {
             setSubmitData(res.data.submits[0])
             console.log('Submits', res.data.submits[0])
+            gradingForm.setFieldsValue({
+                score: res.data.submits[0].result,
+                comment: res.data.submits[0].comment
+            })
+            score.current = res.data.submits[0].result
+            finalComment.current = res.data.submits[0].comment
         })
         axios.get(BASE_WORK_URL, config).then(res => {
             setWorksData(res.data.works)
@@ -280,6 +287,9 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
             _objects.filter(n => n)
             console.log('Objects', _objects)
             axios.put(BASE_WORK_URL, {
+                submit_id: submitData.id,
+                result: score.current,
+                comment: finalComment.current,
                 id: worksData[i].id,
                 canvas_json: _canvasData,
                 objects: _objects
@@ -344,9 +354,9 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
         saveGrading()
 
         notification.open({
-            message: 'Cham diem',
+            message: 'Graded',
             description:
-                'Da nop bai cham diem.',
+                'Success submit grading.',
             onClick: () => {
                 console.log('Notification Clicked!');
             },
@@ -473,31 +483,43 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
 
                     <div className="img-layer layer" id="image-layer">
                         {worksHtml}
-                        <Row style={{ backgroundColor: 'white' }}>
-                            <Col flex="20%" className="final-grade score">
-                                <Typography.Title style={{ color: 'red', textAlign: 'center' }}><i>Score</i></Typography.Title>
-                                <Input onChange={scoreChange}
-                                    // value={submitData ? submitData.result : undefined}
-                                    style={{
-                                        'fontSize': '50px',
-                                        border: 'none',
-                                        textAlign: 'center',
-                                    }} />
-                            </Col>
-                            <Col flex="auto" className='final-grade criticism'>
-                                <Typography.Title style={{ color: 'red', textAlign: 'center' }}><i>Comment</i></Typography.Title>
-                                <Input.TextArea onChange={onFinalCommentChange}
-                                    // value={submitData ? submitData.comment : undefined}
-                                    style={{
-                                        border: 'none',
-                                        marginTop: '7px',
-                                        fontFamily: 'cursive',
-                                        fontSize: '20px',
-                                    }}
-                                    autoSize={{ minRows: 3, maxRows: 3 }}
-                                />
-                            </Col>
-                        </Row>
+                        <Form
+                            form={gradingForm}>
+                            <Row style={{ backgroundColor: 'white' }}>
+                                <Col flex="20%" className="final-grade score">
+                                    <Typography.Title style={{ color: 'red', textAlign: 'center' }}><i>Score</i></Typography.Title>
+                                    <Form.Item
+                                        name="score"
+                                        rules={[{ required: false, pattern: new RegExp(/^([0-9]|10)$/), message: "Only integer between 0 and 10" }]}
+                                    >
+                                        <Input onChange={scoreChange}
+                                            // value={submitData ? submitData.result : undefined}
+                                            style={{
+                                                'fontSize': '50px',
+                                                border: 'none',
+                                                textAlign: 'center',
+                                            }} />
+                                    </Form.Item>
+                                </Col>
+                                <Col flex="auto" className='final-grade criticism'>
+                                    <Typography.Title style={{ color: 'red', textAlign: 'center' }}><i>Comment</i></Typography.Title>
+                                    <Form.Item
+                                        name="comment"
+                                    >
+                                        <Input.TextArea onChange={onFinalCommentChange}
+                                            // value={submitData ? submitData.comment : undefined}
+                                            style={{
+                                                border: 'none',
+                                                marginTop: '7px',
+                                                fontFamily: 'cursive',
+                                                fontSize: '20px',
+                                            }}
+                                            autoSize={{ minRows: 3, maxRows: 3 }}
+                                        />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </Form>
                         <div>
                             <Button id="grading-button" style={{
                                 display: 'block',

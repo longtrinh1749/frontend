@@ -38,7 +38,7 @@ const App = () => {
 
     const profileMenu = (
         <Menu>
-            <Menu.Item>
+            {/* <Menu.Item>
                 <a rel="noopener noreferrer" href="#" key='profile'>
                     Profile
                 </a>
@@ -47,7 +47,7 @@ const App = () => {
                 <a rel="noopener noreferrer" href="#" key='saved'>
                     Saved Items
                 </a>
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Item>
                 <a rel="noopener noreferrer" href="#" key='logout' onClick={() => setToken(null)}>
                     Logout

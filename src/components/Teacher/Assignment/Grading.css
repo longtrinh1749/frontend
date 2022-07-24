@@ -29,12 +29,12 @@
 }
 
 .final-grade {
+  height: 200px;
   border: 1px solid;
   margin: inherit;
 }
 
 .score {
-  height: 200px;
   text-align: center;
 }
 
@@ -66,5 +66,5 @@
 }
 
 #image-layer {
-    width: 100%;
+  width: 100%;
 }

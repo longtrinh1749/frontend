@@ -3,6 +3,7 @@ import { Avatar, Button, Card, Dropdown, Layout, Menu, Radio, Typography } from 
 import { UserOutlined, DownOutlined, RedoOutlined, NotificationOutlined, BellOutlined, SendOutlined } from '@ant-design/icons';
 import axios from "axios";
 import './Notifications.css'
+import { Link, BrowserRouter as Router } from "react-router-dom";
 const Notification = ({ notiFilterMenu, refresh, setRefresh, setCourse, setAssignment, setStudent }) => {
 
     const BASE_URL = 'http://192.168.1.12:5000'
@@ -68,13 +69,15 @@ const Notification = ({ notiFilterMenu, refresh, setRefresh, setCourse, setAssig
                 //         description={noti.description}
                 //     />
                 // </Card>
-                <Menu.Item id='notification-menu'>
-                    <Meta
-                        avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                        title={noti.type}
-                        description={noti.description}
-                    />
-                </Menu.Item>
+                <Link to="/courses">
+                    <Menu.Item id='notification-menu' onClick={() => notificationJump(noti.path)}>
+                        <Meta
+                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                            title={noti.type}
+                            description={noti.description}
+                        />
+                    </Menu.Item>
+                </Link>
             )
         })
     }
@@ -136,9 +139,11 @@ const Notification = ({ notiFilterMenu, refresh, setRefresh, setCourse, setAssig
                     <Radio.Button value='conversation' onClick={() => filterNotification('conversation')}>Conversations</Radio.Button>
                 </Radio.Group>
             </div>
-            <div id='notifications-list'>
-                {notificationsHtml}
-            </div>
+            <Router>
+                <div id='notifications-list'>
+                    {notificationsHtml}
+                </div>
+            </Router>
         </Menu>
     )
     return (

@@ -1,4 +1,4 @@
-import { Input, Modal, Tabs, Form, notification } from "antd";
+import { Input, Modal, Tabs, Form, notification, Button } from "antd";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import './Profile.css'
@@ -53,7 +53,6 @@ const Profile = ({ modalVisible, setModalVisible }) => {
         const config = {
             headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('token'))}` },
             params: {
-                id: sessionStorage.getItem('id')
             }
         };
         axios.get(BASE_URL, config).then(res => {
@@ -77,12 +76,11 @@ const Profile = ({ modalVisible, setModalVisible }) => {
                 .then(async (values) => {
                     formProfile.resetFields();
                     await callUpdateProfile(values)
-                    setModalVisible(false)
                 })
                 .catch((info) => {
                     console.log('Validate Failed:', info);
                     notification.open({
-                        message: 'Invalid form',
+                        message: 'Invalid information',
                         onClick: () => {
                             console.log('Notification Clicked!');
                         },
@@ -95,7 +93,6 @@ const Profile = ({ modalVisible, setModalVisible }) => {
                 .then(async (values) => {
                     formPassword.resetFields();
                     await callUpdatePassword(values)
-                    setModalVisible(false)
                 })
                 .catch((info) => {
                     console.log('Validate Failed:', info)
@@ -114,80 +111,84 @@ const Profile = ({ modalVisible, setModalVisible }) => {
     }
 
     return (
-        <Modal title="Account" visible={modalVisible} onOk={modalOk} onCancel={modalCancel} id="profile-modal">
-            <Tabs defaultActiveKey="1" onChange={(key) => formKey.current = key}>
-                <Tabs.TabPane tab="Profile" key="1">
-                    <Form
-                        form={formProfile}
-                        layout="vertical"
-                        name="form_in_modal"
-                        initialValues={{
-                            name: user ? user.name : '',
-                            phone: user ? user.phone : '',
-                            class: user ? user.class : '',
-                            school: user ? user.school : '',
-                            email: user ? user.email : '',
-                            address: user ? user.address : '',
-                        }}
-                    >
-                        <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Name cannot be empty' }]} className="profile-form">
-                            <Input type="textarea" className="profile-input" />
-                        </Form.Item>
-                        <Form.Item name="phone" label="Phone" className="profile-form">
-                            <Input type="textarea" className="profile-input" />
-                        </Form.Item>
-                        <Form.Item name="class" label="Class" className="profile-form">
-                            <Input type="textarea" className="profile-input" />
-                        </Form.Item>
-                        <Form.Item name="school" label="School" className="profile-form">
-                            <Input type="textarea" className="profile-input" />
-                        </Form.Item>
-                        <Form.Item name="email" label="Email" className="profile-form">
-                            <Input type="textarea" className="profile-input" />
-                        </Form.Item>
-                        <Form.Item name="address" label="Address" className="profile-form">
-                            <Input type="textarea" className="profile-input" />
-                        </Form.Item>
-                    </Form>
-                </Tabs.TabPane>
-                <Tabs.TabPane tab="Change password" key="2">
-                    <Form
-                        form={formPassword}
-                        layout="vertical"
-                        name="form_in_modal"
-                    >
-                        <Form.Item name="oldPassword" label="Old password" rules={[{ required: true, message: 'Please enter old password' }]} className="profile-form">
-                            <Input type="password" className="profile-input" />
-                        </Form.Item>
-                        <Form.Item name="newPassword" label="New password" rules={[{ required: true, message: 'Please enter new password' }]} className="profile-form">
-                            <Input type="password" className="profile-input" />
-                        </Form.Item>
-                        <Form.Item
-                            name="confirmPassword"
-                            label="Confirm new password"
-                            dependencies={['newPassword']}
-                            hasFeedback
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please confirm your password!',
+        <Tabs defaultActiveKey="1" onChange={(key) => formKey.current = key}>
+            <Tabs.TabPane tab="Profile" key="1">
+                <Form
+                    form={formProfile}
+                    layout="vertical"
+                    name="form_in_modal"
+                    initialValues={{
+                        name: user ? user.name : '',
+                        phone: user ? user.phone : '',
+                        class: user ? user.class : '',
+                        school: user ? user.school : '',
+                        email: user ? user.email : '',
+                        address: user ? user.address : '',
+                    }}
+                >
+                    <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Name cannot be empty' }]} className="profile-form">
+                        <Input type="textarea" className="profile-input" />
+                    </Form.Item>
+                    <Form.Item name="phone" label="Phone" className="profile-form">
+                        <Input type="textarea" className="profile-input" />
+                    </Form.Item>
+                    <Form.Item name="class" label="Class" className="profile-form">
+                        <Input type="textarea" className="profile-input" />
+                    </Form.Item>
+                    <Form.Item name="school" label="School" className="profile-form">
+                        <Input type="textarea" className="profile-input" />
+                    </Form.Item>
+                    <Form.Item name="email" label="Email" className="profile-form">
+                        <Input type="textarea" className="profile-input" />
+                    </Form.Item>
+                    <Form.Item name="address" label="Address" className="profile-form">
+                        <Input type="textarea" className="profile-input" />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button type="primary" onClick={modalOk}>Update</Button>
+                    </Form.Item>
+                </Form>
+            </Tabs.TabPane>
+            <Tabs.TabPane tab="Change password" key="2">
+                <Form
+                    form={formPassword}
+                    layout="vertical"
+                    name="form_in_modal"
+                >
+                    <Form.Item name="oldPassword" label="Old password" rules={[{ required: true, message: 'Please enter old password' }]} className="profile-form">
+                        <Input type="password" className="profile-input" />
+                    </Form.Item>
+                    <Form.Item name="newPassword" label="New password" rules={[{ required: true, message: 'Please enter new password' }]} className="profile-form">
+                        <Input type="password" className="profile-input" />
+                    </Form.Item>
+                    <Form.Item
+                        name="confirmPassword"
+                        label="Confirm new password"
+                        dependencies={['newPassword']}
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please confirm your password!',
+                            },
+                            ({ getFieldValue }) => ({
+                                validator(_, value) {
+                                    if (!value || getFieldValue('newPassword') === value) {
+                                        return Promise.resolve();
+                                    }
+                                    return Promise.reject(new Error('The two passwords that you entered do not match!'));
                                 },
-                                ({ getFieldValue }) => ({
-                                    validator(_, value) {
-                                        if (!value || getFieldValue('newPassword') === value) {
-                                            return Promise.resolve();
-                                        }
-                                        return Promise.reject(new Error('The two passwords that you entered do not match!'));
-                                    },
-                                }),
-                            ]}
-                            className="profile-form">
-                            <Input type="password" className="profile-input" />
-                        </Form.Item>
-                    </Form>
-                </Tabs.TabPane>
-            </Tabs>
-        </Modal>
+                            }),
+                        ]}
+                        className="profile-form">
+                        <Input type="password" className="profile-input" />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button type="primary" onClick={modalOk}>Update Password</Button>
+                    </Form.Item>
+                </Form>
+            </Tabs.TabPane>
+        </Tabs>
     )
 }
 

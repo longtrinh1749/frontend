@@ -10,7 +10,7 @@ import '../App/App.css'
 import Courses from '../../components/Student/Courses/Courses'
 import Assignments from "../../components/Student/Course/Assignments";
 import Assignment from '../../components/Student/Course/Assignment'
-import Profile from "../../components/Common/Account/Profile";
+// import Profile from "../../components/Common/Account/Profile";
 import Saved from "../../components/Common/Account/Saved";
 import Chat from "../../components/Common/Chat/Chat";
 import Sort from "../../components/Common/Sort/Sort";
@@ -19,6 +19,7 @@ import Notification from "../../components/Common/Notification/Notification";
 import Leaderboard from "../../components/Student/Leaderboard/Leaderboard";
 import Leftbar from "../../components/Sidebar/Sider";
 import Bookmark from "../../components/Common/Saved/Bookmark";
+import Profile from "../../containers/Common/Account/Profile";
 
 const StudentApp = ({ setToken, token }) => {
 
@@ -53,16 +54,16 @@ const StudentApp = ({ setToken, token }) => {
 
     const profileMenu = (
         <Menu>
-            <Menu.Item>
+            {/* <Menu.Item>
                 <a rel="noopener noreferrer" href="#" key='profile' onClick={(() => setProfileVisible(true))}>
                     Profile
                 </a>
-            </Menu.Item>
-            <Menu.Item>
+            </Menu.Item> */}
+            {/* <Menu.Item>
                 <a rel="noopener noreferrer" href="#" key='saved' onClick={(() => setSavedVisible(true))}>
                     Saved Items
                 </a>
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Item>
                 <a rel="noopener noreferrer" href="#" key='logout' onClick={() => setToken(null)}>
                     Logout
@@ -178,7 +179,7 @@ const StudentApp = ({ setToken, token }) => {
 
     return (
         <Layout>
-            <Profile modalVisible={profileVisible} setModalVisible={setProfileVisible}></Profile>
+            {/* <Profile modalVisible={profileVisible} setModalVisible={setProfileVisible}></Profile> */}
             <Saved
                 modalVisible={savedVisible}
                 setModalVisible={setSavedVisible}
@@ -189,7 +190,7 @@ const StudentApp = ({ setToken, token }) => {
             </Saved>
             <Header className="header">
                 <div className="logo">
-                    <img src="img/text-logo2.png" style={{
+                    <img src="img/logo/logo3.png" style={{
                         height: '100%',
                     }}></img>
                 </div>
@@ -314,7 +315,7 @@ const StudentApp = ({ setToken, token }) => {
                                     padding: '0 24px 24px',
                                     height: 'calc(100vh - 64px)',
                                 }}>
-                                    Account
+                                    <Profile />
                                 </Layout>
                             </>}>
                         </Route>

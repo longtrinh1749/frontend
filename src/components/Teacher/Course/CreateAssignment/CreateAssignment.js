@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Col, Card } from 'antd'
-import { PlusOutlined } from '@ant-design/icons';
+import { Col, Card, Upload, Typography } from 'antd'
+import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormText, ProForm, ProFormDigit } from '@ant-design/pro-form';
 import axios from "axios";
 import {
@@ -24,6 +24,7 @@ import moment from 'moment'
 const CreateAssignment = ({ course, visible, onEdit, onCancel }) => {
 
     const [form] = Form.useForm();
+    const [fileList, setFileList] = useState([])
 
     let BASE_URL = 'http://192.168.1.12:5000/assignments'
 
@@ -32,18 +33,29 @@ const CreateAssignment = ({ course, visible, onEdit, onCancel }) => {
             // setTimeout(() => {
             //     resolve(true);
             // }, 2000);
-            axios.post(BASE_URL, {
-                name: values.name,
-                due: moment(values.due, 'YYYY-MM-DDTHH:mm:ssZ').format('YYYY-MM-DD HH:mm:ss'),
-                instruction: values.instruction,
-                course_id: course.id,
-            }, {
+            let formData = new FormData()
+            formData.append('file', fileList[0].originFileObj)
+            formData.append('course_id', course.id)
+            formData.append('due', moment(values.due, 'YYYY-MM-DDTHH:mm:ssZ').format('YYYY-MM-DD HH:mm:ss'))
+            formData.append('instruction', values.instruction)
+            formData.append('name', values.name)
+            axios.post(BASE_URL, formData, {
                 headers: {
                     'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
                 }
             })
             resolve(true)
         });
+    };
+
+    const props = {
+        name: 'file',
+        beforeUpload: () => false,
+        fileList: fileList,
+
+        onChange({fileList}) {
+            setFileList(fileList)
+        },
     };
 
     return (
@@ -81,6 +93,12 @@ const CreateAssignment = ({ course, visible, onEdit, onCancel }) => {
                     <Input type="textarea" />
                 </Form.Item>
             </Form>
+            <Typography.Text>
+                Attachment
+            </Typography.Text><br /><br />
+            <Upload {...props}>
+                <Button icon={<UploadOutlined />} disabled={fileList.length > 0}>Click to Upload</Button>
+            </Upload>
         </Modal>
     );
 };

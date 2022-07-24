@@ -76,7 +76,7 @@ const Leftbar = () => {
                             <a className='sidebar-redirect' href='/courses' style={{ color: 'white' }}>Courses</a>
                         </span> */}
                 </Menu.Item>
-                <Menu.Item >
+                {/* <Menu.Item >
                     <Link to='/assignments'>
                         <FileExclamationOutlined />
                         <span>
@@ -84,11 +84,7 @@ const Leftbar = () => {
                         </span>
 
                     </Link>
-                    {/* <FileExclamationOutlined />
-                        <span>
-                            <a className='sidebar-redirect' href='/assignments' style={{ color: 'white' }}>Assignments</a>
-                        </span> */}
-                </Menu.Item>
+                </Menu.Item> */}
                 <Menu.Item>
                     <Link to='/bookmark'>
                         <BookOutlined />

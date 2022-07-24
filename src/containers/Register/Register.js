@@ -64,7 +64,7 @@ const Register = ({setRegister}) => {
         <div className="wrapper fadeInDown">
             <div id="formContent">
                 <div className="fadeIn first">
-                    <img src="https://t4.ftcdn.net/jpg/01/90/50/61/360_F_190506160_coExNloNdTd1OcvJe3cbdddUDqoqiJ2B.jpg" id="icon" alt="User Icon" />
+                    <img src="img/logo/logo2.png" id="icon" alt="User Icon" />
                 </div>
                 <form className="login-form" onSubmit={onFinish}>
                     <input type="text" id="login" className="fadeIn first" name="login" placeholder="Username" />
@@ -79,9 +79,9 @@ const Register = ({setRegister}) => {
                     <input type="submit" className="fadeIn fourth" value="Register" />
                 </form>
                 <div id="formFooter">
-                    <div>
+                    {/* <div>
                         <a className="underlineHover" href="#">Forgot Password?</a>
-                    </div>
+                    </div> */}
                     <div>
                         <i>Already have an account? </i><a className="underlineHover" href="#" onClick={loginClicked}>Login</a>
                     </div>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Descriptions, Button } from 'antd'
+import { Descriptions, Button, Typography } from 'antd'
 import EditCourseForm from '../../Teacher/EditCourse/EditCourseInfo'
 import './CourseInfo.css'
 import Statistic from "../../Teacher/Course/Statistic";
@@ -43,15 +43,16 @@ const CourseInfo = ({ course, refresh, setRefresh, setAssignment, setStudent }) 
                 }}
                     style={{
                         marginRight: '10px'
-                    }}>Edit Course</Button>}
+                    }}>Manage Course</Button>}
             >
                 <Descriptions.Item label="Name">{courseInfo.name ? courseInfo.name : 'None'}</Descriptions.Item>
                 <Descriptions.Item label="School">{courseInfo.school ? courseInfo.school : 'None'}</Descriptions.Item>
                 <Descriptions.Item label="Year">{courseInfo.school_year ? courseInfo.school_year : 'None'}</Descriptions.Item>
                 <Descriptions.Item label="Class">{courseInfo.class ? courseInfo.class : 'None'}</Descriptions.Item>
                 <Descriptions.Item label="Course Description">
-                    This course is meant for students who is extremely good
+                    None
                 </Descriptions.Item>
+                <Descriptions.Item label="Join code"><Typography.Text copyable>{courseInfo.id ? courseInfo.id : 'None'}</Typography.Text></Descriptions.Item>
             </Descriptions>
         </>
     )

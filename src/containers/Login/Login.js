@@ -48,7 +48,7 @@ const Login = ({ setToken }) => {
                 token.then(res => setToken(res.username, res.role, res.id, res.token));
                 refreshToken(expired_in)
             }
-        }, 7*3600*1000)
+        }, 7 * 3600 * 1000)
     }
 
     const callRefreshToken = async (token) => {
@@ -63,10 +63,10 @@ const Login = ({ setToken }) => {
         let res = await axios.post(
             BASE_URL + '/users/token',
             bodyParameters, {
-                headers: {
-                    'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
-                }
+            headers: {
+                'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
             }
+        }
         ).then(res => {
             console.log(res)
         }).catch(console.log);
@@ -115,13 +115,13 @@ const Login = ({ setToken }) => {
         <div className="wrapper fadeInDown">
             <div id="formContent">
                 <div className="fadeIn first">
-                    <img src="https://t4.ftcdn.net/jpg/01/90/50/61/360_F_190506160_coExNloNdTd1OcvJe3cbdddUDqoqiJ2B.jpg" id="icon" alt="User Icon" />
+                    <img src="img/logo/logo1.png" id="icon" alt="Asimo Grading Online" />
                 </div>
                 <form className="login-form" onSubmit={onFinish}>
                     <input type="text" id="login" className="fadeIn first" name="login" placeholder="Username" />
                     <input type="password" id="password" className="fadeIn second" name="login" placeholder="Password" /><br />
-                    <input type="radio" id="roleStudent" name="role" value="ROLE.STUDENT" /><label htmlFor="roleStudent">Login as Student</label><br />
-                    <input type="radio" id="roleTeacher" name="role" value="ROLE.TEACHER" defaultChecked="checked" /><label htmlFor="roleTeacher">Login as Teacher</label><br />
+                    <input type="radio" id="roleStudent" name="role" value="ROLE.STUDENT" hidden /><label htmlFor="roleStudent" hidden>Login as Student</label><br />
+                    <input type="radio" id="roleTeacher" name="role" value="ROLE.TEACHER" defaultChecked="checked" hidden /><label htmlFor="roleTeacher" hidden>Login as Teacher</label><br />
                     <input type="submit" className="fadeIn third" value="Log In" />
                 </form>
                 <div id="formFooter">

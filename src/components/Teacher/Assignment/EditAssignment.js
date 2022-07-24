@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input, Radio, Tabs, Switch } from 'antd';
+import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button, Modal, Form, Input, Radio, Tabs, Switch, Upload, Typography } from 'antd';
 import axios from 'axios';
 
 const EditAssignment = ({ assignment, visible, onEdit, onCancel, refresh, setRefresh }) => {
     let BASE_URL = 'http://192.168.1.12:5000/assignments'
 
     const [form] = Form.useForm();
+    const [fileList, setFileList] = useState([])
 
     const callUpdateCourse = (values) => {
         return new Promise((resolve) => {
             console.log('Values:', values)
-            axios.put(BASE_URL, {
-                id: assignment.id,
-                name: values.name,
-                due: values.due,
-                instruction: values.instruction,
-            }, {
+            
+            let formData = new FormData()
+            formData.append('file', fileList[0].originFileObj)
+            formData.append('id', assignment.id)
+            formData.append('due', values.due)
+            formData.append('instruction', values.instruction)
+            formData.append('name', values.name)
+            axios.put(BASE_URL, formData, {
                 headers: {
                     'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
                 }
@@ -23,6 +27,16 @@ const EditAssignment = ({ assignment, visible, onEdit, onCancel, refresh, setRef
             resolve(true)
         });
     }
+
+    const props = {
+        name: 'file',
+        beforeUpload: () => false,
+        fileList: fileList,
+
+        onChange({fileList}) {
+            setFileList(fileList)
+        },
+    };
 
     return (
         <Modal
@@ -65,6 +79,12 @@ const EditAssignment = ({ assignment, visible, onEdit, onCancel, refresh, setRef
                     <Input type="textarea" />
                 </Form.Item>
             </Form>
+            <Typography.Text>
+                Attachment
+            </Typography.Text><br /><br />
+            <Upload {...props}>
+                <Button icon={<UploadOutlined />} disabled={fileList.length > 0}>Click to Upload</Button>
+            </Upload>
         </Modal>
     );
 };

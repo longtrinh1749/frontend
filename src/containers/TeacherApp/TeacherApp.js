@@ -11,7 +11,7 @@ import Courses from '../../components/Teacher/Courses/Courses'
 import Assignments from "../../components/Teacher/Course/Assignments";
 import Students from "../../components/Teacher/Course/Students"
 import Grading from "../../components/Teacher/Assignment/Grading";
-import Profile from "../../components/Common/Account/Profile";
+// import Profile from "../../components/Common/Account/Profile";
 import Saved from "../../components/Common/Account/Saved";
 import Chat from "../../components/Common/Chat/Chat";
 import Sort from "../../components/Common/Sort/Sort";
@@ -20,7 +20,7 @@ import Notification from "../../components/Common/Notification/Notification";
 import Leaderboard from "../../components/Teacher/Leaderboard/Leaderboard";
 import Leftbar from "../../components/Sidebar/Sider";
 import Bookmark from "../../components/Common/Saved/Bookmark";
-import {Profile as ProfileContainer} from "../../containers/Common/Account/Profile";
+import Profile from "../../containers/Common/Account/Profile";
 
 const TeacherApp = ({ setToken, token }) => {
 
@@ -67,16 +67,16 @@ const TeacherApp = ({ setToken, token }) => {
 
     const profileMenu = (
         <Menu>
-            <Menu.Item>
+            {/* <Menu.Item>
                 <a rel="noopener noreferrer" href="#" key='profile' onClick={(() => setProfileVisible(true))}>
                     Profile
                 </a>
-            </Menu.Item>
-            <Menu.Item>
+            </Menu.Item> */}
+            {/* <Menu.Item>
                 <a rel="noopener noreferrer" href="#" key='saved' onClick={(() => setSavedVisible(true))}>
                     Saved Items
                 </a>
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Item>
                 <a rel="noopener noreferrer" href="#" key='logout' onClick={() => setToken(null)}>
                     Logout
@@ -212,7 +212,7 @@ const TeacherApp = ({ setToken, token }) => {
 
     return (
         <Layout>
-            <Profile modalVisible={profileVisible} setModalVisible={setProfileVisible}></Profile>
+            {/* <Profile modalVisible={profileVisible} setModalVisible={setProfileVisible}></Profile> */}
             <Saved
                 modalVisible={savedVisible}
                 setModalVisible={setSavedVisible}
@@ -348,7 +348,7 @@ const TeacherApp = ({ setToken, token }) => {
                                     padding: '0 24px 24px',
                                     height: 'calc(100vh - 64px)',
                                 }}>
-                                    Account
+                                    <Profile />
                                 </Layout>
                             </>}>
                         </Route>
