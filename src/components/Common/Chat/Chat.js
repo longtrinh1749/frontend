@@ -80,7 +80,7 @@ const Chat = ({ courseId, assignmentId, userId }) => {
         return unsubscribe
     }, [courseId, assignmentId, userId])
     let messagesHtml = (
-        <p>Welcome to Homewerk. You can find how to use our system here.</p>
+        <p>Welcome to ASIMO. You can find how to use our system here.</p>
     )
     if (courseId) {
         messagesHtml = (

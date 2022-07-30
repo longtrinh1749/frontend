@@ -97,18 +97,14 @@ const Leftbar = () => {
                             <a className='sidebar-redirect' href='/bookmark' style={{ color: 'white' }}>Bookmark</a>
                         </span> */}
                 </Menu.Item>
-                <Menu.Item>
+                {/* <Menu.Item>
                     <Link to='/statistic'>
                         <BarChartOutlined />
                         <span>
                             <a className='sidebar-redirect' href='/statistic' style={{ color: 'white' }}>Statistic</a>
                         </span>
                     </Link>
-                    {/* <BarChartOutlined />
-                        <span>
-                            <a className='sidebar-redirect' href='/statistic' style={{ color: 'white' }}>Statistic</a>
-                        </span> */}
-                </Menu.Item>
+                </Menu.Item> */}
                 <Menu.Item>
                     <Link to='/account'>
                         <UserOutlined />
