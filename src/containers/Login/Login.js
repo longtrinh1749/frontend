@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Form, Input, Button, Checkbox, Divider, Space, Typography, Row, Col } from 'antd';
+import { Form, Input, Button, Checkbox, Divider, Space, Typography, Row, Col, notification } from 'antd';
 // import './Login.css'
 import './OtherLogin.css'
 import Register from "../Register/Register"
@@ -85,18 +85,37 @@ const Login = ({ setToken }) => {
     };
 
     async function loginUser(data) {
-        let res = await axios.get(BASE_URL + '/users/token', {
-            auth: {
-                username: data.username,
-                password: data.password
+        try {
+            let res = await axios.get(BASE_URL + '/users/token', {
+                auth: {
+                    username: data.username,
+                    password: data.password
+                }
+            })
+            notification.open({
+                message: 'Login successfully',
+                description:
+                    'Welcome to ASIMO.',
+                onClick: () => {
+                    console.log('Notification Clicked!');
+                },
+            });
+            return {
+                'token': res.data.token,
+                'role': res.data.role,
+                'username': res.data.username,
+                'id': 1,
+                'expired_in': 7
             }
-        })
-        return {
-            'token': res.data.token,
-            'role': res.data.role,
-            'username': 'abc',
-            'id': 1,
-            'expired_in': 7
+        } catch (err) {
+            notification.open({
+                message: 'Login failed.',
+                description:
+                    'Wrong username or password.',
+                onClick: () => {
+                    console.log('Notification Clicked!');
+                },
+            });
         }
     }
 
