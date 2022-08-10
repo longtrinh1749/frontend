@@ -165,7 +165,7 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
 
     let worksHtml = worksData.map((work, index) => {
         return (
-            <img id={"work" + work.id} index={index} src={work.image_path} className="image-work" />
+            <img id={"work" + work.id} index={index} src={work.image_path} className="image-work" crossOrigin="anonymous" />
         )
     })
     // ?
@@ -404,9 +404,13 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
             console.log("Img Instance", _imgInstance)
             canvases.current[j].setBackgroundImage(_imgInstance, canvases.current[j].renderAll.bind(canvases.current[j]))
 
-            html2canvas(document.getElementById('canvas' + worksData[j].id)).then(canvas => {
+            html2canvas(document.getElementById('canvas' + worksData[j].id), {
+                allowTaint: true,
+            }).then(canvas => {
+                console.log("Work Data", worksData[j].id)
                 var img = canvas.toDataURL("image/png");
                 var imgHtml = document.createElement('img');
+                imgHtml.crossOrigin = 'anonymous'
                 imgHtml.src = img;
                 // document.getElementById('image-layer').append(imgHtml);
 
