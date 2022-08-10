@@ -11,7 +11,7 @@ import moment from 'moment';
 import axios from "axios";
 
 const Chat = ({ courseId, assignmentId, userId }) => {
-    const BASE_USER_URL = 'http://192.168.1.12:5000/users'
+    const BASE_USER_URL = 'http://127.0.0.1:5000/users'
     const [isTokenFound, setIsTokenFound] = useState();
     const [notification, setNotification] = useState({ title: '', body: '' });
     const [userInfo, setUserInfo] = useState()

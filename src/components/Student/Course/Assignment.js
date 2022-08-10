@@ -8,10 +8,10 @@ import EditAssignment from "../../Teacher/Assignment/EditAssignment";
 import Saved from "../../Common/Saved/Saved";
 
 const Assignment = ({ assignment, refresh, setRefresh, setAssignment, setCourse, setStudent }) => {
-    let BASE_ASM_URL = 'http://192.168.1.12:5000/assignments'
-    let BASE_SUBMIT_URL = 'http://192.168.1.12:5000/submits'
-    let BASE_WORK_URL = 'http://192.168.1.12:5000/work'
-    let BASE_URL = 'http://192.168.1.12:5000'
+    let BASE_ASM_URL = 'http://127.0.0.1:5000/assignments'
+    let BASE_SUBMIT_URL = 'http://127.0.0.1:5000/submits'
+    let BASE_WORK_URL = 'http://127.0.0.1:5000/work'
+    let BASE_URL = 'http://127.0.0.1:5000'
 
     // Data
     const [asmData, setAsmData] = useState(false)

@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import './Saved.css'
 
 const Saved = ({ object, type, refresh, style }) => {
-    const BASE_URL = 'http://192.168.1.12:5000'
+    const BASE_URL = 'http://127.0.0.1:5000'
 
     const [bookmarkButton, setBookmarkButton] = useState('Bookmark')
 

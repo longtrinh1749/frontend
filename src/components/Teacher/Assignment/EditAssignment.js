@@ -4,7 +4,7 @@ import { Button, Modal, Form, Input, Radio, Tabs, Switch, Upload, Typography } f
 import axios from 'axios';
 
 const EditAssignment = ({ assignment, visible, onEdit, onCancel, refresh, setRefresh }) => {
-    let BASE_URL = 'http://192.168.1.12:5000/assignments'
+    let BASE_URL = 'http://127.0.0.1:5000/assignments'
 
     const [form] = Form.useForm();
     const [fileList, setFileList] = useState([])
@@ -12,7 +12,7 @@ const EditAssignment = ({ assignment, visible, onEdit, onCancel, refresh, setRef
     const callUpdateCourse = (values) => {
         return new Promise((resolve) => {
             console.log('Values:', values)
-            
+
             let formData = new FormData()
             formData.append('file', fileList[0].originFileObj)
             formData.append('id', assignment.id)
@@ -33,7 +33,7 @@ const EditAssignment = ({ assignment, visible, onEdit, onCancel, refresh, setRef
         beforeUpload: () => false,
         fileList: fileList,
 
-        onChange({fileList}) {
+        onChange({ fileList }) {
             setFileList(fileList)
         },
     };

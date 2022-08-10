@@ -5,11 +5,11 @@ import './OtherRegister.css'
 import { useRef } from "react";
 import axios from "axios";
 
-const Register = ({setRegister}) => {
+const Register = ({ setRegister }) => {
     // const [username, setUsername] = useState();
     // const [password, setPassword] = useState();
 
-    const BASE_URL = "http://192.168.1.12:5000"
+    const BASE_URL = "http://127.0.0.1:5000"
     let username = useRef()
     let password = useRef()
     let name = useRef()

@@ -7,7 +7,7 @@ import Saved from "../../Common/Saved/Saved";
 
 const Students = ({ setStudent, course, assignment, refresh, setRefresh, students, setStudents, setSortOptions, sort, setFilterOptions, filter, setAssignment, setCourse }) => {
 
-    const BASE_URL = 'http://192.168.1.12:5000/users/course/students'
+    const BASE_URL = 'http://127.0.0.1:5000/users/course/students'
 
     useEffect(() => {
         console.log('Call get all students within course')

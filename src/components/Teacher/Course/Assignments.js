@@ -8,7 +8,7 @@ import moment from 'moment';
 
 const Assignments = ({ token, course, setAssignment, refresh, setRefresh, setSortOptions, sort, setFilterOptions, filter, setStudent }) => {
 
-    const BASE_URL = 'http://192.168.1.12:5000/assignments'
+    const BASE_URL = 'http://127.0.0.1:5000/assignments'
 
     const [assignments, setAssignments] = useState(1)
     useEffect(() => {

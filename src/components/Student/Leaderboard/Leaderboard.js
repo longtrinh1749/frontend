@@ -4,9 +4,9 @@ import { EllipsisOutlined } from '@ant-design/icons';
 import './Leaderboard.css'
 import axios from "axios";
 
-const Leaderboard = ({setCourse}) => {
+const Leaderboard = ({ setCourse }) => {
 
-    const BASE_URL = "http://192.168.1.12:5000"
+    const BASE_URL = "http://127.0.0.1:5000"
 
     const [courses, setCourses] = useState([])
     const [coursesHtml, setCoursesHtml] = useState([])

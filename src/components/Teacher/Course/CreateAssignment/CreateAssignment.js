@@ -26,7 +26,7 @@ const CreateAssignment = ({ course, visible, onEdit, onCancel }) => {
     const [form] = Form.useForm();
     const [fileList, setFileList] = useState([])
 
-    let BASE_URL = 'http://192.168.1.12:5000/assignments'
+    let BASE_URL = 'http://127.0.0.1:5000/assignments'
 
     const callCreateAssignment = (values) => {
         return new Promise((resolve) => {
@@ -53,7 +53,7 @@ const CreateAssignment = ({ course, visible, onEdit, onCancel }) => {
         beforeUpload: () => false,
         fileList: fileList,
 
-        onChange({fileList}) {
+        onChange({ fileList }) {
             setFileList(fileList)
         },
     };

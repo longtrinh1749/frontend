@@ -8,7 +8,7 @@ import axios from "axios";
 
 const Login = ({ setToken }) => {
 
-    const BASE_URL = 'http://192.168.1.12:5000'
+    const BASE_URL = 'http://127.0.0.1:5000'
 
     // const [username, setUsername] = useState();
     // const [password, setPassword] = useState();

@@ -4,7 +4,7 @@ import ManageStudentList from './EditCourseStudent';
 import axios from 'axios';
 
 const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel, refresh, setRefresh }) => {
-    let BASE_URL = 'http://192.168.1.12:5000/courses'
+    let BASE_URL = 'http://127.0.0.1:5000/courses'
 
     const [form] = Form.useForm();
 

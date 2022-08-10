@@ -5,8 +5,8 @@ import { Chart as ChartJS } from 'chart.js'
 import axios from "axios";
 import fileDownload from 'js-file-download';
 
-const Statistic = ({course, setAssignment, setStudent}) => {
-    const BASE_URL = 'http://192.168.1.12:5000'
+const Statistic = ({ course, setAssignment, setStudent }) => {
+    const BASE_URL = 'http://127.0.0.1:5000'
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [dataSource, setDataSource] = useState([])
     const [columns, setColumns] = useState([])

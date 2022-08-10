@@ -6,7 +6,7 @@ import './Notifications.css'
 import { Link, BrowserRouter as Router } from "react-router-dom";
 const Notification = ({ notiFilterMenu, refresh, setRefresh, setCourse, setAssignment, setStudent }) => {
 
-    const BASE_URL = 'http://192.168.1.12:5000'
+    const BASE_URL = 'http://127.0.0.1:5000'
 
     const [notifications, setNotifications] = useState(0)
     const [showNotifications, setShowNotifications] = useState(0)
