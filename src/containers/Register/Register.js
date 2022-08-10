@@ -59,7 +59,7 @@ const Register = ({setRegister}) => {
     function loginClicked() {
         setRegister(false)
     }
-    
+
     return (
         <div className="wrapper fadeInDown">
             <div id="formContent">
@@ -73,9 +73,9 @@ const Register = ({setRegister}) => {
                     <input type="text" id="email" className="fadeIn third" name="login" placeholder="Email" />
                     <input type="text" id="phone" className="fadeIn third" name="login" placeholder="Phone" />
                     <input type="text" id="class" className="fadeIn fourth" name="login" placeholder="Class" />
-                    <input type="text" id="school" className="fadeIn fourth" name="login" placeholder="School" /><br/>
-                    <input type="radio" id="roleStudent" name="role" value="ROLE.STUDENT" defaultChecked="checked"/><label for="roleStudent">Register as Student</label><br/>
-                    <input type="radio" id="roleTeacher" name="role" value="ROLE.TEACHER"/><label for="roleTeacher">Register as Teacher</label><br/>
+                    <input type="text" id="school" className="fadeIn fourth" name="login" placeholder="School" /><br />
+                    <input type="radio" id="roleStudent" name="role" value="ROLE.STUDENT" defaultChecked="checked" /><label for="roleStudent">Register as Student</label><br />
+                    <input type="radio" id="roleTeacher" name="role" value="ROLE.TEACHER" /><label for="roleTeacher">Register as Teacher</label><br />
                     <input type="submit" className="fadeIn fourth" value="Register" />
                 </form>
                 <div id="formFooter">
@@ -149,42 +149,42 @@ const Register = ({setRegister}) => {
         //                         >
         //                             <Input />
         //                         </Form.Item>
-                                
+
         //                         <Form.Item
         //                             label="Email"
         //                             name="email"
         //                         >
         //                             <Input />
         //                         </Form.Item>
-                                
+
         //                         <Form.Item
         //                             label="Address"
         //                             name="address"
         //                         >
         //                             <Input />
         //                         </Form.Item>
-                                
+
         //                         <Form.Item
         //                             label="Phone number"
         //                             name="phone"
         //                         >
         //                             <Input />
         //                         </Form.Item>
-                                
+
         //                         <Form.Item
         //                             label="School"
         //                             name="school"
         //                         >
         //                             <Input />
         //                         </Form.Item>
-                                
+
         //                         <Form.Item
         //                             label="Class"
         //                             name="class"
         //                         >
         //                             <Input />
         //                         </Form.Item>
-                                
+
         //                         <Form.Item
         //                             label="Role"
         //                             name="role"
@@ -267,42 +267,42 @@ const Register = ({setRegister}) => {
         //                         >
         //                             <Input />
         //                         </Form.Item>
-                                
+
         //                         <Form.Item
         //                             label="Email"
         //                             name="email"
         //                         >
         //                             <Input />
         //                         </Form.Item>
-                                
+
         //                         <Form.Item
         //                             label="Address"
         //                             name="address"
         //                         >
         //                             <Input />
         //                         </Form.Item>
-                                
+
         //                         <Form.Item
         //                             label="Phone number"
         //                             name="phone"
         //                         >
         //                             <Input />
         //                         </Form.Item>
-                                
+
         //                         <Form.Item
         //                             label="School"
         //                             name="school"
         //                         >
         //                             <Input />
         //                         </Form.Item>
-                                
+
         //                         <Form.Item
         //                             label="Class"
         //                             name="class"
         //                         >
         //                             <Input />
         //                         </Form.Item>
-                                
+
         //                         <Form.Item
         //                             label="Role"
         //                             name="role"
