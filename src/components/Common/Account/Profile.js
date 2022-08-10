@@ -1,6 +1,7 @@
 import { Input, Modal, Tabs, Form, notification } from "antd";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
+import { FrownOutlined, SmileOutlined } from "@ant-design/icons"
 import './Profile.css'
 
 const Profile = ({ modalVisible, setModalVisible }) => {

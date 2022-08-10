@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Col, Card, Upload, Typography } from 'antd'
+import { Col, Card, Upload, Typography, notification } from 'antd'
 import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
+import { FrownOutlined, SmileOutlined } from "@ant-design/icons"
 import { ModalForm, ProFormText, ProForm, ProFormDigit } from '@ant-design/pro-form';
 import axios from "axios";
 import {
@@ -43,6 +44,21 @@ const CreateAssignment = ({ course, visible, onEdit, onCancel }) => {
                 headers: {
                     'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
                 }
+            }).then(function (response) {
+                notification.open({
+                    message: "Create assignment successfully",
+                    icon: <SmileOutlined style={{ color: 'green' }} />,
+                })
+            }).catch(res => {
+                notification.open({
+                    message: 'Create assignment failed.',
+                    description:
+                        'Server error. Please try again!',
+                    icon: <FrownOutlined style={{ color: 'red' }} />,
+                    onClick: () => {
+                        console.log('Notification Clicked!');
+                    },
+                });
             })
             resolve(true)
         });

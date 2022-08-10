@@ -1,6 +1,7 @@
 import { Input, Modal, Tabs, Form, notification, Button } from "antd";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
+import { FrownOutlined, SmileOutlined } from "@ant-design/icons"
 import './Profile.css'
 
 const Profile = ({ modalVisible, setModalVisible }) => {
@@ -28,6 +29,19 @@ const Profile = ({ modalVisible, setModalVisible }) => {
                 headers: {
                     'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
                 }
+            }).then(function (response) {
+                notification.open({
+                    message: "Update account successfully.",
+                    icon: <SmileOutlined style={{ color: 'green' }} />,
+                })
+            }).catch(res => {
+                notification.open({
+                    message: 'Update account failed.',
+                    icon: <FrownOutlined style={{ color: 'red' }} />,
+                    onClick: () => {
+                        console.log('Notification Clicked!');
+                    },
+                });
             })
             resolve(true)
         });
@@ -44,6 +58,21 @@ const Profile = ({ modalVisible, setModalVisible }) => {
                 headers: {
                     'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
                 }
+            }).then(function (response) {
+                notification.open({
+                    message: "Update password successfully.",
+                    icon: <SmileOutlined style={{ color: 'green' }} />,
+                })
+            }).catch(res => {
+                notification.open({
+                    message: 'Update password failed.',
+                    description:
+                        'Wrong password!',
+                    icon: <FrownOutlined style={{ color: 'red' }} />,
+                    onClick: () => {
+                        console.log('Notification Clicked!');
+                    },
+                });
             })
             resolve(true)
         })
@@ -98,6 +127,7 @@ const Profile = ({ modalVisible, setModalVisible }) => {
                     console.log('Validate Failed:', info)
                     notification.open({
                         message: 'Invalid form',
+                        icon: <FrownOutlined style={{ color: 'red' }} />,
                         onClick: () => {
                             console.log('Notification Clicked!');
                         },

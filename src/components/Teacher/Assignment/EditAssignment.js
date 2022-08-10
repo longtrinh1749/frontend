@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
-import { Button, Modal, Form, Input, Radio, Tabs, Switch, Upload, Typography } from 'antd';
+import { Button, Modal, Form, Input, Radio, Tabs, Switch, Upload, Typography, notification } from 'antd';
+import { FrownOutlined, SmileOutlined } from "@ant-design/icons"
 import axios from 'axios';
 
 const EditAssignment = ({ assignment, visible, onEdit, onCancel, refresh, setRefresh }) => {
@@ -14,7 +15,10 @@ const EditAssignment = ({ assignment, visible, onEdit, onCancel, refresh, setRef
             console.log('Values:', values)
 
             let formData = new FormData()
-            formData.append('file', fileList[0].originFileObj)
+            if (fileList[0]) {
+                console.log("Co file nhe")
+                formData.append('file', fileList[0].originFileObj)
+            }
             formData.append('id', assignment.id)
             formData.append('due', values.due)
             formData.append('instruction', values.instruction)
@@ -23,6 +27,19 @@ const EditAssignment = ({ assignment, visible, onEdit, onCancel, refresh, setRef
                 headers: {
                     'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
                 }
+            }).then(function (response) {
+                notification.open({
+                    message: "Update assignment successfully.",
+                    icon: <SmileOutlined style={{ color: 'green' }} />,
+                })
+            }).catch(res => {
+                notification.open({
+                    message: 'Update failed. Server error.',
+                    icon: <FrownOutlined style={{ color: 'red' }} />,
+                    onClick: () => {
+                        console.log('Notification Clicked!');
+                    },
+                });
             })
             resolve(true)
         });

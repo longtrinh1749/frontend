@@ -4,6 +4,7 @@ import axios from "axios";
 import { fabric } from 'fabric'
 import html2canvas from "html2canvas";
 import './Grading.css'
+import { FrownOutlined, SmileOutlined } from "@ant-design/icons"
 import Saved from "../../Common/Saved/Saved";
 
 const Grading = ({ assignment, student, token, course, refresh, setAssignment, setCourse, setStudent }) => {
@@ -297,6 +298,19 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
                 headers: {
                     'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
                 }
+            }).then(function (response) {
+                notification.open({
+                    message: "Grading progress saved.",
+                    icon: <SmileOutlined style={{ color: 'green' }} />,
+                })
+            }).catch(res => {
+                notification.open({
+                    message: 'Save failed. Server error.',
+                    icon: <FrownOutlined style={{ color: 'red' }} />,
+                    onClick: () => {
+                        console.log('Notification Clicked!');
+                    },
+                });
             })
         }
     }
@@ -353,14 +367,14 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
         // Uncomment tat ca ok
         saveGrading()
 
-        notification.open({
-            message: 'Graded',
-            description:
-                'Success submit grading.',
-            onClick: () => {
-                console.log('Notification Clicked!');
-            },
-        });
+        // notification.open({
+        //     message: 'Graded',
+        //     description:
+        //         'Success submit grading.',
+        //     onClick: () => {
+        //         console.log('Notification Clicked!');
+        //     },
+        // });
         for (let j = 0; j < worksData.length; j++) {
             let formData = new FormData()
             console.log("Grading objects", objects)
@@ -425,6 +439,24 @@ const Grading = ({ assignment, student, token, course, refresh, setAssignment, s
                     headers: {
                         'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
                     }
+                }).then(function (response) {
+                    notification.open({
+                        message: 'Graded',
+                        description:
+                            'Success submit grading.',
+                        icon: <SmileOutlined style={{ color: 'green' }} />,
+                        onClick: () => {
+                            console.log('Notification Clicked!');
+                        },
+                    });
+                }).catch(res => {
+                    notification.open({
+                        message: 'Submit grade failed. Server error.',
+                        icon: <FrownOutlined style={{ color: 'red' }} />,
+                        onClick: () => {
+                            console.log('Notification Clicked!');
+                        },
+                    });
                 })
             })
         }

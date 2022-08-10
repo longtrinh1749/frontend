@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input, Radio, Tabs, Switch, Typography } from 'antd';
+import { Button, Modal, Form, Input, Radio, Tabs, Switch, Typography, notification } from 'antd';
 import ManageStudentList from './EditCourseStudent';
+import { FrownOutlined, SmileOutlined } from "@ant-design/icons"
 import axios from 'axios';
 
 const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel, refresh, setRefresh }) => {
@@ -21,6 +22,11 @@ const EditCourseForm = ({ courseInfo, visible, onEdit, onCancel, refresh, setRef
                 headers: {
                     'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
                 }
+            }).then(function (response) {
+                notification.open({
+                    message: "Update course successfully.",
+                    icon: <SmileOutlined style={{ color: 'green' }} />,
+                })
             })
             resolve(true)
         });

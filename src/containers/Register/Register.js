@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Checkbox, Divider, Space, Typography, Row, Col, notification } from 'antd';
+import { FrownOutlined, SmileOutlined } from "@ant-design/icons"
 // import './Register.css'
 import './OtherRegister.css'
 import { useRef } from "react";
@@ -34,7 +35,6 @@ const Register = ({ setRegister }) => {
         } else {
             role.current = e.target[8].value
         }
-
         axios.post(BASE_URL + '/users', {
             username: username.current,
             password: password.current,
@@ -49,6 +49,16 @@ const Register = ({ setRegister }) => {
                 message: "Register successful"
             })
             loginClicked()
+        }).catch(res => {
+            notification.open({
+                message: 'Register failed.',
+                description:
+                    'Username existed. Please use another username.',
+                icon: <FrownOutlined style={{ color: 'red' }} />,
+                onClick: () => {
+                    console.log('Notification Clicked!');
+                },
+            });
         })
     }
 

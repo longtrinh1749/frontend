@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Form, Input, Button, Checkbox, Divider, Space, Typography, Row, Col, notification } from 'antd';
+import { SmileOutlined, FrownOutlined } from '@ant-design/icons';
 // import './Login.css'
 import './OtherLogin.css'
 import Register from "../Register/Register"
@@ -96,6 +97,7 @@ const Login = ({ setToken }) => {
                 message: 'Login successfully',
                 description:
                     'Welcome to ASIMO.',
+                icon: <SmileOutlined style={{ color: 'green' }} />,
                 onClick: () => {
                     console.log('Notification Clicked!');
                 },
@@ -112,6 +114,7 @@ const Login = ({ setToken }) => {
                 message: 'Login failed.',
                 description:
                     'Wrong username or password.',
+                icon: <FrownOutlined style={{ color: 'red' }} />,
                 onClick: () => {
                     console.log('Notification Clicked!');
                 },

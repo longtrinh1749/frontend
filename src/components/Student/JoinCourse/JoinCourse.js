@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Col, Card } from 'antd'
+import { Col, Card, notification } from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormText, ProForm, ProFormDigit } from '@ant-design/pro-form';
+import { FrownOutlined, SmileOutlined } from "@ant-design/icons"
 import axios from "axios";
 import {
     Form,
@@ -35,6 +36,21 @@ const JoinCourse = () => {
                 headers: {
                     'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
                 }
+            }).then(function (response) {
+                notification.open({
+                    message: "Join course successfully",
+                    icon: <SmileOutlined style={{ color: 'green' }} />,
+                })
+            }).catch(res => {
+                notification.open({
+                    message: 'Join course failed.',
+                    description:
+                        'Course not existed.',
+                    icon: <FrownOutlined style={{ color: 'red' }} />,
+                    onClick: () => {
+                        console.log('Notification Clicked!');
+                    },
+                });
             })
             resolve(true)
         });

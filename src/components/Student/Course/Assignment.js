@@ -6,6 +6,7 @@ import axios from "axios";
 import { upload } from "@testing-library/user-event/dist/upload";
 import EditAssignment from "../../Teacher/Assignment/EditAssignment";
 import Saved from "../../Common/Saved/Saved";
+import { FrownOutlined, SmileOutlined } from "@ant-design/icons"
 
 const Assignment = ({ assignment, refresh, setRefresh, setAssignment, setCourse, setStudent }) => {
     let BASE_ASM_URL = 'http://127.0.0.1:5000/assignments'
@@ -79,6 +80,19 @@ const Assignment = ({ assignment, refresh, setRefresh, setAssignment, setCourse,
                 headers: {
                     'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
                 }
+            }).then(function (response) {
+                notification.open({
+                    message: "Update assignment successfully.",
+                    icon: <SmileOutlined style={{ color: 'green' }} />,
+                })
+            }).catch(res => {
+                notification.open({
+                    message: 'Update failed. Server error.',
+                    icon: <FrownOutlined style={{ color: 'red' }} />,
+                    onClick: () => {
+                        console.log('Notification Clicked!');
+                    },
+                });
             })
         } else {
             console.log(submitData)
@@ -87,6 +101,7 @@ const Assignment = ({ assignment, refresh, setRefresh, setAssignment, setCourse,
                     message: 'Cannot handin',
                     description:
                         'Cannot handin without any file submitted!',
+                    icon: <FrownOutlined style={{ color: 'red' }} />,
                     onClick: () => {
                         console.log('Notification Clicked!');
                     },
@@ -100,6 +115,19 @@ const Assignment = ({ assignment, refresh, setRefresh, setAssignment, setCourse,
                     headers: {
                         'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
                     }
+                }).then(function (response) {
+                    notification.open({
+                        message: "Update assignment successfully.",
+                        icon: <SmileOutlined style={{ color: 'green' }} />,
+                    })
+                }).catch(res => {
+                    notification.open({
+                        message: 'Update failed. Server error.',
+                        icon: <FrownOutlined style={{ color: 'red' }} />,
+                        onClick: () => {
+                            console.log('Notification Clicked!');
+                        },
+                    });
                 })
             }
         }
@@ -169,6 +197,10 @@ const Assignment = ({ assignment, refresh, setRefresh, setAssignment, setCourse,
             }).then(function (response) {
                 setRefresh(!refresh)
                 console.log(response)
+                notification.open({
+                    message: "Upload successful",
+                    icon: <SmileOutlined style={{ color: 'green' }} />,
+                })
             })
             resolve(true)
         })
@@ -180,6 +212,7 @@ const Assignment = ({ assignment, refresh, setRefresh, setAssignment, setCourse,
             axios.put(BASE_WORK_URL, {
                 id: file.id,
                 active: false,
+                submit_id: submitData.id
             }, {
                 headers: {
                     'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('token'))}`
