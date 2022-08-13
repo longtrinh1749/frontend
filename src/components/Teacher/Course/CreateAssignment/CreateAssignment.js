@@ -35,7 +35,9 @@ const CreateAssignment = ({ course, visible, onEdit, onCancel }) => {
             //     resolve(true);
             // }, 2000);
             let formData = new FormData()
-            formData.append('file', fileList[0].originFileObj)
+            if (fileList[0]) {
+                formData.append('file', fileList[0].originFileObj)
+            }
             formData.append('course_id', course.id)
             formData.append('due', moment(values.due, 'YYYY-MM-DDTHH:mm:ssZ').format('YYYY-MM-DD HH:mm:ss'))
             formData.append('instruction', values.instruction)

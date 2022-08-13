@@ -40,6 +40,7 @@ const Register = ({ setRegister }) => {
             password: password.current,
             name: name.current,
             email: email.current,
+            phone: phone.current,
             class: clazz.current,
             school: school.current,
             role: role.current

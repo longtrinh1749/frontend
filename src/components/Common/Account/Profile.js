@@ -128,7 +128,7 @@ const Profile = ({ modalVisible, setModalVisible }) => {
                             class: user ? user.class : '',
                             school: user ? user.school : '',
                             email: user ? user.email : '',
-                            address: user ? user.address : '',
+                            // address: user ? user.address : '',
                         }}
                     >
                         <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Name cannot be empty' }]} className="profile-form">
@@ -146,9 +146,9 @@ const Profile = ({ modalVisible, setModalVisible }) => {
                         <Form.Item name="email" label="Email" className="profile-form">
                             <Input type="textarea" className="profile-input" />
                         </Form.Item>
-                        <Form.Item name="address" label="Address" className="profile-form">
+                        {/* <Form.Item name="address" label="Address" className="profile-form">
                             <Input type="textarea" className="profile-input" />
-                        </Form.Item>
+                        </Form.Item> */}
                     </Form>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Change password" key="2">

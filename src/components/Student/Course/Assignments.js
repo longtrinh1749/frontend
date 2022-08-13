@@ -13,7 +13,7 @@ const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRef
 
     const BASE_URL = 'http://127.0.0.1:5000/assignments'
 
-    const [assignments, setAssignments] = useState(1)
+    const [assignments, setAssignments] = useState([])
 
     useEffect(() => {
         const config = {
@@ -173,7 +173,7 @@ const Assignments = ({ token, course, setAssignment, setBrCrumb, refresh, setRef
                 display: 'inline-block',
             }}>Assignments:</Typography.Title>
             <LeaveCourse course={course} leaveCourse={setBrCrumb}></LeaveCourse>
-            <Statistic></Statistic>
+            <Statistic assignments={assignments}></Statistic>
             <Divider />
             <Row gutter={16}>
                 {assignmentsHTML}
